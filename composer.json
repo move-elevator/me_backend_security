@@ -1,0 +1,18 @@
+{
+  "name": "move-elevator/me-backend-security",
+  "description": "Advanced security for the TYPO3 backend",
+  "type": "typo3-cms-extension",
+  "config": {
+    "bin-dir": "Build/bin"
+  },
+  "autoload": {
+    "psr-4": {
+      "MoveElevator\\MeBackendSecurity\\": "Classes"
+    }
+  },
+  "autoload-dev": {
+    "psr-4": {
+      "MoveElevator\\MeBackendSecurity\\Tests\\": "Tests"
+    }
+  }
+}
