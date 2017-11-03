@@ -14,10 +14,24 @@ use TYPO3\CMS\Lang\LanguageService;
 class UserAuthHook
 {
     /**
-     * @param $params
-     * @param $pObj
+     * @param array $params
+     * @param BackendUserAuthentication $pObj
      */
     public function postUserLookUp($params, $pObj)
+    {
+        if ($pObj instanceof BackendUserAuthentication && empty($pObj->user) === false) {
+            $this->checkPasswordLifeTime($pObj);
+
+            return;
+        }
+
+        return;
+    }
+
+    /**
+     * @param BackendUserAuthentication $pObj
+     */
+    private function checkPasswordLifeTime(BackendUserAuthentication $pObj)
     {
         /** @var ObjectManager $objectManager */
         $objectManager = GeneralUtility::makeInstance(ObjectManager::class);
@@ -36,14 +50,6 @@ class UserAuthHook
             new \DateInterval('P' . $validUntil . 'D')
         );
 
-        if ($pObj instanceof BackendUserAuthentication === false) {
-            return;
-        }
-
-        if (empty($pObj->user)) {
-            return;
-        }
-
         if ($now <= $expireDeathLine) {
             return;
         }
@@ -58,6 +64,6 @@ class UserAuthHook
 
         $pObj->logoff();
 
-        HttpUtility::redirect('index.php?loginProvider=1507295520');
+        HttpUtility::redirect('index.php?r=1&u=' . $user['username']);
     }
 }
