@@ -7,6 +7,7 @@ use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Core\Utility\HttpUtility;
 use TYPO3\CMS\Extbase\Object\ObjectManager;
 use TYPO3\CMS\Lang\LanguageService;
+use TYPO3\CMS\Rsaauth\RsaEncryptionDecoder;
 
 /**
  * @package MoveElevator\MeBackendSecurity\Hook
@@ -14,18 +15,92 @@ use TYPO3\CMS\Lang\LanguageService;
 class UserAuthHook
 {
     /**
+     * @var ObjectManager
+     */
+    protected $objectManager;
+
+    /**
+     * @var RsaEncryptionDecoder
+     */
+    protected $rsaEncryptionDecoder;
+
+    /**
      * @param array $params
      * @param BackendUserAuthentication $pObj
      */
     public function postUserLookUp($params, $pObj)
     {
-        if ($pObj instanceof BackendUserAuthentication && empty($pObj->user) === false) {
-            $this->checkPasswordLifeTime($pObj);
+        if ($this->isLocalBackendUserAuthentificaton($pObj) === false) {
+            return;
+        }
+
+        $this->objectManager = GeneralUtility::makeInstance(ObjectManager::class);
+        $this->rsaEncryptionDecoder = $this->objectManager->get(RsaEncryptionDecoder::class);
+
+        $this->changePasswordIfRequested($pObj);
+        $this->checkPasswordLifeTime($pObj);
+    }
+
+    /**
+     * @param $pObj
+     *
+     * @return bool
+     */
+    private function isLocalBackendUserAuthentificaton($pObj)
+    {
+        if (!$pObj instanceof BackendUserAuthentication) {
+            return false;
+        }
+
+        if (empty($pObj->user) === true) {
+            return false;
+        }
+
+        return true;
+    }
+
+    /**
+     * @return void
+     */
+    private function changePasswordIfRequested(BackendUserAuthentication $pObj)
+    {
+        $resetFormVars = GeneralUtility::_GP('tx_mebackendsecurity');
+
+        if (empty($resetFormVars['password_new']) === true ||
+            empty($resetFormVars['password_confirmation']) === true
+        ) {
+            return;
+        }
+
+        $resetFormVars['password_new'] = $this->rsaEncryptionDecoder->decrypt(
+            $resetFormVars['password_new']
+        );
+
+        $resetFormVars['password_confirmation'] = $this->rsaEncryptionDecoder->decrypt(
+            $resetFormVars['password_confirmation']
+        );
+
+        $userExists = $GLOBALS['TYPO3_DB']->exec_SELECTcountRows(
+            'uid',
+            'be_users',
+            'username=' . $GLOBALS['TYPO3_DB']->fullQuoteStr($pObj->user['username'], 'be_users')
+        );
+
+        if ($userExists) {
+            $hashedPassword = $this->getHashedPassword($resetFormVars['password_new']);
+            $userFields = [
+                'password' => $hashedPassword,
+                'tx_mebackendsecurity_lastpasswordchange' => $GLOBALS['EXEC_TIME']
+            ];
+
+            $GLOBALS['TYPO3_DB']->exec_UPDATEquery('be_users', 'uid=' . $pObj->user['uid'], $userFields);
+
+            $pObj->user['tx_mebackendsecurity_lastpasswordchange'] = $GLOBALS['EXEC_TIME'];
 
             return;
         }
 
-        return;
+        $this->redirectToForm($pObj, 100);
     }
 
     /**
@@ -54,16 +129,48 @@ class UserAuthHook
             return;
         }
 
+        $this->redirectToForm($pObj);
+    }
+
+    /**
+     * @param BackendUserAuthentication $pObj
+     * @param int|null                  $errorCode
+     */
+    private function redirectToForm(BackendUserAuthentication $pObj, int $errorCode = null)
+    {
+        $url = 'index.php?r=1';
+
+        if (empty($pObj->user['username']) === false) {
+            $url .= '&u=' . $pObj->user['username'];
+        }
+
+        if (empty($errorCode) === false) {
+            $url .= '&e=' . $errorCode;
+        }
+
         $user = $pObj->user;
 
         if (!$GLOBALS['LANG']) {
             $userUc = unserialize($user['uc']);
-            $GLOBALS['LANG'] = GeneralUtility::makeInstance(LanguageService::class);
+            $GLOBALS['LANG'] = $this->objectManager->get(LanguageService::class);
             $GLOBALS['LANG']->init($userUc['lang']);
         }
 
         $pObj->logoff();
 
-        HttpUtility::redirect('index.php?r=1&u=' . $user['username']);
+        HttpUtility::redirect($url);
+    }
+
+
+
+    /**
+     * @param string $password
+     * @return string
+     */
+    protected function getHashedPassword($password)
+    {
+        $saltFactory = \TYPO3\CMS\Saltedpasswords\Salt\SaltFactory::getSaltingInstance(null, 'BE');
+
+        return $saltFactory->getHashedPassword($password);
     }
 }
