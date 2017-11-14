@@ -12,6 +12,8 @@ use TYPO3\CMS\Fluid\View\StandaloneView;
  */
 class UsernamePasswordLoginProvider extends \TYPO3\CMS\Backend\LoginProvider\UsernamePasswordLoginProvider
 {
+    const PARAMETER_IDENTIFIER = 'tx_mebackendsecurity';
+
     /**
      * {@inheritdoc}
      */
@@ -38,7 +40,7 @@ class UsernamePasswordLoginProvider extends \TYPO3\CMS\Backend\LoginProvider\Use
     private function isResetFormRequired()
     {
         $resetForm = GeneralUtility::_GP('r');
-        $resetFormVars = GeneralUtility::_GP('tx_mebackendsecurity');
+        $resetFormVars = GeneralUtility::_GP(self::PARAMETER_IDENTIFIER);
 
         if (empty($resetForm) === false || empty($resetFormVars) === false) {
             return true;
