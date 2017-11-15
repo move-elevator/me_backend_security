@@ -13,11 +13,11 @@ class LoginProviderRedirectFactory
 
     /**
      * @param string|null $username
-     * @param int|null    $errorCode
+     * @param array       $errorCodes
      *
      * @return LoginProviderRedirect
      */
-    public static function create($username = null, $errorCode = null)
+    public static function create($username = null, $errorCodes = [])
     {
         $parameter = [
             'r' => 1
@@ -27,8 +27,8 @@ class LoginProviderRedirectFactory
             $parameter['u'] = $username;
         }
 
-        if (empty($errorCode) === false) {
-            $parameter['e'] = $errorCode;
+        if (empty($errorCodes) === false) {
+            $parameter['e'] = urlencode(base64_encode(serialize($errorCodes)));
         }
 
         $loginProviderRedirect = new LoginProviderRedirect();

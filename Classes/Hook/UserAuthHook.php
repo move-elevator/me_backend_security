@@ -9,6 +9,7 @@ use MoveElevator\MeBackendSecurity\Factory\DatabaseConnectionFactory;
 use MoveElevator\MeBackendSecurity\Factory\ExtensionConfigurationFactory;
 use MoveElevator\MeBackendSecurity\Service\BackendUserService;
 use MoveElevator\MeBackendSecurity\Factory\PasswordChangeRequestFactory;
+use MoveElevator\MeBackendSecurity\Validation\Validator\PasswordChangeRequestValidator;
 use TYPO3\CMS\Core\Authentication\BackendUserAuthentication;
 use TYPO3\CMS\Core\Database\DatabaseConnection;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
@@ -82,6 +83,12 @@ class UserAuthHook
             $configurationUtility->getCurrentConfiguration(self::EXTKEY)
         );
 
+        /** @var PasswordChangeRequestValidator $passwordChangeRequestValidator */
+        $passwordChangeRequestValidator = $this->objectManager->get(
+            PasswordChangeRequestValidator::class,
+            ['extensionConfiguration' => $extensionConfiguration]
+        );
+
         /** @var SaltInterface $saltingInstance */
         $saltingInstance = SaltFactory::getSaltingInstance(null, 'BE');
 
@@ -91,6 +98,7 @@ class UserAuthHook
             $this->backendUserAuthentication,
             $databaseConnection,
             $extensionConfiguration,
+            $passwordChangeRequestValidator,
             $saltingInstance
         );
 
@@ -136,7 +144,7 @@ class UserAuthHook
 
         $result = $this->backendUserService->handlePasswordChangeRequest($passwordChangeRequest);
 
-        if (empty($result) === false) {
+        if ($result instanceof LoginProviderRedirect) {
             $this->handleRedirect($result);
         }
     }
@@ -148,7 +156,7 @@ class UserAuthHook
     {
         $result = $this->backendUserService->checkPasswordLifeTime();
 
-        if (empty($result) === false) {
+        if ($result instanceof LoginProviderRedirect) {
             $this->handleRedirect($result);
         }
     }

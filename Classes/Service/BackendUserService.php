@@ -6,9 +6,11 @@ use MoveElevator\MeBackendSecurity\Domain\Model\ExtensionConfiguration;
 use MoveElevator\MeBackendSecurity\Domain\Model\LoginProviderRedirect;
 use MoveElevator\MeBackendSecurity\Domain\Model\PasswordChangeRequest;
 use MoveElevator\MeBackendSecurity\Factory\LoginProviderRedirectFactory;
+use MoveElevator\MeBackendSecurity\Validation\Validator\PasswordChangeRequestValidator;
 use TYPO3\CMS\Core\Authentication\BackendUserAuthentication;
 use TYPO3\CMS\Core\Database\DatabaseConnection;
-use TYPO3\CMS\Extensionmanager\Utility\ConfigurationUtility;
+use TYPO3\CMS\Extbase\Error\Error;
+use TYPO3\CMS\Extbase\Error\Result;
 use TYPO3\CMS\Saltedpasswords\Salt\SaltInterface;
 
 /**
@@ -16,6 +18,9 @@ use TYPO3\CMS\Saltedpasswords\Salt\SaltInterface;
  */
 class BackendUserService
 {
+    const USERS_TABLE_NAME = 'be_users';
+    const LASTCHANGE_COLUMN_NAME = 'tx_mebackendsecurity_lastpasswordchange';
+
     /**
      * mixed
      */
@@ -32,64 +37,83 @@ class BackendUserService
     protected $extensionConfiguration;
 
     /**
+     * @var PasswordChangeRequestValidator
+     */
+    protected $passwordChangeRequestValidator;
+
+    /**
      * @var SaltInterface
      */
     protected $saltingInstance;
 
     /**
-     * @param mixed                  $backendUserAuthentication
-     * @param DatabaseConnection     $databaseConnection
-     * @param ExtensionConfiguration $extensionConfiguration
-     * @param SaltInterface          $saltingInstance
+     * @param BackendUserAuthentication      $backendUserAuthentication
+     * @param DatabaseConnection             $databaseConnection
+     * @param ExtensionConfiguration         $extensionConfiguration
+     * @param PasswordChangeRequestValidator $passwordChangeRequestValidator
+     * @param SaltInterface                  $saltingInstance
      */
     public function __construct(
         BackendUserAuthentication $backendUserAuthentication,
         DatabaseConnection $databaseConnection,
         ExtensionConfiguration $extensionConfiguration,
+        PasswordChangeRequestValidator $passwordChangeRequestValidator,
         SaltInterface $saltingInstance
     ) {
         $this->backendUserAuthentication = $backendUserAuthentication;
         $this->databaseConnection = $databaseConnection;
         $this->extensionConfiguration = $extensionConfiguration;
+        $this->passwordChangeRequestValidator = $passwordChangeRequestValidator;
         $this->saltingInstance = $saltingInstance;
     }
 
     /**
      * @return LoginProviderRedirect|null
      */
-    public function handlePasswordChangeRequest(PasswordChangeRequest $passwordChange)
+    public function handlePasswordChangeRequest(PasswordChangeRequest $passwordChangeRequest)
     {
-        if ($this->isActiveBackendUserAuthentication() === false) {
-            return null;
+        /** @var Result $validationResults */
+        $validationResults = $this->passwordChangeRequestValidator->validate($passwordChangeRequest);
+
+        if ($validationResults->hasErrors()) {
+            return LoginProviderRedirectFactory::create(
+                $this->backendUserAuthentication->user['username'],
+                $this->getErrorCodes($validationResults)
+            );
         }
 
         $userExists = $this->databaseConnection->exec_SELECTcountRows(
             'uid',
-            'be_users',
-            'username=' .
-            $this->databaseConnection->fullQuoteStr($this->backendUserAuthentication->user['username'], 'be_users')
+            self::USERS_TABLE_NAME,
+            'uid=' . $this->databaseConnection->fullQuoteStr(
+                $this->backendUserAuthentication->user['uid'],
+                self::USERS_TABLE_NAME
+            ) . 'AND username=' . $this->databaseConnection->fullQuoteStr(
+                $this->backendUserAuthentication->user['username'],
+                self::USERS_TABLE_NAME
+            )
         );
 
-        if ($userExists) {
-            $hashedPassword = $this->saltingInstance->getHashedPassword($passwordChange->getPassword());
-
-            $this->databaseConnection->exec_UPDATEquery(
-                'be_users',
-                'uid=' . $this->backendUserAuthentication->user['uid'],
-                [
-                    'password' => $hashedPassword,
-                    'tx_mebackendsecurity_lastpasswordchange' => $GLOBALS['EXEC_TIME']
-                ]
+        if ($userExists === false) {
+            return LoginProviderRedirectFactory::create(
+                $this->backendUserAuthentication->user['username'],
+                [1510742748]
             );
-
-            $this->backendUserAuthentication->user['tx_mebackendsecurity_lastpasswordchange'] = $GLOBALS['EXEC_TIME'];
-
-            return null;
         }
 
-        return LoginProviderRedirectFactory::create(
-            $this->backendUserAuthentication->user['username']
+        $this->databaseConnection->exec_UPDATEquery(
+            self::USERS_TABLE_NAME,
+            'uid=' . $this->databaseConnection->fullQuoteStr(
+                $this->backendUserAuthentication->user['uid'],
+                self::USERS_TABLE_NAME
+            ),
+            [
+                'password' => $this->saltingInstance->getHashedPassword($passwordChangeRequest->getPassword()),
+                self::LASTCHANGE_COLUMN_NAME => time()
+            ]
         );
+
+        return null;
     }
 
     /**
@@ -97,16 +121,12 @@ class BackendUserService
      */
     public function checkPasswordLifeTime()
     {
-        if ($this->isActiveBackendUserAuthentication() === false) {
-            return null;
-        }
-
         $validUntil = $this->extensionConfiguration->getValidUntil();
 
         $now = new \DateTime();
         $expireDeathLine = new \DateTime();
         $expireDeathLine->setTimestamp(
-            intval($this->backendUserAuthentication->user['tx_mebackendsecurity_lastpasswordchange'])
+            intval($this->backendUserAuthentication->user[self::LASTCHANGE_COLUMN_NAME])
         );
         $expireDeathLine->add(
             new \DateInterval('P' . $validUntil . 'D')
@@ -122,18 +142,19 @@ class BackendUserService
     }
 
     /**
-     * @return bool
+     * @param Result $validationResults
+     *
+     * @return array
      */
-    private function isActiveBackendUserAuthentication()
+    private function getErrorCodes($validationResults)
     {
-        if ($this->backendUserAuthentication instanceof BackendUserAuthentication === false) {
-            return false;
+        $errorCodes = [];
+
+        /** @var Error $error */
+        foreach ($validationResults->getErrors() as $error) {
+            $errorCodes[] = $error->getCode();
         }
 
-        if (empty($this->backendUserAuthentication->user)) {
-            return false;
-        }
-
-        return true;
+        return $errorCodes;
     }
 }

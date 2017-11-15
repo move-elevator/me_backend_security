@@ -4,10 +4,10 @@ specialChar = 1
 # cat=Basic; type=int [0-99]; label=How many digits must the password contain? (Default is 1)
 digit = 1
 
-# cat=Basic; type=int [0-99]; label=How many capital characters (A-Z) must the password contain? (Default is 1)
+# cat=Basic; type=int [0-99]; label=How many capital characters (A-Z, Ä, Ö, Ü) must the password contain? (Default is 1)
 capitalChar = 1
 
-# cat=Basic; type=int [0-99]; label=How many lowercase characters (A-Z) must the password contain? (Default is 1)
+# cat=Basic; type=int [0-99]; label=How many lowercase characters (a-z, ä, ö, ü) must the password contain? (Default is 1)
 lowercaseChar = 1
 
 # cat=Basic; type=int [5-99]; label=What is the mimimal length of a password? (Default is 8)

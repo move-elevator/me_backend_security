@@ -16,12 +16,12 @@ class ExtensionConfigurationFactory
      */
     public static function create($rawExtensionConfiguration)
     {
-        if (empty($rawExtensionConfiguration['specialChar']['value']) ||
-            empty($rawExtensionConfiguration['digit']['value']) ||
-            empty($rawExtensionConfiguration['capitalChar']['value']) ||
-            empty($rawExtensionConfiguration['lowercaseChar']['value']) ||
-            empty($rawExtensionConfiguration['passwordLength']['value']) ||
-            empty($rawExtensionConfiguration['validUntil']['value'])
+        if (isset($rawExtensionConfiguration['specialChar']['value']) === false ||
+            isset($rawExtensionConfiguration['digit']['value']) === false ||
+            isset($rawExtensionConfiguration['capitalChar']['value']) === false ||
+            isset($rawExtensionConfiguration['lowercaseChar']['value']) === false ||
+            isset($rawExtensionConfiguration['passwordLength']['value']) === false ||
+            isset($rawExtensionConfiguration['validUntil']['value']) === false
         ) {
             throw new \InvalidArgumentException(
                 'The given arguments are incomplete!'
