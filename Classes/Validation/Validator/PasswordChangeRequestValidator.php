@@ -11,6 +11,14 @@ use TYPO3\CMS\Extbase\Validation\Validator\AbstractValidator;
  */
 class PasswordChangeRequestValidator extends AbstractValidator
 {
+    const PATTERN_SPECIALCHAR = '/[!$%&\/=?,.]/';
+    const PATTERN_DIGIT = '/[0-9]/';
+    const PATTERN_CAPITALCHAR = '/[A-ZÄÖÜ]/';
+    const PATTERN_LOWERCASECHAR = '/[a-zäöü]/';
+
+    /**
+     * @var array
+     */
     protected $supportedOptions = [
         'extensionConfiguration' => [0, 'The extension configuration object', ExtensionConfiguration::class, true]
     ];
@@ -108,7 +116,7 @@ class PasswordChangeRequestValidator extends AbstractValidator
      */
     protected function validateSpecialChar($passwordChangeRequest, $minimum)
     {
-        $matches = preg_match_all('/[!$%&\/=?,.]/', $passwordChangeRequest->getPassword());
+        $matches = preg_match_all(self::PATTERN_SPECIALCHAR, $passwordChangeRequest->getPassword());
 
         if ($matches >= $minimum) {
             return true;
@@ -125,7 +133,7 @@ class PasswordChangeRequestValidator extends AbstractValidator
      */
     protected function validateDigit($passwordChangeRequest, $minimum)
     {
-        $matches = preg_match_all('/[0-9]/', $passwordChangeRequest->getPassword());
+        $matches = preg_match_all(self::PATTERN_DIGIT, $passwordChangeRequest->getPassword());
 
         if ($matches >= $minimum) {
             return true;
@@ -142,7 +150,7 @@ class PasswordChangeRequestValidator extends AbstractValidator
      */
     protected function validateCapitalChar($passwordChangeRequest, $minimum)
     {
-        $matches = preg_match_all('/[A-ZÄÖÜ]/', $passwordChangeRequest->getPassword());
+        $matches = preg_match_all(self::PATTERN_CAPITALCHAR, $passwordChangeRequest->getPassword());
 
         if ($matches >= $minimum) {
             return true;
@@ -159,7 +167,7 @@ class PasswordChangeRequestValidator extends AbstractValidator
      */
     protected function validateLowerCaseChar($passwordChangeRequest, $minimum)
     {
-        $matches = preg_match_all('/[a-zäöü]/', $passwordChangeRequest->getPassword());
+        $matches = preg_match_all(self::PATTERN_LOWERCASECHAR, $passwordChangeRequest->getPassword());
 
         if ($matches >= $minimum) {
             return true;
