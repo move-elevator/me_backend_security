@@ -61,6 +61,10 @@ class UsernamePasswordLoginProvider extends \TYPO3\CMS\Backend\LoginProvider\Use
         if (empty($errors) === false) {
             $view->assign('errors', unserialize(base64_decode(urldecode($errors))));
         }
+
+        $pageRenderer->loadRequireJsModule(
+            'TYPO3/CMS/MeBackendSecurity/PasswordValidator'
+        );
     }
 
     /**
