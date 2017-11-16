@@ -10,13 +10,13 @@
 				<target>Aus Sicherheitsgründen muss Ihr Passwort in regelmäßigen Abständen geändert werden. Bitte ändern Sie es jetzt um sich einzuloggen.</target>
 			</trans-unit>
 			<trans-unit id="error.title" xml:space="preserve">
-				<target>Ihr Passwort konnte nicht aktualisiert werden</target>
+				<target>Passwortänderung fehlgeschlagen</target>
 			</trans-unit>
 			<trans-unit id="error.1510742741" xml:space="preserve">
-				<target>Passwort ist zu kurz</target>
+				<target>Das Passwort ist zu kurz</target>
 			</trans-unit>
 			<trans-unit id="error.1510742742" xml:space="preserve">
-				<target>Passwörter stimmen nicht überein</target>
+				<target>Die Passwörter stimmen nicht überein</target>
 			</trans-unit>
 			<trans-unit id="error.1510742743" xml:space="preserve">
 				<target>Nicht genügend Sonderzeichen</target>

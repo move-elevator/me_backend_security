@@ -13,10 +13,10 @@
 				<source>Your password change did not succeed</source>
 			</trans-unit>
 			<trans-unit id="error.1510742741" xml:space="preserve">
-				<source>Password is to short</source>
+				<source>The password is to short</source>
 			</trans-unit>
 			<trans-unit id="error.1510742742" xml:space="preserve">
-				<source>Passwords do not match</source>
+				<source>The passwords do not match</source>
 			</trans-unit>
 			<trans-unit id="error.1510742743" xml:space="preserve">
 				<source>Not enough special character</source>
