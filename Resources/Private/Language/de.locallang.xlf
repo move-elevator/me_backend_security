@@ -75,6 +75,9 @@
 			<trans-unit id="password.confirmation">
 				<target>Passwort wiederholen</target>
 			</trans-unit>
+			<trans-unit id="be_users.tx_mebackendsecurity_lastpasswordchange" xml:space="preserve">
+				<target>Passwort zuletzt geändert</target>
+			</trans-unit>
 		</body>
 	</file>
 </xliff>

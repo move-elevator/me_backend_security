@@ -109,7 +109,7 @@ class BackendUserService
             ),
             [
                 'password' => $this->saltingInstance->getHashedPassword($passwordChangeRequest->getPassword()),
-                self::LASTCHANGE_COLUMN_NAME => time()
+                self::LASTCHANGE_COLUMN_NAME => time() + date('Z')
             ]
         );
 

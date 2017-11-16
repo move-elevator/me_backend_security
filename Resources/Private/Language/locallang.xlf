@@ -75,6 +75,9 @@
 			<trans-unit id="password.confirmation">
 				<source>Repeat password</source>
 			</trans-unit>
+			<trans-unit id="be_users.tx_mebackendsecurity_lastpasswordchange" xml:space="preserve">
+				<source>Last password change</source>
+			</trans-unit>
 		</body>
 	</file>
 </xliff>

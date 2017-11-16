@@ -36,7 +36,7 @@ class PasswordChangeRequestValidator extends AbstractValidator
         if ($this->validatePasswordLength($passwordChangeRequest, $configuration->getPasswordLength()) === false) {
             $this->addError(
                 $this->translateErrorMessage(
-                    'error.1510742747',
+                    'error.1510742741',
                     'me_backend_security'
                 ),
                 1510742741

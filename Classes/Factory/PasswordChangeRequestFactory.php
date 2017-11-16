@@ -19,7 +19,7 @@ class PasswordChangeRequestFactory
     public static function create($passwordChangeRequestParameters, RsaEncryptionDecoder $rsaEncryptionDecoder)
     {
         if (empty($passwordChangeRequestParameters['password']) ||
-            empty($passwordChangeRequestParameters['password_confirmation'])
+            empty($passwordChangeRequestParameters['password2'])
         ) {
             throw new \InvalidArgumentException(
                 'The given arguments are incomplete!'
@@ -31,7 +31,7 @@ class PasswordChangeRequestFactory
             $rsaEncryptionDecoder->decrypt($passwordChangeRequestParameters['password'])
         );
         $passwordChange->setPasswordConfirmation(
-            $rsaEncryptionDecoder->decrypt($passwordChangeRequestParameters['password_confirmation'])
+            $rsaEncryptionDecoder->decrypt($passwordChangeRequestParameters['password2'])
         );
 
         return $passwordChange;
