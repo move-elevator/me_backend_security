@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project name="me-backend-security" basedir="../">
-	<property file="${basedir}/Build/build.properties"/>
+	<property file="${basedir}/build/build.properties"/>
 	<import file="${base-tasks-directory}/base.build.xml"/>
 </project>
