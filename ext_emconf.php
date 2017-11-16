@@ -3,7 +3,7 @@
 $EM_CONF[$_EXTKEY] = [
     'title' => 'm:e Backend Security',
     'description' => 'Erweiterte Sicherheit für das TYPO3-Backend',
-    'version' => '0.0.1',
+    'version' => '1.0.0',
     'category' => 'services',
     'constraints' => [
         'depends' => [
@@ -12,7 +12,7 @@ $EM_CONF[$_EXTKEY] = [
         'conflicts' => [],
         'suggests' => []
     ],
-    'state' => 'alpha',
+    'state' => 'beta',
     'uploadfolder' => false,
     'createDirs' => '',
     'clearCacheOnLoad' => true,

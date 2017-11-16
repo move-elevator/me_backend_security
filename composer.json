@@ -2,8 +2,43 @@
   "name": "move-elevator/me-backend-security",
   "description": "Advanced security for the TYPO3 backend",
   "type": "typo3-cms-extension",
-  "config": {
-    "bin-dir": "Build/bin"
+  "require": {
+    "php": ">=5.6"
+  },
+  "require-dev": {
+    "tm/tooly-composer-script": "1.2.1"
+  },
+  "scripts": {
+    "post-install-cmd": "Tooly\\ScriptHandler::installPharTools",
+    "post-update-cmd": "Tooly\\ScriptHandler::installPharTools"
+  },
+  "extra": {
+    "tools": {
+      "phpunit": {
+        "url": "https://phar.phpunit.de/phpunit-6.0.13.phar",
+        "force-replace": true
+      },
+      "phpmd": {
+        "url": "https://github.com/mi-schi/phpmd-extension/releases/download/stable/phpmd-extension.phar",
+        "force-replace": true
+      },
+      "phpcpd": {
+        "url": "https://phar.phpunit.de/phpcpd.phar",
+        "force-replace": true
+      },
+      "pdepend": {
+        "url": "http://static.pdepend.org/php/latest/pdepend.phar",
+        "force-replace": true
+      },
+      "phpcs": {
+        "url": "https://squizlabs.github.io/PHP_CodeSniffer/phpcs.phar",
+        "force-replace": true
+      },
+      "phpmetrics": {
+        "url": "https://github.com/phpmetrics/PhpMetrics/raw/master/build/phpmetrics.phar",
+        "force-replace": true
+      }
+    }
   },
   "autoload": {
     "psr-4": {
