@@ -7,7 +7,10 @@
 				<target>Ihr Passwort muss geändert werden</target>
 			</trans-unit>
 			<trans-unit id="description" xml:space="preserve">
-				<target>Aus Sicherheitsgründen muss Ihr Passwort in regelmäßigen Abständen geändert werden. Bitte ändern Sie es jetzt um sich einzuloggen.</target>
+				<target>Aus Sicherheitsgründen muss Ihr Passwort jeden Tag geändert werden. Bitte ändern Sie es jetzt um sich einzuloggen.</target>
+			</trans-unit>
+			<trans-unit id="description.plural" xml:space="preserve">
+				<target>Aus Sicherheitsgründen muss Ihr Passwort alle %s Tage geändert werden. Bitte ändern Sie es jetzt um sich einzuloggen.</target>
 			</trans-unit>
 			<trans-unit id="error.title" xml:space="preserve">
 				<target>Passwortänderung fehlgeschlagen</target>

@@ -7,7 +7,10 @@
 				<source>Your password have to be changed</source>
 			</trans-unit>
 			<trans-unit id="description" xml:space="preserve">
-				<source>For security reasons, your password have to be changed periodically. Please change it now to log in.</source>
+				<source>For security reasons, your password have to be changed every day. Please change it now to log in.</source>
+			</trans-unit>
+			<trans-unit id="description.plural" xml:space="preserve">
+				<source>For security reasons, your password have to be changed every %s days. Please change it now to log in.</source>
 			</trans-unit>
 			<trans-unit id="error.title" xml:space="preserve">
 				<source>Your password change did not succeed</source>
