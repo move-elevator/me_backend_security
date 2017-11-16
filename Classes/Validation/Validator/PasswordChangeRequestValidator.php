@@ -33,10 +33,20 @@ class PasswordChangeRequestValidator extends AbstractValidator
         /** @var ExtensionConfiguration $configuration */
         $configuration = $this->options['extensionConfiguration'];
 
+        if ($this->validatePasswordLength($passwordChangeRequest, $configuration->getPasswordLength()) === false) {
+            $this->addError(
+                $this->translateErrorMessage(
+                    'error.1510742747',
+                    'me_backend_security'
+                ),
+                1510742741
+            );
+        }
+
         if ($this->validatePasswordConfirmation($passwordChangeRequest) === false) {
             $this->addError(
                 $this->translateErrorMessage(
-                    'password_change_request.error.confirmation',
+                    'error.1510742742',
                     'me_backend_security'
                 ),
                 1510742742
@@ -46,7 +56,7 @@ class PasswordChangeRequestValidator extends AbstractValidator
         if ($this->validateSpecialChar($passwordChangeRequest, $configuration->getSpecialChar()) === false) {
             $this->addError(
                 $this->translateErrorMessage(
-                    'password_change_request.error.special_char',
+                    'error.1510742743',
                     'me_backend_security'
                 ),
                 1510742743
@@ -56,7 +66,7 @@ class PasswordChangeRequestValidator extends AbstractValidator
         if ($this->validateDigit($passwordChangeRequest, $configuration->getDigit()) === false) {
             $this->addError(
                 $this->translateErrorMessage(
-                    'password_change_request.error.digit',
+                    'error.1510742744',
                     'me_backend_security'
                 ),
                 1510742744
@@ -66,7 +76,7 @@ class PasswordChangeRequestValidator extends AbstractValidator
         if ($this->validateCapitalChar($passwordChangeRequest, $configuration->getCapitalChar()) === false) {
             $this->addError(
                 $this->translateErrorMessage(
-                    'password_change_request.error.capital_char',
+                    'error.1510742745',
                     'me_backend_security'
                 ),
                 1510742745
@@ -76,22 +86,27 @@ class PasswordChangeRequestValidator extends AbstractValidator
         if ($this->validateLowerCaseChar($passwordChangeRequest, $configuration->getLowercaseChar()) === false) {
             $this->addError(
                 $this->translateErrorMessage(
-                    'password_change_request.error.lowercase_char',
+                    'error.1510742746',
                     'me_backend_security'
                 ),
                 1510742746
             );
         }
+    }
 
-        if ($this->validatePasswordLength($passwordChangeRequest, $configuration->getPasswordLength()) === false) {
-            $this->addError(
-                $this->translateErrorMessage(
-                    'password_change_request.error.password_length',
-                    'me_backend_security'
-                ),
-                1510742747
-            );
+    /**
+     * @param PasswordChangeRequest $passwordChangeRequest
+     * @param int                   $minimum
+     *
+     * @return bool
+     */
+    protected function validatePasswordLength($passwordChangeRequest, $minimum)
+    {
+        if (strlen($passwordChangeRequest->getPassword()) >= $minimum) {
+            return true;
         }
+
+        return false;
     }
 
     /**
@@ -170,21 +185,6 @@ class PasswordChangeRequestValidator extends AbstractValidator
         $matches = preg_match_all(self::PATTERN_LOWERCASECHAR, $passwordChangeRequest->getPassword());
 
         if ($matches >= $minimum) {
-            return true;
-        }
-
-        return false;
-    }
-
-    /**
-     * @param PasswordChangeRequest $passwordChangeRequest
-     * @param int                   $minimum
-     *
-     * @return bool
-     */
-    protected function validatePasswordLength($passwordChangeRequest, $minimum)
-    {
-        if (strlen($passwordChangeRequest->getPassword()) >= $minimum) {
             return true;
         }
 

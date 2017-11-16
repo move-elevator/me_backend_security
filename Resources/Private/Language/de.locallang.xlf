@@ -1,76 +1,76 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <xliff version="1.0">
-	<file source-language="en" datatype="plaintext" original="messages" date="2017-10-06T16:21:00Z" product-name="lang">
+	<file target-language="de" datatype="plaintext" original="messages" date="2017-10-06T16:21:00Z" product-name="lang">
 		<header/>
 		<body>
 			<trans-unit id="title" xml:space="preserve">
-				<source>Your password have to be changed</source>
+				<target>Ihr Passwort muss geändert werden</target>
 			</trans-unit>
 			<trans-unit id="description" xml:space="preserve">
-				<source>For security reasons, your password have to be changed periodically. Please change it now to log in.</source>
+				<target>Aus Sicherheitsgründen muss Ihr Passwort in regelmäßigen Abständen geändert werden. Bitte ändern Sie es jetzt um sich einzuloggen.</target>
 			</trans-unit>
 			<trans-unit id="error.title" xml:space="preserve">
-				<source>Your password change did not succeed</source>
+				<target>Ihr Passwort konnte nicht aktualisiert werden</target>
 			</trans-unit>
 			<trans-unit id="error.1510742741" xml:space="preserve">
-				<source>Password is to short</source>
+				<target>Passwort ist zu kurz</target>
 			</trans-unit>
 			<trans-unit id="error.1510742742" xml:space="preserve">
-				<source>Passwords do not match</source>
+				<target>Passwörter stimmen nicht überein</target>
 			</trans-unit>
 			<trans-unit id="error.1510742743" xml:space="preserve">
-				<source>Not enough special character</source>
+				<target>Nicht genügend Sonderzeichen</target>
 			</trans-unit>
 			<trans-unit id="error.1510742744" xml:space="preserve">
-				<source>Not enough digits</source>
+				<target>Nicht genügend Zahlen</target>
 			</trans-unit>
 			<trans-unit id="error.1510742745" xml:space="preserve">
-				<source>Not enough capital character</source>
+				<target>Nicht genügend Großbuchstaben</target>
 			</trans-unit>
 			<trans-unit id="error.1510742746" xml:space="preserve">
-				<source>Not enough lowercase character</source>
+				<target>Nicht genügend Kleinbuchstaben</target>
 			</trans-unit>
 			<trans-unit id="error.1510742747" xml:space="preserve">
-				<source>User does not exist</source>
+				<target>Benutzer existiert nicht</target>
 			</trans-unit>
 			<trans-unit id="rule.passwordlength">
-				<source>At least %s character</source>
+				<target>Mindestens %s Zeichen</target>
 			</trans-unit>
 			<trans-unit id="rule.passwordlength.plural">
-				<source>At least %s characters</source>
+				<target>Mindestens %s Zeichen</target>
 			</trans-unit>
 			<trans-unit id="rule.specialchar">
-				<source>At least %s special character</source>
+				<target>Mindestens %s Sonderzeichen</target>
 			</trans-unit>
 			<trans-unit id="rule.specialchar.plural">
-				<source>At least %s special characters</source>
+				<target>Mindestens %s Sonderzeichen</target>
 			</trans-unit>
 			<trans-unit id="rule.digit">
-				<source>At least %s digit</source>
+				<target>Mindestens %s Zahl</target>
 			</trans-unit>
 			<trans-unit id="rule.digit.plural">
-				<source>At least %s digits</source>
+				<target>Mindestens %s Zahlen</target>
 			</trans-unit>
 			<trans-unit id="rule.capitalchar">
-				<source>At least %s capital character</source>
+				<target>Mindestens %s Großbuchstabe</target>
 			</trans-unit>
 			<trans-unit id="rule.capitalchar.plural">
-				<source>At least %s capital characters</source>
+				<target>Mindestens %s Großbuchstaben</target>
 			</trans-unit>
 			<trans-unit id="rule.lowercasechar">
-				<source>At least %s lowercase character</source>
+				<target>Mindestens %s Kleinbuchstabe</target>
 			</trans-unit>
 			<trans-unit id="rule.lowercasechar.plural">
-				<source>At least %s lowercase characters</source>
+				<target>Mindestens %s Kleinbuchstaben</target>
 			</trans-unit>
 			<trans-unit id="password.current">
-				<source>Current password</source>
+				<target>Aktuelles Passwort</target>
 			</trans-unit>
 			<trans-unit id="password.new">
-				<source>New password</source>
+				<target>Neues Passwort</target>
 			</trans-unit>
 			<trans-unit id="password.confirmation">
-				<source>Repeat password</source>
+				<target>Passwort wiederholen</target>
 			</trans-unit>
 		</body>
 	</file>

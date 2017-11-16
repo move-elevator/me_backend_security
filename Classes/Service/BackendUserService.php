@@ -97,7 +97,7 @@ class BackendUserService
         if ($userExists === false) {
             return LoginProviderRedirectFactory::create(
                 $this->backendUserAuthentication->user['username'],
-                [1510742748]
+                [1510742747]
             );
         }
 
