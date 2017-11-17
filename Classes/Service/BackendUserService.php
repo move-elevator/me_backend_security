@@ -105,6 +105,8 @@ class BackendUserService
             ]
         );
 
+        $this->backendUserAuthentication->user['tx_mebackendsecurity_lastpasswordchange'] = time() + date('Z');
+
         return null;
     }
 
