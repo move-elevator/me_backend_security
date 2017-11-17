@@ -53,7 +53,7 @@ class PasswordChangeRequestValidator extends AbstractValidator
             );
         }
 
-        if ($this->validateSpecialChar($passwordChangeRequest, $configuration->getSpecialChar()) === false) {
+        if ($this->validateSpecialChar($passwordChangeRequest, $configuration->getMinimalSpecialCharacters()) === false) {
             $this->addError(
                 $this->translateErrorMessage(
                     'error.1510742743',
@@ -63,7 +63,7 @@ class PasswordChangeRequestValidator extends AbstractValidator
             );
         }
 
-        if ($this->validateDigit($passwordChangeRequest, $configuration->getDigit()) === false) {
+        if ($this->validateDigit($passwordChangeRequest, $configuration->getMinimalDigits()) === false) {
             $this->addError(
                 $this->translateErrorMessage(
                     'error.1510742744',
@@ -73,7 +73,7 @@ class PasswordChangeRequestValidator extends AbstractValidator
             );
         }
 
-        if ($this->validateCapitalChar($passwordChangeRequest, $configuration->getCapitalChar()) === false) {
+        if ($this->validateCapitalChar($passwordChangeRequest, $configuration->getMinimalCapitalCharacters()) === false) {
             $this->addError(
                 $this->translateErrorMessage(
                     'error.1510742745',
@@ -83,7 +83,7 @@ class PasswordChangeRequestValidator extends AbstractValidator
             );
         }
 
-        if ($this->validateLowerCaseChar($passwordChangeRequest, $configuration->getLowercaseChar()) === false) {
+        if ($this->validateLowerCaseChar($passwordChangeRequest, $configuration->getMinimalLowercaseCharacters()) === false) {
             $this->addError(
                 $this->translateErrorMessage(
                     'error.1510742746',

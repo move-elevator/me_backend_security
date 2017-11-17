@@ -123,7 +123,7 @@ class BackendUserService
      */
     public function checkPasswordLifeTime()
     {
-        $validUntil = $this->extensionConfiguration->getValidUntil();
+        $validUntil = $this->extensionConfiguration->getMaximumValidDays();
 
         $now = new \DateTime();
         $expireDeathLine = new \DateTime();

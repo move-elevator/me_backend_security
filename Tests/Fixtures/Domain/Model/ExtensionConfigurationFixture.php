@@ -12,22 +12,22 @@ trait ExtensionConfigurationFixture
     /**
      * @var int
      */
-    protected $specialChar = 1;
+    protected $minimumSpecialCharacters = 1;
 
     /**
      * @var int
      */
-    protected $digit = 1;
+    protected $minimumDigits = 1;
 
     /**
      * @var int
      */
-    protected $capitalChar = 1;
+    protected $minimumCapitalCharacters = 1;
 
     /**
      * @var int
      */
-    protected $lowercaseChar = 1;
+    protected $minimumLowercaseCharacters = 1;
 
     /**
      * @var int
@@ -37,20 +37,21 @@ trait ExtensionConfigurationFixture
     /**
      * @var int
      */
-    protected $validUntil = 14;
+    protected $maximumValidDays = 14;
 
     /**
      * @return ExtensionConfiguration
      */
     protected function getAddressFixtureObject()
     {
-        $extensionConfiguration = new ExtensionConfiguration();
-        $extensionConfiguration->setSpecialChar($this->specialChar);
-        $extensionConfiguration->setDigit($this->digit);
-        $extensionConfiguration->setCapitalChar($this->capitalChar);
-        $extensionConfiguration->setLowercaseChar($this->lowercaseChar);
-        $extensionConfiguration->setPasswordLength($this->passwordLength);
-        $extensionConfiguration->setValidUntil($this->validUntil);
+        $extensionConfiguration = new ExtensionConfiguration(
+            $this->minimumSpecialCharacters,
+            $this->minimumDigits,
+            $this->minimumCapitalCharacters,
+            $this->minimumLowercaseCharacters,
+            $this->passwordLength,
+            $this->maximumValidDays
+        );
 
         return $extensionConfiguration;
     }

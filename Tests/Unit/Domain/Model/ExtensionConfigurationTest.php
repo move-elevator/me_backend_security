@@ -16,11 +16,14 @@ class ExtensionConfigurationTest extends TestCase
     {
         $extensionConfiguration = $this->getAddressFixtureObject();
 
-        $this->assertEquals($this->specialChar, $extensionConfiguration->getSpecialChar());
-        $this->assertEquals($this->digit, $extensionConfiguration->getDigit());
-        $this->assertEquals($this->capitalChar, $extensionConfiguration->getCapitalChar());
-        $this->assertEquals($this->lowercaseChar, $extensionConfiguration->getLowercaseChar());
+        $this->assertEquals($this->minimumSpecialCharacters, $extensionConfiguration->getMinimalSpecialCharacters());
+        $this->assertEquals($this->minimumDigits, $extensionConfiguration->getMinimalDigits());
+        $this->assertEquals($this->minimumCapitalCharacters, $extensionConfiguration->getMinimalCapitalCharacters());
+        $this->assertEquals(
+            $this->minimumLowercaseCharacters,
+            $extensionConfiguration->getMinimalLowercaseCharacters()
+        );
         $this->assertEquals($this->passwordLength, $extensionConfiguration->getPasswordLength());
-        $this->assertEquals($this->validUntil, $extensionConfiguration->getValidUntil());
+        $this->assertEquals($this->maximumValidDays, $extensionConfiguration->getMaximumValidDays());
     }
 }

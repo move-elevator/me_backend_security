@@ -10,22 +10,22 @@ class ExtensionConfiguration
     /**
      * @var int
      */
-    protected $specialChar;
+    protected $minimalSpecialCharacters;
 
     /**
      * @var int
      */
-    protected $digit;
+    protected $minimalDigits;
 
     /**
      * @var int
      */
-    protected $capitalChar;
+    protected $minimalCapitalCharacters;
 
     /**
      * @var int
      */
-    protected $lowercaseChar;
+    protected $minimalLowercaseCharacters;
 
     /**
      * @var int
@@ -35,70 +35,62 @@ class ExtensionConfiguration
     /**
      * @var int
      */
-    protected $validUntil;
+    protected $maximumValidDays;
 
     /**
-     * @return int
+     * @param int $minimalSpecialCharacters
+     * @param int $minimalDigits
+     * @param int $minimalCapitalCharacters
+     * @param int $minimalLowercaseCharacters
+     * @param int $passwordLength
+     * @param int $maximumValidDays
      */
-    public function getSpecialChar()
-    {
-        return $this->specialChar;
-    }
-
-    /**
-     * @param int $specialChar
-     */
-    public function setSpecialChar($specialChar)
-    {
-        $this->specialChar = $specialChar;
-    }
-
-    /**
-     * @return int
-     */
-    public function getDigit()
-    {
-        return $this->digit;
-    }
-
-    /**
-     * @param int $digit
-     */
-    public function setDigit($digit)
-    {
-        $this->digit = $digit;
+    public function __construct(
+        $minimalSpecialCharacters,
+        $minimalDigits,
+        $minimalCapitalCharacters,
+        $minimalLowercaseCharacters,
+        $passwordLength,
+        $maximumValidDays
+    ) {
+        $this->minimalSpecialCharacters = $minimalSpecialCharacters;
+        $this->minimalDigits = $minimalDigits;
+        $this->minimalCapitalCharacters = $minimalCapitalCharacters;
+        $this->minimalLowercaseCharacters = $minimalLowercaseCharacters;
+        $this->passwordLength = $passwordLength;
+        $this->maximumValidDays = $maximumValidDays;
     }
 
     /**
      * @return int
      */
-    public function getCapitalChar()
+    public function getMinimalSpecialCharacters()
     {
-        return $this->capitalChar;
-    }
-
-    /**
-     * @param int $capitalChar
-     */
-    public function setCapitalChar($capitalChar)
-    {
-        $this->capitalChar = $capitalChar;
+        return $this->minimalSpecialCharacters;
     }
 
     /**
      * @return int
      */
-    public function getLowercaseChar()
+    public function getMinimalDigits()
     {
-        return $this->lowercaseChar;
+        return $this->minimalDigits;
     }
 
     /**
-     * @param int $lowercaseChar
+     * @return int
      */
-    public function setLowercaseChar($lowercaseChar)
+    public function getMinimalCapitalCharacters()
     {
-        $this->lowercaseChar = $lowercaseChar;
+        return $this->minimalCapitalCharacters;
+    }
+
+    /**
+     * @return int
+     */
+    public function getMinimalLowercaseCharacters()
+    {
+        return $this->minimalLowercaseCharacters;
     }
 
     /**
@@ -110,26 +102,10 @@ class ExtensionConfiguration
     }
 
     /**
-     * @param int $passwordLength
-     */
-    public function setPasswordLength($passwordLength)
-    {
-        $this->passwordLength = $passwordLength;
-    }
-
-    /**
      * @return int
      */
-    public function getValidUntil()
+    public function getMaximumValidDays()
     {
-        return $this->validUntil;
-    }
-
-    /**
-     * @param int $validUntil
-     */
-    public function setValidUntil($validUntil)
-    {
-        $this->validUntil = $validUntil;
+        return $this->maximumValidDays;
     }
 }
