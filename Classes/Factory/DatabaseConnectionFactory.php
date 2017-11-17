@@ -13,6 +13,8 @@ class DatabaseConnectionFactory
      * @param array $databaseConfiguration
      *
      * @return DatabaseConnection
+     *
+     * @SuppressWarnings(PHPMD.CyclomaticComplexity)
      */
     public static function create($databaseConfiguration)
     {

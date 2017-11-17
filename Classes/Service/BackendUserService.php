@@ -52,6 +52,8 @@ class BackendUserService
      * @param ExtensionConfiguration         $extensionConfiguration
      * @param PasswordChangeRequestValidator $passwordChangeRequestValidator
      * @param SaltInterface                  $saltingInstance
+     *
+     * @SuppressWarnings(PHPMD.ExcessiveParameterList)
      */
     public function __construct(
         BackendUserAuthentication $backendUserAuthentication,

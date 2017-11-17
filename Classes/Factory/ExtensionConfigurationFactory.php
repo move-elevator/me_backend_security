@@ -13,6 +13,8 @@ class ExtensionConfigurationFactory
      * @param array $rawExtensionConfiguration
      *
      * @return ExtensionConfiguration
+     *
+     * @SuppressWarnings(PHPMD.CyclomaticComplexity)
      */
     public static function create($rawExtensionConfiguration)
     {
