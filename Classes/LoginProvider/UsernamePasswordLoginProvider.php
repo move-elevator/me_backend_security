@@ -22,7 +22,7 @@ class UsernamePasswordLoginProvider extends \TYPO3\CMS\Backend\LoginProvider\Use
     protected $extensionConfiguration;
 
     /**
-     * UsernamePasswordLoginProvider constructor.
+     * Determine extension configuration
      */
     public function __construct()
     {

@@ -20,6 +20,8 @@ use TYPO3\CMS\Setup\Controller\SetupModuleController;
 
 /**
  * @package MoveElevator\MeBackendSecurity\Hook
+ *
+ * @codeCoverageIgnore
  */
 class UserEditHook
 {

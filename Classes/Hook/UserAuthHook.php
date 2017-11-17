@@ -23,6 +23,9 @@ use TYPO3\CMS\Saltedpasswords\Salt\SaltInterface;
 
 /**
  * @package MoveElevator\MeBackendSecurity\Hook
+ *
+ * @codeCoverageIgnore
+ * @SuppressWarnings(PHPMD.CouplingBetweenObjects)
  */
 class UserAuthHook
 {

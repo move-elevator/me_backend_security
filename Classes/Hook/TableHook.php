@@ -15,6 +15,7 @@ class TableHook
      * @param int         $id
      * @param DataHandler $pObj
      *
+     * @codeCoverageIgnore
      * @SuppressWarnings(PHPMD.CamelCaseMethodName)
      * @SuppressWarnings(PHPMD.Superglobals)
      * @SuppressWarnings(PHPMD.UnusedFormalParameter)
