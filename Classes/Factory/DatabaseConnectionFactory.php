@@ -27,17 +27,35 @@ class DatabaseConnectionFactory
             );
         }
 
+        $databaseConnection = self::createDatabaseConnection($databaseConfiguration);
+
+        if ($databaseConnection->isConnected() === false) {
+            throw new \RuntimeException(
+                'Could not connect to database server!'
+            );
+        }
+
+        return $databaseConnection;
+    }
+
+    /**
+     * @param array $databaseConfiguration
+     *
+     * @return DatabaseConnection
+     */
+    private static function createDatabaseConnection($databaseConfiguration)
+    {
         /** @var \TYPO3\CMS\Core\Database\DatabaseConnection $databaseConnection */
         $databaseConnection = new DatabaseConnection();
 
-        $databaseConnection->setDatabaseUsername($databaseConfiguration['username']);
-        $databaseConnection->setDatabasePassword($databaseConfiguration['password']);
-        $databaseConnection->setDatabaseHost($databaseConfiguration['host']);
-        $databaseConnection->setDatabasePort($databaseConfiguration['port']);
-        $databaseConnection->setDatabaseName($databaseConfiguration['database']);
+        $databaseConnection->setDatabaseUsername((string) $databaseConfiguration['username']);
+        $databaseConnection->setDatabasePassword((string) $databaseConfiguration['password']);
+        $databaseConnection->setDatabaseHost((string) $databaseConfiguration['host']);
+        $databaseConnection->setDatabasePort((string) $databaseConfiguration['port']);
+        $databaseConnection->setDatabaseName((string) $databaseConfiguration['database']);
 
         if (empty($databaseConfiguration['socket']) === false) {
-            $databaseConnection->setDatabaseSocket($databaseConfiguration['socket']);
+            $databaseConnection->setDatabaseSocket((string) $databaseConfiguration['socket']);
         }
 
         $databaseConnection->initialize();
