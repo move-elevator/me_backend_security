@@ -44,6 +44,8 @@ class ExtensionConfiguration
      * @param int $minimalLowercaseCharacters
      * @param int $passwordLength
      * @param int $maximumValidDays
+     *
+     * @SuppressWarnings(PHPMD.ExcessiveParameterList)
      */
     public function __construct(
         $minimalSpecialCharacters,
