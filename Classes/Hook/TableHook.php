@@ -10,10 +10,10 @@ use TYPO3\CMS\Core\DataHandling\DataHandler;
 class TableHook
 {
     /**
-     * @param array $incomingFieldArray
-     * @param string $table
-     * @param int $id
-     * @param \TYPO3\CMS\Core\DataHandling\DataHandler $pObj
+     * @param array       $incomingFieldArray
+     * @param string      $table
+     * @param int         $id
+     * @param DataHandler $pObj
      *
      * @SuppressWarnings(PHPMD.CamelCaseMethodName)
      * @SuppressWarnings(PHPMD.Superglobals)
@@ -29,7 +29,7 @@ class TableHook
             return;
         }
 
-        if ((int)$id !== (int)$GLOBALS['BE_USER']->user['uid']) {
+        if ((int) $id !== (int) $GLOBALS['BE_USER']->user['uid']) {
             return;
         }
 

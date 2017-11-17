@@ -68,6 +68,8 @@ class BackendUserService
     }
 
     /**
+     * @param PasswordChangeRequest $passwordChangeRequest
+     *
      * @return LoginProviderRedirect|null
      */
     public function handlePasswordChangeRequest(PasswordChangeRequest $passwordChangeRequest)

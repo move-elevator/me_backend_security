@@ -10,7 +10,7 @@ use MoveElevator\MeBackendSecurity\Domain\Model\ExtensionConfiguration;
 class ExtensionConfigurationFactory
 {
     /**
-     * @param $rawExtensionConfiguration
+     * @param array $rawExtensionConfiguration
      *
      * @return ExtensionConfiguration
      */
@@ -29,12 +29,12 @@ class ExtensionConfigurationFactory
         }
 
         $extensionConfiguration = new ExtensionConfiguration();
-        $extensionConfiguration->setSpecialChar((int)$rawExtensionConfiguration['specialChar']['value']);
-        $extensionConfiguration->setDigit((int)$rawExtensionConfiguration['digit']['value']);
-        $extensionConfiguration->setCapitalChar((int)$rawExtensionConfiguration['capitalChar']['value']);
-        $extensionConfiguration->setLowercaseChar((int)$rawExtensionConfiguration['lowercaseChar']['value']);
-        $extensionConfiguration->setPasswordLength((int)$rawExtensionConfiguration['passwordLength']['value']);
-        $extensionConfiguration->setValidUntil((int)$rawExtensionConfiguration['validUntil']['value']);
+        $extensionConfiguration->setSpecialChar((int) $rawExtensionConfiguration['specialChar']['value']);
+        $extensionConfiguration->setDigit((int) $rawExtensionConfiguration['digit']['value']);
+        $extensionConfiguration->setCapitalChar((int) $rawExtensionConfiguration['capitalChar']['value']);
+        $extensionConfiguration->setLowercaseChar((int) $rawExtensionConfiguration['lowercaseChar']['value']);
+        $extensionConfiguration->setPasswordLength((int) $rawExtensionConfiguration['passwordLength']['value']);
+        $extensionConfiguration->setValidUntil((int) $rawExtensionConfiguration['validUntil']['value']);
 
         return $extensionConfiguration;
     }
