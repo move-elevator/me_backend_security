@@ -14,6 +14,10 @@ class TableHook
      * @param string $table
      * @param int $id
      * @param \TYPO3\CMS\Core\DataHandling\DataHandler $pObj
+     *
+     * @SuppressWarnings(PHPMD.CamelCaseMethodName)
+     * @SuppressWarnings(PHPMD.Superglobals)
+     * @SuppressWarnings(PHPMD.UnusedFormalParameter)
      */
     public function processDatamap_preProcessFieldArray(&$incomingFieldArray, $table, $id, DataHandler &$pObj)
     {

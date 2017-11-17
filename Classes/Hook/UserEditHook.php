@@ -53,6 +53,8 @@ class UserEditHook
     /**
      * @param array                 $params
      * @param SetupModuleController $parentObject
+     *
+     * @SuppressWarnings(PHPMD.UnusedFormalParameter)
      */
     public function modifyUserDataBeforeSave(array &$params, SetupModuleController &$parentObject)
     {

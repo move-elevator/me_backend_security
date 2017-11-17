@@ -61,6 +61,9 @@ class UserAuthHook
     /**
      * @param array $params
      * @param mixed $pObj
+     *
+     * @SuppressWarnings(PHPMD.Superglobals)
+     * @SuppressWarnings(PHPMD.UnusedFormalParameter)
      */
     public function postUserLookUp($params, $pObj)
     {
@@ -109,6 +112,8 @@ class UserAuthHook
 
     /**
      * @return void
+     *
+     * @SuppressWarnings(PHPMD.Superglobals)
      */
     private function initializeLanguageService()
     {

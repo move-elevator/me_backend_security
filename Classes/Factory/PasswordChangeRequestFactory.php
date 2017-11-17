@@ -11,15 +11,15 @@ use TYPO3\CMS\Rsaauth\RsaEncryptionDecoder;
 class PasswordChangeRequestFactory
 {
     /**
-     * @param array                $passwordChangeRequestParameters
+     * @param array                $changeRequestParameters
      * @param RsaEncryptionDecoder $rsaEncryptionDecoder
      *
      * @return PasswordChangeRequest
      */
-    public static function create($passwordChangeRequestParameters, RsaEncryptionDecoder $rsaEncryptionDecoder)
+    public static function create($changeRequestParameters, RsaEncryptionDecoder $rsaEncryptionDecoder)
     {
-        if (empty($passwordChangeRequestParameters['password']) ||
-            empty($passwordChangeRequestParameters['password2'])
+        if (empty($changeRequestParameters['password']) ||
+            empty($changeRequestParameters['password2'])
         ) {
             throw new \InvalidArgumentException(
                 'The given arguments are incomplete!'
@@ -28,10 +28,10 @@ class PasswordChangeRequestFactory
 
         $passwordChange = new PasswordChangeRequest();
         $passwordChange->setPassword(
-            $rsaEncryptionDecoder->decrypt($passwordChangeRequestParameters['password'])
+            $rsaEncryptionDecoder->decrypt($changeRequestParameters['password'])
         );
         $passwordChange->setPasswordConfirmation(
-            $rsaEncryptionDecoder->decrypt($passwordChangeRequestParameters['password2'])
+            $rsaEncryptionDecoder->decrypt($changeRequestParameters['password2'])
         );
 
         return $passwordChange;
