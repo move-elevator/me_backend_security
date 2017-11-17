@@ -33,7 +33,7 @@ class PasswordChangeRequestValidator extends AbstractValidator
         /** @var ExtensionConfiguration $configuration */
         $configuration = $this->options['extensionConfiguration'];
 
-        $this->validatePasswordLength($passwordChangeRequest, $configuration->getPasswordLength();
+        $this->validatePasswordLength($passwordChangeRequest, $configuration->getPasswordLength());
         $this->validatePasswordConfirmation($passwordChangeRequest);
         $this->validateSpecialChar($passwordChangeRequest, $configuration->getMinimalSpecialCharacters());
         $this->validateDigit($passwordChangeRequest, $configuration->getMinimalDigits());
