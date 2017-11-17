@@ -1,117 +1,66 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<ruleset name="move:elevator">
+<ruleset name="basic-rules"
+		xmlns="http://pmd.sf.net/ruleset/1.0.0"
+		xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+		xsi:schemaLocation="http://pmd.sf.net/ruleset/1.0.0
+                      http://pmd.sf.net/ruleset_xml_schema.xsd"
+		xsi:noNamespaceSchemaLocation="http://pmd.sf.net/ruleset_xml_schema.xsd">
+	<description>mess detection</description>
 
 	<rule ref="rulesets/cleancode.xml">
-		<exclude name="StaticAccess"/>
+		<exclude name="StaticAccess" />
 	</rule>
-
-	<!-- Clean Code Rules -->
-
-	<rule ref="rulesets/cleancode.xml/StaticAccess">
-		<properties>
-			<property name="exceptions"
-					value="\TYPO3\CMS\Core\Utility\GeneralUtility, \TYPO3\CMS\Core\Utility\ArrayUtility, \TYPO3\CMS\Extbase\Utility\LocalizationUtility"/>
-		</properties>
-	</rule>
-
-	<!-- Code Size Rules -->
-
 	<rule ref="rulesets/codesize.xml">
-		<exclude name="CyclomaticComplexity"/>
-		<exclude name="ExcessiveMethodLength"/>
-		<exclude name="ExcessiveClassLength"/>
-		<exclude name="ExcessiveParameterList"/>
+		<exclude name="ExcessiveParameterList" />
+		<exclude name="ExcessiveMethodLength" />
+		<exclude name="ExcessiveClassLength" />
+		<exclude name="CyclomaticComplexity" />
 	</rule>
-
-	<rule ref="rulesets/codesize.xml/CyclomaticComplexity">
+	<rule ref="rulesets/codesize.xml/ExcessiveParameterList">
 		<properties>
-			<property name="reportLevel" value="6"/>
-			<property name="showClassesComplexity" value="true"/>
-			<property name="showMethodsComplexity" value="true"/>
+			<property name="minimum" value="4" />
 		</properties>
 	</rule>
 	<rule ref="rulesets/codesize.xml/ExcessiveMethodLength">
 		<properties>
-			<property name="minimum" value="41"/>
-			<property name="ignore-whitespace" value="true"/>
+			<property name="minimum" value="31" />
+			<property name="ignore-whitespace" value="true" />
 		</properties>
 	</rule>
 	<rule ref="rulesets/codesize.xml/ExcessiveClassLength">
 		<properties>
-			<property name="minimum" value="401"/>
-			<property name="ignore-whitespace" value="true"/>
+			<property name="minimum" value="301" />
+			<property name="ignore-whitespace" value="true" />
 		</properties>
 	</rule>
-	<rule ref="rulesets/codesize.xml/ExcessiveParameterList">
+	<rule ref="rulesets/codesize.xml/CyclomaticComplexity">
 		<properties>
-			<property name="minimum" value="4"/>
+			<property name="reportLevel" value="6" />
+			<property name="showClassesComplexity" value="true" />
+			<property name="showMethodsComplexity" value="true" />
 		</properties>
 	</rule>
-
-	<!-- Controversial Rules -->
-
-	<rule ref="rulesets/controversial.xml"/>
-
-	<!-- Design Rules -->
-
-	<rule ref="rulesets/design.xml"/>
-
-	<!-- Naming Rules -->
-
+	<rule ref="rulesets/controversial.xml" />
+	<rule ref="rulesets/design.xml" />
 	<rule ref="rulesets/naming.xml">
-		<exclude name="ShortVariable"/>
-		<exclude name="LongVariable"/>
+		<exclude name="ShortVariable" />
+		<exclude name="LongVariable" />
 	</rule>
-
 	<rule ref="rulesets/naming.xml/ShortVariable">
 		<properties>
-			<property name="minimum" value="2"/>
+			<property name="minimum" value="2" />
 		</properties>
 	</rule>
 	<rule ref="rulesets/naming.xml/LongVariable">
 		<properties>
-			<property name="maximum" value="30"/>
+			<property name="maximum" value="30" />
 		</properties>
 	</rule>
+	<rule ref="rulesets/unusedcode.xml" />
 
-	<!-- Unused Code Rules -->
-
-	<rule ref="rulesets/unusedcode.xml"/>
-
-	<!-- Extended Clean Code Rules  -->
-
-	<rule ref="../../../../../mi-schi/phpmd-symfony2/Rulesets/cleancode.xml">
-		<exclude name="ClassNameSingleResponsibility"/>
-		<exclude name="SuperfluousComment"/>
+	<rule ref="../../../../../../rulesets/cleancode.xml">
+		<exclude name="PrivateFieldDeclaration" />
+		<exclude name="MemberPrimaryPrefix" />
 	</rule>
-
-	<rule ref="../../../../../mi-schi//phpmd-symfony2/Rulesets/cleancode.xml/ClassNameSingleResponsibility">
-		<properties>
-			<property name="delimiter" value="," description="delimiter for explode" />
-			<property name="suffixes" value="Manager,Handler,Util,Utility,Information,Processor" description="bad general suffixes" />
-		</properties>
-	</rule>
-	<rule ref="../../../../../mi-schi/phpmd-symfony2/Rulesets/cleancode.xml/SuperfluousComment">
-		<properties>
-			<property name="checkClass" value="0"/>
-			<property name="checkProperties" value="1"/>
-			<property name="checkMethods" value="1"/>
-		</properties>
-	</rule>
-
-	<!-- Symfony2 Rules -->
-
-	<rule ref="../../../../../mi-schi/phpmd-symfony2/Rulesets/symfony2.xml">
-		<exclude name="ControllerMethodName"/>
-	</rule>
-
-	<rule ref="../../../../../mi-schi/phpmd-symfony2/Rulesets/symfony2.xml/ControllerMethodName">
-		<properties>
-			<property name="allowedMethodNames" value="__construct, initializeObject, initializeView"/>
-		</properties>
-	</rule>
-
-	<!-- Test Rules -->
-
-	<rule ref="../../../../../mi-schi/phpmd-symfony2/Rulesets/test.xml"/>
+	<rule ref="../../../../../../rulesets/naming.xml" />
+	<rule ref="../../../../../../rulesets/test.xml" />
 </ruleset>
