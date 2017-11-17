@@ -86,19 +86,7 @@ class BackendUserService
             );
         }
 
-        $userExists = $this->databaseConnection->exec_SELECTcountRows(
-            'uid',
-            self::USERS_TABLE_NAME,
-            'uid=' . $this->databaseConnection->fullQuoteStr(
-                $this->backendUserAuthentication->user['uid'],
-                self::USERS_TABLE_NAME
-            ) . 'AND username=' . $this->databaseConnection->fullQuoteStr(
-                $this->backendUserAuthentication->user['username'],
-                self::USERS_TABLE_NAME
-            )
-        );
-
-        if ($userExists === false) {
+        if ($this->isExistingUser() === false) {
             return LoginProviderRedirectFactory::create(
                 $this->backendUserAuthentication->user['username'],
                 [1510742747]
@@ -143,6 +131,30 @@ class BackendUserService
         return LoginProviderRedirectFactory::create(
             $this->backendUserAuthentication->user['username']
         );
+    }
+
+    /**
+     * @return bool
+     */
+    private function isExistingUser()
+    {
+        $userExists = $this->databaseConnection->exec_SELECTcountRows(
+            'uid',
+            self::USERS_TABLE_NAME,
+            'uid=' . $this->databaseConnection->fullQuoteStr(
+                $this->backendUserAuthentication->user['uid'],
+                self::USERS_TABLE_NAME
+            ) . 'AND username=' . $this->databaseConnection->fullQuoteStr(
+                $this->backendUserAuthentication->user['username'],
+                self::USERS_TABLE_NAME
+            )
+        );
+
+        if ($userExists === false) {
+            return false;
+        }
+
+        return true;
     }
 
     /**
