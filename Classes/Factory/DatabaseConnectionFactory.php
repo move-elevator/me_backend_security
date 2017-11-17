@@ -27,15 +27,7 @@ class DatabaseConnectionFactory
             );
         }
 
-        $databaseConnection = self::createDatabaseConnection($databaseConfiguration);
-
-        if ($databaseConnection->isConnected() === false) {
-            throw new \RuntimeException(
-                'Could not connect to database server!'
-            );
-        }
-
-        return $databaseConnection;
+        return self::createDatabaseConnection($databaseConfiguration);
     }
 
     /**
@@ -60,6 +52,12 @@ class DatabaseConnectionFactory
 
         $databaseConnection->initialize();
         $databaseConnection->connectDB();
+
+        if ($databaseConnection->isConnected() === false) {
+            throw new \RuntimeException(
+                'Could not connect to database server!'
+            );
+        }
 
         return $databaseConnection;
     }
