@@ -19,6 +19,7 @@ class UsernamePasswordLoginProvider extends \TYPO3\CMS\Backend\LoginProvider\Use
     const EXTKEY = 'me_backend_security';
     const PARAMETER_IDENTIFIER = 'tx_mebackendsecurity';
 
+    /** @var ExtensionConfiguration $extensionConfiguration */
     protected $extensionConfiguration;
 
     /**
@@ -31,7 +32,6 @@ class UsernamePasswordLoginProvider extends \TYPO3\CMS\Backend\LoginProvider\Use
         /** @var ConfigurationUtility $configurationUtility */
         $configurationUtility = $objectManager->get(ConfigurationUtility::class);
 
-        /** @var ExtensionConfiguration $extensionConfiguration */
         $this->extensionConfiguration = ExtensionConfigurationFactory::create(
             $configurationUtility->getCurrentConfiguration(self::EXTKEY)
         );
