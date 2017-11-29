@@ -18,13 +18,13 @@ class TableHook
      * @param DataHandler $pObj
      *
      * @codeCoverageIgnore
-     * @SuppressWarnings("NotCamelCaps")
+     * @SuppressWarnings(PHPMD.ShortVariable)
      * @SuppressWarnings(PHPMD.CamelCaseMethodName)
      * @SuppressWarnings(PHPMD.Superglobals)
      * @SuppressWarnings(PHPMD.UnusedFormalParameter)
      * @SuppressWarnings(PHPMD.ExcessiveParameterList)
      */
-    public function processDatamap_preProcessFieldArray(&$incomingFieldArray, $table, $id, DataHandler &$pObj)
+    public function processDatamap_preProcessFieldArray(&$incomingFieldArray, $table, $id, DataHandler &$pObj) // @codingStandardsIgnoreLine
     {
         if ($table !== 'be_users') {
             return;
