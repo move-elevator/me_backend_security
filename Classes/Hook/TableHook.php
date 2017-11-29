@@ -9,6 +9,8 @@ use TYPO3\CMS\Core\DataHandling\DataHandler;
  */
 class TableHook
 {
+    const LASTCHANGE_COLUMN_NAME = 'tx_mebackendsecurity_lastpasswordchange';
+
     /**
      * @param array       $incomingFieldArray
      * @param string      $table
@@ -39,6 +41,6 @@ class TableHook
             return;
         }
 
-        $incomingFieldArray['tx_mebackendsecurity_lastpasswordchange'] = time() + date('Z');
+        $incomingFieldArray[self::LASTCHANGE_COLUMN_NAME] = time() + date('Z');
     }
 }

@@ -12,12 +12,12 @@ class LoginProviderRedirectFactory
     const BASE_URL = 'index.php';
 
     /**
-     * @param string|null $username
-     * @param array       $errorCodes
+     * @param string $username
+     * @param array  $errorCodes
      *
      * @return LoginProviderRedirect
      */
-    public static function create($username = null, $errorCodes = [])
+    public static function create($username = '', $errorCodes = [])
     {
         $parameter = [
             'r' => 1
