@@ -23,7 +23,7 @@ class UsernamePasswordLoginProvider extends \TYPO3\CMS\Backend\LoginProvider\Use
     protected $extensionConfiguration;
 
     /**
-     * Determine extension configuration
+     * @codeCoverageIgnore
      */
     public function __construct()
     {
@@ -39,6 +39,8 @@ class UsernamePasswordLoginProvider extends \TYPO3\CMS\Backend\LoginProvider\Use
 
     /**
      * {@inheritdoc}
+     *
+     * @codeCoverageIgnore
      */
     public function render(StandaloneView $view, PageRenderer $pageRenderer, LoginController $loginController)
     {
@@ -69,6 +71,8 @@ class UsernamePasswordLoginProvider extends \TYPO3\CMS\Backend\LoginProvider\Use
 
     /**
      * @return bool
+     *
+     * @codeCoverageIgnore
      */
     private function isResetFormRequired()
     {
