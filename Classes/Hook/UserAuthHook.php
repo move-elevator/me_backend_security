@@ -69,6 +69,7 @@ class UserAuthHook
      *
      * @SuppressWarnings(PHPMD.Superglobals)
      * @SuppressWarnings(PHPMD.UnusedFormalParameter)
+     * @SuppressWarnings(PHPMD.ExcessiveMethodLength)
      */
     public function postUserLookUp($params, $pObj)
     {
