@@ -24,6 +24,8 @@ class CompositeValidatorFactory
         ExtensionConfiguration $extensionConfiguration,
         $rawTypoScriptSetup
     ) {
+        $compositeValidator = self::createEmptyCompositeValidator($objectManager, $extensionConfiguration);
+
         if (empty($rawTypoScriptSetup['config.']['tx_mebackendsecurity.']['validators.'])) {
             throw new \InvalidArgumentException(
                 'No typoscript setup for validator initialization.'
@@ -31,18 +33,32 @@ class CompositeValidatorFactory
         }
 
         $validators = $rawTypoScriptSetup['config.']['tx_mebackendsecurity.']['validators.'];
-        $validatorOptions = [
-            'extensionConfiguration' => $extensionConfiguration
-        ];
-
-        /** @var CompositeValidator $compositeValidator */
-        $compositeValidator = $objectManager->get(CompositeValidator::class, $validatorOptions);
 
         foreach ($validators as $validatorClass) {
             /** @var AbstractValidator $validator */
-            $validator = $objectManager->get($validatorClass, $validatorOptions);
+            $validator = $objectManager->get(
+                $validatorClass,
+                ['extensionConfiguration' => $extensionConfiguration]
+            );
             $compositeValidator->append($validator);
         }
+    }
+
+    /**
+     * @param ObjectManager          $objectManager
+     * @param ExtensionConfiguration $extensionConfiguration
+     *
+     * @return CompositeValidator
+     */
+    private static function createEmptyCompositeValidator(
+        ObjectManager $objectManager,
+        ExtensionConfiguration $extensionConfiguration
+    ) {
+        /** @var CompositeValidator $compositeValidator */
+        $compositeValidator = $objectManager->get(
+            CompositeValidator::class,
+            ['extensionConfiguration' => $extensionConfiguration]
+        );
 
         return $compositeValidator;
     }
