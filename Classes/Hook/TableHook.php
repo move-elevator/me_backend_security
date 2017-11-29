@@ -18,6 +18,7 @@ class TableHook
      * @param DataHandler $pObj
      *
      * @codeCoverageIgnore
+     * @SuppressWarnings("NotCamelCaps")
      * @SuppressWarnings(PHPMD.CamelCaseMethodName)
      * @SuppressWarnings(PHPMD.Superglobals)
      * @SuppressWarnings(PHPMD.UnusedFormalParameter)
