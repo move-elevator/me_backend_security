@@ -5,15 +5,17 @@ namespace MoveElevator\MeBackendSecurity\Hook;
 use MoveElevator\MeBackendSecurity\Domain\Model\ExtensionConfiguration;
 use MoveElevator\MeBackendSecurity\Domain\Model\LoginProviderRedirect;
 use MoveElevator\MeBackendSecurity\Domain\Model\PasswordChangeRequest;
+use MoveElevator\MeBackendSecurity\Factory\CompositeValidatorFactory;
 use MoveElevator\MeBackendSecurity\Factory\DatabaseConnectionFactory;
 use MoveElevator\MeBackendSecurity\Factory\ExtensionConfigurationFactory;
 use MoveElevator\MeBackendSecurity\Service\BackendUserService;
 use MoveElevator\MeBackendSecurity\Factory\PasswordChangeRequestFactory;
-use MoveElevator\MeBackendSecurity\Validation\Validator\PasswordChangeRequestValidator;
+use MoveElevator\MeBackendSecurity\Validation\Validator\CompositeValidator;
 use TYPO3\CMS\Core\Authentication\BackendUserAuthentication;
 use TYPO3\CMS\Core\Database\DatabaseConnection;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Core\Utility\HttpUtility;
+use TYPO3\CMS\Extbase\Configuration\ConfigurationManagerInterface;
 use TYPO3\CMS\Extbase\Object\ObjectManager;
 use TYPO3\CMS\Extensionmanager\Utility\ConfigurationUtility;
 use TYPO3\CMS\Lang\LanguageService;
@@ -89,10 +91,16 @@ class UserAuthHook
             $configurationUtility->getCurrentConfiguration(self::EXTKEY)
         );
 
-        /** @var PasswordChangeRequestValidator $passwordChangeRequestValidator */
-        $passwordChangeRequestValidator = $this->objectManager->get(
-            PasswordChangeRequestValidator::class,
-            ['extensionConfiguration' => $extensionConfiguration]
+        /** @var ConfigurationManagerInterface $configurationManager */
+        $configurationManager = $this->objectManager->get(ConfigurationManagerInterface::class);
+
+        /** @var CompositeValidator $compositeValidator */
+        $compositeValidator = CompositeValidatorFactory::create(
+            $this->objectManager,
+            $extensionConfiguration,
+            $configurationManager->getConfiguration(
+                ConfigurationManagerInterface::CONFIGURATION_TYPE_FULL_TYPOSCRIPT
+            )
         );
 
         /** @var SaltInterface $saltingInstance */
@@ -104,7 +112,7 @@ class UserAuthHook
             $this->backendUserAuthentication,
             $databaseConnection,
             $extensionConfiguration,
-            $passwordChangeRequestValidator,
+            $compositeValidator,
             $saltingInstance
         );
 

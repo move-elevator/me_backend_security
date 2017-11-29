@@ -6,7 +6,7 @@ use MoveElevator\MeBackendSecurity\Domain\Model\ExtensionConfiguration;
 use MoveElevator\MeBackendSecurity\Domain\Model\LoginProviderRedirect;
 use MoveElevator\MeBackendSecurity\Domain\Model\PasswordChangeRequest;
 use MoveElevator\MeBackendSecurity\Factory\LoginProviderRedirectFactory;
-use MoveElevator\MeBackendSecurity\Validation\Validator\PasswordChangeRequestValidator;
+use MoveElevator\MeBackendSecurity\Validation\Validator\CompositeValidator;
 use TYPO3\CMS\Core\Authentication\BackendUserAuthentication;
 use TYPO3\CMS\Core\Database\DatabaseConnection;
 use TYPO3\CMS\Extbase\Error\Error;
@@ -20,6 +20,7 @@ class BackendUserService
 {
     const USERS_TABLE_NAME = 'be_users';
     const LASTCHANGE_COLUMN_NAME = 'tx_mebackendsecurity_lastpasswordchange';
+    const USER_DONT_EXIST_ERROR_CODE = 1510742747;
 
     /**
      * mixed
@@ -37,9 +38,9 @@ class BackendUserService
     protected $extensionConfiguration;
 
     /**
-     * @var PasswordChangeRequestValidator
+     * @var CompositeValidator
      */
-    protected $passwordChangeRequestValidator;
+    protected $compositeValidator;
 
     /**
      * @var SaltInterface
@@ -47,25 +48,24 @@ class BackendUserService
     protected $saltingInstance;
 
     /**
-     * @param BackendUserAuthentication      $backendUserAuthentication
-     * @param DatabaseConnection             $databaseConnection
-     * @param ExtensionConfiguration         $extensionConfiguration
-     * @param PasswordChangeRequestValidator $passwordChangeRequestValidator
-     * @param SaltInterface                  $saltingInstance
-     *
+     * @param BackendUserAuthentication $backendUserAuthentication
+     * @param DatabaseConnection        $databaseConnection
+     * @param ExtensionConfiguration    $extensionConfiguration
+     * @param CompositeValidator        $compositeValidator
+     * @param SaltInterface             $saltingInstance
      * @SuppressWarnings(PHPMD.ExcessiveParameterList)
      */
     public function __construct(
         BackendUserAuthentication $backendUserAuthentication,
         DatabaseConnection $databaseConnection,
         ExtensionConfiguration $extensionConfiguration,
-        PasswordChangeRequestValidator $passwordChangeRequestValidator,
+        CompositeValidator $compositeValidator,
         SaltInterface $saltingInstance
     ) {
         $this->backendUserAuthentication = $backendUserAuthentication;
         $this->databaseConnection = $databaseConnection;
         $this->extensionConfiguration = $extensionConfiguration;
-        $this->passwordChangeRequestValidator = $passwordChangeRequestValidator;
+        $this->compositeValidator = $compositeValidator;
         $this->saltingInstance = $saltingInstance;
     }
 
@@ -77,7 +77,7 @@ class BackendUserService
     public function handlePasswordChangeRequest(PasswordChangeRequest $passwordChangeRequest)
     {
         /** @var Result $validationResults */
-        $validationResults = $this->passwordChangeRequestValidator->validate($passwordChangeRequest);
+        $validationResults = $this->compositeValidator->validate($passwordChangeRequest);
 
         if ($validationResults->hasErrors()) {
             return LoginProviderRedirectFactory::create(
@@ -89,7 +89,7 @@ class BackendUserService
         if ($this->isExistingUser() === false) {
             return LoginProviderRedirectFactory::create(
                 $this->backendUserAuthentication->user['username'],
-                [1510742747]
+                [self::USER_DONT_EXIST_ERROR_CODE]
             );
         }
 
@@ -105,7 +105,7 @@ class BackendUserService
             ]
         );
 
-        $this->backendUserAuthentication->user['tx_mebackendsecurity_lastpasswordchange'] = time() + date('Z');
+        $this->backendUserAuthentication->user[self::LASTCHANGE_COLUMN_NAME] = time() + date('Z');
 
         return null;
     }

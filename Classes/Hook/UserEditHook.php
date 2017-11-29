@@ -6,10 +6,12 @@ use MoveElevator\MeBackendSecurity\Domain\Model\ExtensionConfiguration;
 use MoveElevator\MeBackendSecurity\Domain\Model\PasswordChangeRequest;
 use MoveElevator\MeBackendSecurity\Factory\ExtensionConfigurationFactory;
 use MoveElevator\MeBackendSecurity\Factory\PasswordChangeRequestFactory;
-use MoveElevator\MeBackendSecurity\Validation\Validator\PasswordChangeRequestValidator;
+use MoveElevator\MeBackendSecurity\Factory\CompositeValidatorFactory;
+use MoveElevator\MeBackendSecurity\Validation\Validator\CompositeValidator;
 use TYPO3\CMS\Core\Messaging\FlashMessage;
 use TYPO3\CMS\Core\Messaging\FlashMessageQueue;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
+use TYPO3\CMS\Extbase\Configuration\ConfigurationManagerInterface;
 use TYPO3\CMS\Extbase\Error\Error;
 use TYPO3\CMS\Extbase\Error\Result;
 use TYPO3\CMS\Extbase\Object\ObjectManager;
@@ -76,10 +78,16 @@ class UserEditHook
             $configurationUtility->getCurrentConfiguration(self::EXTKEY)
         );
 
-        /** @var PasswordChangeRequestValidator $passwordChangeRequestValidator */
-        $passwordChangeRequestValidator = $this->objectManager->get(
-            PasswordChangeRequestValidator::class,
-            ['extensionConfiguration' => $extensionConfiguration]
+        /** @var ConfigurationManagerInterface $configurationManager */
+        $configurationManager = $this->objectManager->get(ConfigurationManagerInterface::class);
+
+        /** @var CompositeValidator $compositeValidator */
+        $compositeValidator = CompositeValidatorFactory::create(
+            $this->objectManager,
+            $extensionConfiguration,
+            $configurationManager->getConfiguration(
+                ConfigurationManagerInterface::CONFIGURATION_TYPE_FULL_TYPOSCRIPT
+            )
         );
 
         /** @var PasswordChangeRequest $passwordChangeRequest */
@@ -88,7 +96,7 @@ class UserEditHook
             $this->rsaEncryptionDecoder
         );
 
-        $validationResult = $passwordChangeRequestValidator->validate($passwordChangeRequest);
+        $validationResult = $compositeValidator->validate($passwordChangeRequest);
 
         if ($validationResult->hasErrors() === false) {
             return;
