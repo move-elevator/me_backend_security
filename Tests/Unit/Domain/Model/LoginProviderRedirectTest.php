@@ -14,7 +14,7 @@ class LoginProviderRedirectTest extends TestCase
 
     public function testNoManipulationInSetterAndGetter()
     {
-        $loginProviderRedirect = $this->getAddressFixtureObject();
+        $loginProviderRedirect = $this->getFixtureObject();
 
         $this->assertEquals($this->url, $loginProviderRedirect->getUrl());
     }

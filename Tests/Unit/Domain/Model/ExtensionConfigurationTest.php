@@ -14,7 +14,7 @@ class ExtensionConfigurationTest extends TestCase
 
     public function testNoManipulationInSetterAndGetter()
     {
-        $extensionConfiguration = $this->getAddressFixtureObject();
+        $extensionConfiguration = $this->getFixtureObject();
 
         $this->assertEquals($this->minimumSpecialCharacters, $extensionConfiguration->getMinimalSpecialCharacters());
         $this->assertEquals($this->minimumDigits, $extensionConfiguration->getMinimalDigits());

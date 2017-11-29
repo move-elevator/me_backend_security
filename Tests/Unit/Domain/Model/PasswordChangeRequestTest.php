@@ -14,7 +14,7 @@ class PasswordChangeRequestTest extends TestCase
 
     public function testNoManipulationInSetterAndGetter()
     {
-        $passwordChangeRequest = $this->getAddressFixtureObject();
+        $passwordChangeRequest = $this->getFixtureObject();
 
         $this->assertEquals($this->password, $passwordChangeRequest->getPassword());
         $this->assertEquals($this->passwordConfirmation, $passwordChangeRequest->getPasswordConfirmation());

@@ -42,7 +42,7 @@ trait ExtensionConfigurationFixture
     /**
      * @return ExtensionConfiguration
      */
-    protected function getAddressFixtureObject()
+    protected function getFixtureObject()
     {
         $extensionConfiguration = new ExtensionConfiguration(
             $this->minimumSpecialCharacters,
