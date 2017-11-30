@@ -10,22 +10,22 @@ class ExtensionConfiguration
     /**
      * @var int
      */
-    protected $minimalSpecialCharacters;
+    protected $minimumSpecialCharacters;
 
     /**
      * @var int
      */
-    protected $minimalDigits;
+    protected $minimumDigits;
 
     /**
      * @var int
      */
-    protected $minimalCapitalCharacters;
+    protected $minimumCapitalCharacters;
 
     /**
      * @var int
      */
-    protected $minimalLowercaseCharacters;
+    protected $minimumLowercaseCharacters;
 
     /**
      * @var int
@@ -38,27 +38,26 @@ class ExtensionConfiguration
     protected $maximumValidDays;
 
     /**
-     * @param int $minimalSpecialCharacters
-     * @param int $minimalDigits
-     * @param int $minimalCapitalCharacters
-     * @param int $minimalLowercaseCharacters
+     * @param int $minimumSpecialCharacters
+     * @param int $minimumDigits
+     * @param int $minimumCapitalCharacters
+     * @param int $minimumLowercaseCharacters
      * @param int $passwordLength
      * @param int $maximumValidDays
-     *
      * @SuppressWarnings(PHPMD.ExcessiveParameterList)
      */
     public function __construct(
-        $minimalSpecialCharacters,
-        $minimalDigits,
-        $minimalCapitalCharacters,
-        $minimalLowercaseCharacters,
+        $minimumSpecialCharacters,
+        $minimumDigits,
+        $minimumCapitalCharacters,
+        $minimumLowercaseCharacters,
         $passwordLength,
         $maximumValidDays
     ) {
-        $this->minimalSpecialCharacters = $minimalSpecialCharacters;
-        $this->minimalDigits = $minimalDigits;
-        $this->minimalCapitalCharacters = $minimalCapitalCharacters;
-        $this->minimalLowercaseCharacters = $minimalLowercaseCharacters;
+        $this->minimumSpecialCharacters = $minimumSpecialCharacters;
+        $this->minimumDigits = $minimumDigits;
+        $this->minimumCapitalCharacters = $minimumCapitalCharacters;
+        $this->minimumLowercaseCharacters = $minimumLowercaseCharacters;
         $this->passwordLength = $passwordLength;
         $this->maximumValidDays = $maximumValidDays;
     }
@@ -66,33 +65,33 @@ class ExtensionConfiguration
     /**
      * @return int
      */
-    public function getMinimalSpecialCharacters()
+    public function getMinimumSpecialCharacters()
     {
-        return $this->minimalSpecialCharacters;
+        return $this->minimumSpecialCharacters;
     }
 
     /**
      * @return int
      */
-    public function getMinimalDigits()
+    public function getMinimumDigits()
     {
-        return $this->minimalDigits;
+        return $this->minimumDigits;
     }
 
     /**
      * @return int
      */
-    public function getMinimalCapitalCharacters()
+    public function getMinimumCapitalCharacters()
     {
-        return $this->minimalCapitalCharacters;
+        return $this->minimumCapitalCharacters;
     }
 
     /**
      * @return int
      */
-    public function getMinimalLowercaseCharacters()
+    public function getMinimumLowercaseCharacters()
     {
-        return $this->minimalLowercaseCharacters;
+        return $this->minimumLowercaseCharacters;
     }
 
     /**

@@ -25,7 +25,7 @@ class CapitalCharactersValidator extends AbstractValidator
 
         $matches = preg_match_all(self::PATTERN_CAPITALCHAR, $passwordChangeRequest->getPassword());
 
-        if ($matches >= $configuration->getMinimalCapitalCharacters()) {
+        if ($matches >= $configuration->getMinimumCapitalCharacters()) {
             return;
         }
 

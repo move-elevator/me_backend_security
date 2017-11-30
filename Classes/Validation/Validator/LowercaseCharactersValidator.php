@@ -25,7 +25,7 @@ class LowercaseCharactersValidator extends AbstractValidator
 
         $matches = preg_match_all(self::PATTERN_LOWERCASECHAR, $passwordChangeRequest->getPassword());
 
-        if ($matches >= $configuration->getMinimalLowercaseCharacters()) {
+        if ($matches >= $configuration->getMinimumLowercaseCharacters()) {
             return;
         }
 

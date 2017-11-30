@@ -25,7 +25,7 @@ class DigitsValidator extends AbstractValidator
 
         $matches = preg_match_all(self::PATTERN_DIGIT, $passwordChangeRequest->getPassword());
 
-        if ($matches >= $configuration->getMinimalDigits()) {
+        if ($matches >= $configuration->getMinimumDigits()) {
             return;
         }
 

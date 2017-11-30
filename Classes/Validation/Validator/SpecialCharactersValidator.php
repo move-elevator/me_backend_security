@@ -25,7 +25,7 @@ class SpecialCharactersValidator extends AbstractValidator
 
         $matches = preg_match_all(self::PATTERN_SPECIALCHAR, $passwordChangeRequest->getPassword());
 
-        if ($matches >= $configuration->getMinimalSpecialCharacters()) {
+        if ($matches >= $configuration->getMinimumSpecialCharacters()) {
             return;
         }
 

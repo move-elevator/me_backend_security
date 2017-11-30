@@ -18,10 +18,10 @@ class ExtensionConfigurationFactory
      */
     public static function create($rawExtensionConfiguration)
     {
-        if (isset($rawExtensionConfiguration['minimalSpecialCharacters']['value']) === false ||
-            isset($rawExtensionConfiguration['minimalDigits']['value']) === false ||
-            isset($rawExtensionConfiguration['minimalCapitalCharacters']['value']) === false ||
-            isset($rawExtensionConfiguration['minimalLowercaseCharacters']['value']) === false ||
+        if (isset($rawExtensionConfiguration['minimumSpecialCharacters']['value']) === false ||
+            isset($rawExtensionConfiguration['minimumDigits']['value']) === false ||
+            isset($rawExtensionConfiguration['minimumCapitalCharacters']['value']) === false ||
+            isset($rawExtensionConfiguration['minimumLowercaseCharacters']['value']) === false ||
             isset($rawExtensionConfiguration['passwordLength']['value']) === false ||
             isset($rawExtensionConfiguration['maximumValidDays']['value']) === false
         ) {
@@ -41,10 +41,10 @@ class ExtensionConfigurationFactory
     private static function createExtensionConfiguration($rawExtensionConfiguration)
     {
         $extensionConfiguration = new ExtensionConfiguration(
-            (int) $rawExtensionConfiguration['minimalSpecialCharacters']['value'],
-            (int) $rawExtensionConfiguration['minimalDigits']['value'],
-            (int) $rawExtensionConfiguration['minimalCapitalCharacters']['value'],
-            (int) $rawExtensionConfiguration['minimalLowercaseCharacters']['value'],
+            (int) $rawExtensionConfiguration['minimumSpecialCharacters']['value'],
+            (int) $rawExtensionConfiguration['minimumDigits']['value'],
+            (int) $rawExtensionConfiguration['minimumCapitalCharacters']['value'],
+            (int) $rawExtensionConfiguration['minimumLowercaseCharacters']['value'],
             (int) $rawExtensionConfiguration['passwordLength']['value'],
             (int) $rawExtensionConfiguration['maximumValidDays']['value']
         );
