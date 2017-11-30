@@ -14,7 +14,7 @@ class ExtensionConfigurationFactoryTest extends TestCase
 {
     use ExtensionConfigurationFixture;
 
-    public function testCreateObjectFromArguments()
+    public function testCreateObjectFromValidArguments()
     {
         $rawExtensionConfiguration = $this->getRawExtensionConfigurationFixture();
 
@@ -30,5 +30,14 @@ class ExtensionConfigurationFactoryTest extends TestCase
         );
         $this->assertEquals($this->passwordLength, $extensionConfiguration->getPasswordLength());
         $this->assertEquals($this->maximumValidDays, $extensionConfiguration->getMaximumValidDays());
+    }
+
+    public function testCreateObjectFromInvalidArguments()
+    {
+        $this->expectException(
+            \InvalidArgumentException::class
+        );
+
+        ExtensionConfigurationFactory::create([]);
     }
 }
