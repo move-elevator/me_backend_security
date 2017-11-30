@@ -2,6 +2,8 @@ Build/bin*
 Build/log*
 Build/php*
 !Build/phpmd.xml
+typo3
+typo3_src
 vendor
 cache.*
 composer*
