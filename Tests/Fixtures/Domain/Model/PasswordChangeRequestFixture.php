@@ -23,7 +23,7 @@ trait PasswordChangeRequestFixture
     /**
      * @return PasswordChangeRequest
      */
-    protected function getFixtureObject()
+    protected function getPasswordChangeRequestFixture()
     {
         $passwordChangeRequest = new PasswordChangeRequest();
         $passwordChangeRequest->setPassword($this->password);

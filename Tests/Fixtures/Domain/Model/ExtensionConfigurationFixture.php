@@ -42,9 +42,9 @@ trait ExtensionConfigurationFixture
     /**
      * @return ExtensionConfiguration
      */
-    protected function getFixtureObject()
+    protected function getExtensionConfigurationFixture()
     {
-        $extensionConfiguration = new ExtensionConfiguration(
+        return new ExtensionConfiguration(
             $this->minimumSpecialCharacters,
             $this->minimumDigits,
             $this->minimumCapitalCharacters,
@@ -52,7 +52,7 @@ trait ExtensionConfigurationFixture
             $this->passwordLength,
             $this->maximumValidDays
         );
+    }
 
-        return $extensionConfiguration;
     }
 }
