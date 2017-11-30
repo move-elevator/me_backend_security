@@ -54,5 +54,18 @@ trait ExtensionConfigurationFixture
         );
     }
 
+    /**
+     * @return array
+     */
+    protected function getRawExtensionConfigurationFixture()
+    {
+        return [
+            'minimumSpecialCharacters' => ['value' => $this->minimumSpecialCharacters],
+            'minimumDigits' => ['value' => $this->minimumDigits],
+            'minimumCapitalCharacters' => ['value' => $this->minimumCapitalCharacters],
+            'minimumLowercaseCharacters' => ['value' => $this->minimumLowercaseCharacters],
+            'passwordLength' => ['value' => $this->passwordLength],
+            'maximumValidDays' => ['value' => $this->maximumValidDays]
+        ];
     }
 }
