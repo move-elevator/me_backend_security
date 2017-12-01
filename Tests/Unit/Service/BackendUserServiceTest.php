@@ -22,8 +22,12 @@ class BackendUserServiceTest extends TestCase
 
     public function setup()
     {
-        $backendUserAuthentication = new BackendUserAuthentication();
-        $backendUserAuthentication->user = ['tx_mebackendsecurity_lastpasswordchange' => time()];
+        $backendUserAuthentication = $this->getMockBuilder(BackendUserAuthentication::class)
+            ->setMethods(['getDatabaseConnection'])
+            ->getMock();
+
+        $backendUserAuthentication->method('getDatabaseConnection')->willReturn(new DatabaseConnection());
+        $backendUserAuthentication->user['tx_mebackendsecurity_lastpasswordchange'] = time();
 
         $databaseConnection = new DatabaseConnection();
 
