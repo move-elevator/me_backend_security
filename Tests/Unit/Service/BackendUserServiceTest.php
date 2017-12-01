@@ -42,7 +42,7 @@ class BackendUserServiceTest extends TestCase
         $capitalCharactersValidator =
             $this->getMockBuilder(CapitalCharactersValidator::class)
                 ->setMethods(['translateErrorMessage'])
-                ->setConstructorArgs([['extensionConfiguration' => $extensionConfiguration]])
+                ->setConstructorArgs([['extensionConfiguration' => $this->extensionConfiguration]])
                 ->getMock();
 
         $capitalCharactersValidator
@@ -52,7 +52,7 @@ class BackendUserServiceTest extends TestCase
         $this->compositeValidator =
             $this->getMockBuilder(CompositeValidator::class)
                 ->setMethods(['translateErrorMessage'])
-                ->setConstructorArgs([['extensionConfiguration' => $extensionConfiguration]])
+                ->setConstructorArgs([['extensionConfiguration' => $this->extensionConfiguration]])
                 ->getMock();
 
         $this->compositeValidator
