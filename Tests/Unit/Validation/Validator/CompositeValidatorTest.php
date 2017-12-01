@@ -64,4 +64,11 @@ class CompositeValidatorTest extends TestCase
 
         $this->assertEquals(count($result->getErrors()), 1);
     }
+
+    public function testValidationWithInvalidArguments()
+    {
+        $this->expectException(\InvalidArgumentException::class);
+
+        $this->compositeValidator->validate('anything');
+    }
 }
