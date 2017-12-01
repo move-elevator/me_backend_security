@@ -46,4 +46,11 @@ class PasswordChangeRequestFactoryTest extends TestCase
             $expectedPasswordChangeRequest->getPasswordConfirmation()
         );
     }
+
+    public function testCreateObjectFromInvalidArguments()
+    {
+        $this->expectException(\InvalidArgumentException::class);
+
+        PasswordChangeRequestFactory::create([], $this->rsaEncryptionDecoder);
+    }
 }
