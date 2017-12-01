@@ -9,6 +9,7 @@ use MoveElevator\MeBackendSecurity\Validation\Validator\CompositeValidator;
 use PHPUnit\Framework\TestCase;
 use TYPO3\CMS\Core\Authentication\BackendUserAuthentication;
 use TYPO3\CMS\Core\Database\DatabaseConnection;
+use TYPO3\CMS\Saltedpasswords\Salt\Md5Salt;
 use TYPO3\CMS\Saltedpasswords\Salt\SaltFactory;
 
 /**
@@ -56,7 +57,7 @@ class BackendUserServiceTest extends TestCase
             $capitalCharactersValidator
         );
 
-        $saltingInstance = SaltFactory::getSaltingInstance(null, 'BE');
+        $saltingInstance = new Md5Salt();
 
         $this->backendUserService = new BackendUserService(
             $backendUserAuthentication,
