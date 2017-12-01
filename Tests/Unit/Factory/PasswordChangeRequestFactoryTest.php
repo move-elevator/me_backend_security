@@ -22,6 +22,7 @@ class PasswordChangeRequestFactoryTest extends TestCase
         $this->rsaEncryptionDecoder = $this->getMockBuilder(RsaEncryptionDecoder::class)
             ->disableOriginalConstructor()
             ->disableOriginalClone()
+            ->setMethods(['decrypt'])
             ->getMock();
 
         $this->rsaEncryptionDecoder
@@ -29,7 +30,7 @@ class PasswordChangeRequestFactoryTest extends TestCase
             ->will($this->returnArgument(0));
     }
 
-    public function testCreateObjectWithoutArguments()
+    public function testCreateObjectFromValidArguments()
     {
         $rawPasswordChangeRequest = $this->getRawPasswordChangeRequestFixture();
         $expectedPasswordChangeRequest = $this->getPasswordChangeRequestFixture();
