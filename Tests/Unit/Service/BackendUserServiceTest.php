@@ -39,6 +39,10 @@ class BackendUserServiceTest extends TestCase
             ->shouldReceive('fullQuoteStr')
             ->withAnyArgs()
             ->andReturnUsing(function($argument) { return $argument; });
+        $this->databaseConnection
+            ->shouldReceive('exec_UPDATEquery')
+            ->withAnyArgs()
+            ->andReturn(true);
 
         $this->extensionConfiguration = $this->getExtensionConfigurationFixture();
 
@@ -148,5 +152,32 @@ class BackendUserServiceTest extends TestCase
         $result = $backendUserService->handlePasswordChangeRequest($passwordChangeRequest);
 
         $this->assertInstanceOf(LoginProviderRedirect::class, $result);
+    }
+
+    public function testHandlePasswordChangeRequestWithExistingUser()
+    {
+        $this->backendUserAuthentication->user['uid'] = '1';
+        $this->backendUserAuthentication->user['username'] = 'test';
+
+        $this->databaseConnection
+            ->shouldReceive('exec_SELECTcountRows')
+            ->withArgs(['uid', 'be_users', 'uid=1 AND username=test'])
+            ->andReturn(1);
+
+        $backendUserService = new BackendUserService(
+            $this->backendUserAuthentication,
+            $this->databaseConnection,
+            $this->extensionConfiguration,
+            $this->compositeValidator,
+            $this->saltingInstance
+        );
+
+        $passwordChangeRequest = new PasswordChangeRequest();
+        $passwordChangeRequest->setPassword('A');
+        $passwordChangeRequest->setPasswordConfirmation('A');
+
+        $result = $backendUserService->handlePasswordChangeRequest($passwordChangeRequest);
+
+        $this->assertNull($result);
     }
 }
