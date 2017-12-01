@@ -32,33 +32,33 @@ class BackendUserServiceTest extends TestCase
 
     public function setup()
     {
-        $this->backendUserAuthentication = $this->getMockBuilder(BackendUserAuthentication::class)
-            ->disableOriginalConstructor()
-            ->getMock();
+        $this->backendUserAuthentication = \Mockery::mock(BackendUserAuthentication::class);
 
-        $this->databaseConnection = new DatabaseConnection();
+        $this->databaseConnection = \Mockery::mock(DatabaseConnection::class);
+        $this->databaseConnection
+            ->shouldReceive('fullQuoteStr')
+            ->withAnyArgs()
+            ->andReturnUsing(function($argument) { return $argument; });
 
         $this->extensionConfiguration = $this->getExtensionConfigurationFixture();
 
-        $capitalCharactersValidator =
-            $this->getMockBuilder(CapitalCharactersValidator::class)
-                ->setMethods(['translateErrorMessage'])
-                ->setConstructorArgs([['extensionConfiguration' => $this->extensionConfiguration]])
-                ->getMock();
-
+        $capitalCharactersValidator = \Mockery::mock(
+            CapitalCharactersValidator::class . '[translateErrorMessage]',
+            [['extensionConfiguration' => $this->extensionConfiguration]]
+        )->shouldAllowMockingProtectedMethods();
         $capitalCharactersValidator
-            ->method('translateErrorMessage')
-            ->willReturn('translated message');
+            ->shouldReceive('translateErrorMessage')
+            ->withAnyArgs()
+            ->andReturn('translated message');
 
-        $this->compositeValidator =
-            $this->getMockBuilder(CompositeValidator::class)
-                ->setMethods(['translateErrorMessage'])
-                ->setConstructorArgs([['extensionConfiguration' => $this->extensionConfiguration]])
-                ->getMock();
-
+        $this->compositeValidator = \Mockery::mock(
+            CompositeValidator::class . '[translateErrorMessage]',
+            [['extensionConfiguration' => $this->extensionConfiguration]]
+        )->shouldAllowMockingProtectedMethods();
         $this->compositeValidator
-            ->method('translateErrorMessage')
-            ->willReturn('translated message');
+            ->shouldReceive('translateErrorMessage')
+            ->withAnyArgs()
+            ->andReturn('translated message');
 
         $this->compositeValidator->append(
             $capitalCharactersValidator
@@ -117,6 +117,33 @@ class BackendUserServiceTest extends TestCase
         $passwordChangeRequest = new PasswordChangeRequest();
         $passwordChangeRequest->setPassword('foo');
         $passwordChangeRequest->setPasswordConfirmation('bar');
+
+        $result = $backendUserService->handlePasswordChangeRequest($passwordChangeRequest);
+
+        $this->assertInstanceOf(LoginProviderRedirect::class, $result);
+    }
+
+    public function testHandlePasswordChangeRequestWithNotExistingUser()
+    {
+        $this->backendUserAuthentication->user['uid'] = '1';
+        $this->backendUserAuthentication->user['username'] = 'nobody';
+
+        $this->databaseConnection
+            ->shouldReceive('exec_SELECTcountRows')
+            ->withArgs(['uid', 'be_users', 'uid=1 AND username=nobody'])
+            ->andReturn(false);
+
+        $backendUserService = new BackendUserService(
+            $this->backendUserAuthentication,
+            $this->databaseConnection,
+            $this->extensionConfiguration,
+            $this->compositeValidator,
+            $this->saltingInstance
+        );
+
+        $passwordChangeRequest = new PasswordChangeRequest();
+        $passwordChangeRequest->setPassword('A');
+        $passwordChangeRequest->setPasswordConfirmation('A');
 
         $result = $backendUserService->handlePasswordChangeRequest($passwordChangeRequest);
 

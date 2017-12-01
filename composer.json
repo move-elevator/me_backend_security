@@ -7,6 +7,7 @@
   },
   "require-dev": {
     "tm/tooly-composer-script": "1.2.1",
+    "mockery/mockery": "^1.0",
     "typo3/cms": "^7.6"
   },
   "scripts": {
