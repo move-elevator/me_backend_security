@@ -2,6 +2,7 @@
 
 namespace MoveElevator\MeBackendSecurity\Tests\Unit\Domain\Model;
 
+use MoveElevator\MeBackendSecurity\Domain\Model\LoginProviderRedirect;
 use MoveElevator\MeBackendSecurity\Service\BackendUserService;
 use MoveElevator\MeBackendSecurity\Tests\Fixtures\Domain\Model\ExtensionConfigurationFixture;
 use MoveElevator\MeBackendSecurity\Validation\Validator\CapitalCharactersValidator;
@@ -10,7 +11,6 @@ use PHPUnit\Framework\TestCase;
 use TYPO3\CMS\Core\Authentication\BackendUserAuthentication;
 use TYPO3\CMS\Core\Database\DatabaseConnection;
 use TYPO3\CMS\Saltedpasswords\Salt\Md5Salt;
-use TYPO3\CMS\Saltedpasswords\Salt\SaltFactory;
 
 /**
  * @package MoveElevator\MeBackendSecurity\Tests\Unit\Domain\Model
@@ -19,19 +19,25 @@ class BackendUserServiceTest extends TestCase
 {
     use ExtensionConfigurationFixture;
 
-    protected $backendUserService;
+    protected $backendUserAuthentication;
+
+    protected $databaseConnection;
+
+    protected $extensionConfiguration;
+
+    protected $compositeValidator;
+
+    protected $saltingInstance;
 
     public function setup()
     {
-        $backendUserAuthentication = $this->getMockBuilder(BackendUserAuthentication::class)
+        $this->backendUserAuthentication = $this->getMockBuilder(BackendUserAuthentication::class)
             ->disableOriginalConstructor()
             ->getMock();
 
-        $backendUserAuthentication->user['tx_mebackendsecurity_lastpasswordchange'] = time();
+        $this->databaseConnection = new DatabaseConnection();
 
-        $databaseConnection = new DatabaseConnection();
-
-        $extensionConfiguration = $this->getExtensionConfigurationFixture();
+        $this->extensionConfiguration = $this->getExtensionConfigurationFixture();
 
         $capitalCharactersValidator =
             $this->getMockBuilder(CapitalCharactersValidator::class)
@@ -43,35 +49,55 @@ class BackendUserServiceTest extends TestCase
             ->method('translateErrorMessage')
             ->willReturn('translated message');
 
-        $compositeValidator =
+        $this->compositeValidator =
             $this->getMockBuilder(CompositeValidator::class)
                 ->setMethods(['translateErrorMessage'])
                 ->setConstructorArgs([['extensionConfiguration' => $extensionConfiguration]])
                 ->getMock();
 
-        $compositeValidator
+        $this->compositeValidator
             ->method('translateErrorMessage')
             ->willReturn('translated message');
 
-        $compositeValidator->append(
+        $this->compositeValidator->append(
             $capitalCharactersValidator
         );
 
-        $saltingInstance = new Md5Salt();
-
-        $this->backendUserService = new BackendUserService(
-            $backendUserAuthentication,
-            $databaseConnection,
-            $extensionConfiguration,
-            $compositeValidator,
-            $saltingInstance
-        );
+        $this->saltingInstance = new Md5Salt();
     }
 
-    public function testCheckPasswordLifeTime()
+    public function testCheckPasswordIsValid()
     {
-        $result = $this->backendUserService->checkPasswordLifeTime();
+        $this->backendUserAuthentication->user['tx_mebackendsecurity_lastpasswordchange'] = time();
+
+        $backendUserService = new BackendUserService(
+            $this->backendUserAuthentication,
+            $this->databaseConnection,
+            $this->extensionConfiguration,
+            $this->compositeValidator,
+            $this->saltingInstance
+        );
+
+        $result = $backendUserService->checkPasswordLifeTime();
 
         $this->assertNull($result);
+    }
+
+    public function testCheckPasswordIsInvalid()
+    {
+        $this->backendUserAuthentication->user['tx_mebackendsecurity_lastpasswordchange'] = 0;
+        $this->backendUserAuthentication->user['username'] = 'testuser';
+
+        $backendUserService = new BackendUserService(
+            $this->backendUserAuthentication,
+            $this->databaseConnection,
+            $this->extensionConfiguration,
+            $this->compositeValidator,
+            $this->saltingInstance
+        );
+
+        $result = $backendUserService->checkPasswordLifeTime();
+
+        $this->assertInstanceOf(LoginProviderRedirect::class, $result);
     }
 }
