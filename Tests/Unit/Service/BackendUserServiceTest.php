@@ -23,10 +23,11 @@ class BackendUserServiceTest extends TestCase
     public function setup()
     {
         $backendUserAuthentication = $this->getMockBuilder(BackendUserAuthentication::class)
-            ->setMethods(['getDatabaseConnection'])
+            ->setMethods(['getDatabaseConnection', 'getCookieName'])
             ->getMock();
 
         $backendUserAuthentication->method('getDatabaseConnection')->willReturn(new DatabaseConnection());
+        $backendUserAuthentication->method('getCookieName')->willReturn('');
         $backendUserAuthentication->user['tx_mebackendsecurity_lastpasswordchange'] = time();
 
         $databaseConnection = new DatabaseConnection();
