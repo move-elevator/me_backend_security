@@ -2,7 +2,6 @@
 
 namespace MoveElevator\MeBackendSecurity\Tests\Fixtures\Domain\Model;
 
-use MoveElevator\MeBackendSecurity\Domain\Model\LoginProviderRedirect;
 use MoveElevator\MeBackendSecurity\Domain\Model\PasswordChangeRequest;
 
 /**
@@ -30,5 +29,16 @@ trait PasswordChangeRequestFixture
         $passwordChangeRequest->setPasswordConfirmation($this->passwordConfirmation);
 
         return $passwordChangeRequest;
+    }
+
+    /**
+     * @return array
+     */
+    protected function getRawPasswordChangeRequestFixture()
+    {
+        return [
+            'password' => $this->password,
+            'password2' => $this->passwordConfirmation
+        ];
     }
 }
