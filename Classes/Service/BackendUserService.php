@@ -146,7 +146,7 @@ class BackendUserService
             'uid=' . $this->databaseConnection->fullQuoteStr(
                 $this->backendUserAuthentication->user['uid'],
                 self::USERS_TABLE_NAME
-            ) . 'AND username=' . $this->databaseConnection->fullQuoteStr(
+            ) . ' AND username=' . $this->databaseConnection->fullQuoteStr(
                 $this->backendUserAuthentication->user['username'],
                 self::USERS_TABLE_NAME
             )
