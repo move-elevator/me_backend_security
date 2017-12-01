@@ -19,6 +19,13 @@ class LoginProviderRedirectFactory
      */
     public static function create($username = '', $errorCodes = [])
     {
+        if (is_string($username) === false ||
+            is_array($errorCodes) === false) {
+            throw new \InvalidArgumentException(
+                'The given arguments are invalid!'
+            );
+        }
+
         $parameter = [
             'r' => 1
         ];
