@@ -68,7 +68,11 @@ class BackendUserServiceTest extends TestCase
             $capitalCharactersValidator
         );
 
-        $this->saltingInstance = new Md5Salt();
+        $this->saltingInstance = \Mockery::mock(Md5Salt::class);
+        $this->saltingInstance
+            ->shouldReceive('getHashedPassword')
+            ->withAnyArgs()
+            ->andReturnUsing(function($argument) { return $argument; });
     }
 
     public function testCheckPasswordIsValid()
