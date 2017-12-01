@@ -3,6 +3,7 @@
 namespace MoveElevator\MeBackendSecurity\Tests\Unit\Domain\Model;
 
 use MoveElevator\MeBackendSecurity\Domain\Model\LoginProviderRedirect;
+use MoveElevator\MeBackendSecurity\Domain\Model\PasswordChangeRequest;
 use MoveElevator\MeBackendSecurity\Service\BackendUserService;
 use MoveElevator\MeBackendSecurity\Tests\Fixtures\Domain\Model\ExtensionConfigurationFixture;
 use MoveElevator\MeBackendSecurity\Validation\Validator\CapitalCharactersValidator;
@@ -97,6 +98,27 @@ class BackendUserServiceTest extends TestCase
         );
 
         $result = $backendUserService->checkPasswordLifeTime();
+
+        $this->assertInstanceOf(LoginProviderRedirect::class, $result);
+    }
+
+    public function testHandlePasswordChangeRequestWithValidationError()
+    {
+        $this->backendUserAuthentication->user['username'] = 'testuser';
+
+        $backendUserService = new BackendUserService(
+            $this->backendUserAuthentication,
+            $this->databaseConnection,
+            $this->extensionConfiguration,
+            $this->compositeValidator,
+            $this->saltingInstance
+        );
+
+        $passwordChangeRequest = new PasswordChangeRequest();
+        $passwordChangeRequest->setPassword('foo');
+        $passwordChangeRequest->setPasswordConfirmation('bar');
+
+        $result = $backendUserService->handlePasswordChangeRequest($passwordChangeRequest);
 
         $this->assertInstanceOf(LoginProviderRedirect::class, $result);
     }
