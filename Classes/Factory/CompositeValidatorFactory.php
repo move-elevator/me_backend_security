@@ -42,6 +42,8 @@ class CompositeValidatorFactory
             );
             $compositeValidator->append($validator);
         }
+
+        return $compositeValidator;
     }
 
     /**
