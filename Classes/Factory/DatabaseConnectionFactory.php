@@ -3,6 +3,7 @@
 namespace MoveElevator\MeBackendSecurity\Factory;
 
 use TYPO3\CMS\Core\Database\DatabaseConnection;
+use TYPO3\CMS\Extbase\Object\ObjectManager;
 
 /**
  * @package MoveElevator\MeBackendSecurity\Factory
@@ -10,13 +11,14 @@ use TYPO3\CMS\Core\Database\DatabaseConnection;
 class DatabaseConnectionFactory
 {
     /**
+     * @param ObjectManager $objectManager
      * @param array $databaseConfiguration
      *
      * @return DatabaseConnection
      *
      * @SuppressWarnings(PHPMD.CyclomaticComplexity)
      */
-    public static function create($databaseConfiguration)
+    public static function create(ObjectManager $objectManager, $databaseConfiguration)
     {
         if (empty($databaseConfiguration['username']) ||
             empty($databaseConfiguration['password']) ||
@@ -29,18 +31,19 @@ class DatabaseConnectionFactory
             );
         }
 
-        return self::createDatabaseConnection($databaseConfiguration);
+        return self::createDatabaseConnection($objectManager, $databaseConfiguration);
     }
 
     /**
+     * @param ObjectManager $objectManager
      * @param array $databaseConfiguration
      *
      * @return DatabaseConnection
      */
-    private static function createDatabaseConnection($databaseConfiguration)
+    private static function createDatabaseConnection(ObjectManager $objectManager, $databaseConfiguration)
     {
         /** @var \TYPO3\CMS\Core\Database\DatabaseConnection $databaseConnection */
-        $databaseConnection = new DatabaseConnection();
+        $databaseConnection = $objectManager->get(DatabaseConnection::class);
 
         $databaseConnection->setDatabaseUsername((string) $databaseConfiguration['username']);
         $databaseConnection->setDatabasePassword((string) $databaseConfiguration['password']);

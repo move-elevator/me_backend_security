@@ -82,7 +82,10 @@ class UserAuthHook
         }
 
         /** @var DatabaseConnection $databaseConnection */
-        $databaseConnection = DatabaseConnectionFactory::create($GLOBALS['TYPO3_CONF_VARS']['DB']);
+        $databaseConnection = DatabaseConnectionFactory::create(
+            $this->objectManager,
+            $GLOBALS['TYPO3_CONF_VARS']['DB']
+        );
 
         /** @var ConfigurationUtility $configurationUtility */
         $configurationUtility = $this->objectManager->get(ConfigurationUtility::class);
