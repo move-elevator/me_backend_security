@@ -7,6 +7,7 @@ use MoveElevator\MeBackendSecurity\Factory\CompositeValidatorFactory;
 use MoveElevator\MeBackendSecurity\Factory\ExtensionConfigurationFactory;
 use MoveElevator\MeBackendSecurity\Tests\Fixtures\Domain\Model\ExtensionConfigurationFixture;
 use MoveElevator\MeBackendSecurity\Tests\Fixtures\Domain\Model\TypoScriptSetupFixture;
+use MoveElevator\MeBackendSecurity\Validation\Validator\CapitalCharactersValidator;
 use MoveElevator\MeBackendSecurity\Validation\Validator\CompositeValidator;
 use PHPUnit\Framework\TestCase;
 use TYPO3\CMS\Extbase\Object\ObjectManager;
@@ -26,7 +27,7 @@ class CompositeValidatorFactoryTest extends TestCase
         $this->objectManager = \Mockery::mock(ObjectManager::class);
         $this->objectManager
             ->shouldReceive('get')
-            ->andReturnUsing(function($class, $options) { return new $class($options); });
+            ->andReturnUsing(function($class, $options) { return new CompositeValidator($options); });
     }
 
     public function testCreateObjectFromValidArguments()
