@@ -2,7 +2,6 @@
 
 namespace MoveElevator\MeBackendSecurity\Tests\Unit\Domain\Model;
 
-use MoveElevator\MeBackendSecurity\Factory\LoginProviderRedirectFactory;
 use MoveElevator\MeBackendSecurity\Factory\PasswordChangeRequestFactory;
 use MoveElevator\MeBackendSecurity\Tests\Fixtures\Domain\Model\PasswordChangeRequestFixture;
 use PHPUnit\Framework\TestCase;
@@ -17,17 +16,13 @@ class PasswordChangeRequestFactoryTest extends TestCase
 
     protected $rsaEncryptionDecoder;
 
-    public function setup()
+    public function setUp()
     {
-        $this->rsaEncryptionDecoder = $this->getMockBuilder(RsaEncryptionDecoder::class)
-            ->disableOriginalConstructor()
-            ->disableOriginalClone()
-            ->setMethods(['decrypt'])
-            ->getMock();
-
+        $this->rsaEncryptionDecoder = \Mockery::mock(RsaEncryptionDecoder::class);
         $this->rsaEncryptionDecoder
-            ->method('decrypt')
-            ->will($this->returnArgument(0));
+            ->shouldReceive('decrypt')
+            ->withAnyArgs()
+            ->andReturnUsing(function($argument) { return $argument; });
     }
 
     public function testCreateObjectFromValidArguments()

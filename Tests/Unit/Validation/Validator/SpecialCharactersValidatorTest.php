@@ -16,17 +16,17 @@ class SpecialCharactersValidatorTest extends TestCase
 
     protected $specialCharactersValidator;
 
-    public function setup()
+    public function setUp()
     {
-        $this->specialCharactersValidator =
-            $this->getMockBuilder(SpecialCharactersValidator::class)
-                ->setMethods(['translateErrorMessage'])
-                ->setConstructorArgs([['extensionConfiguration' => $this->getExtensionConfigurationFixture()]])
-                ->getMock();
-
+        $this->specialCharactersValidator = \Mockery::mock(
+            SpecialCharactersValidator::class . '[translateErrorMessage]',
+            [['extensionConfiguration' => $this->getExtensionConfigurationFixture()]]
+        );
         $this->specialCharactersValidator
-            ->method('translateErrorMessage')
-            ->willReturn('translated message');
+            ->shouldAllowMockingProtectedMethods()
+            ->shouldReceive('translateErrorMessage')
+            ->withAnyArgs()
+            ->andReturn('translated message');
     }
 
     public function testPositiveValidation()

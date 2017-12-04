@@ -4,7 +4,7 @@ namespace MoveElevator\MeBackendSecurity\Tests\Unit\Domain\Model;
 
 use MoveElevator\MeBackendSecurity\Factory\CompositeValidatorFactory;
 use MoveElevator\MeBackendSecurity\Tests\Fixtures\Domain\Model\ExtensionConfigurationFixture;
-use MoveElevator\MeBackendSecurity\Tests\Fixtures\Domain\Model\TypoScriptSetupFixture;
+use MoveElevator\MeBackendSecurity\Tests\Fixtures\TypoScriptSetupFixture;
 use MoveElevator\MeBackendSecurity\Validation\Validator\CompositeValidator;
 use PHPUnit\Framework\TestCase;
 use TYPO3\CMS\Extbase\Object\ObjectManager;
@@ -19,7 +19,7 @@ class CompositeValidatorFactoryTest extends TestCase
 
     protected $objectManager;
 
-    public function setup()
+    public function setUp()
     {
         $this->objectManager = \Mockery::mock(ObjectManager::class);
         $this->objectManager

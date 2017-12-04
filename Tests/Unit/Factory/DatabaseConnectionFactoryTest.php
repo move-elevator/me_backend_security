@@ -3,7 +3,7 @@
 namespace MoveElevator\MeBackendSecurity\Tests\Unit\Domain\Model;
 
 use MoveElevator\MeBackendSecurity\Factory\DatabaseConnectionFactory;
-use MoveElevator\MeBackendSecurity\Tests\Fixtures\Domain\Model\DatabaseConfigurationFixture;
+use MoveElevator\MeBackendSecurity\Tests\Fixtures\DatabaseConfigurationFixture;
 use PHPUnit\Framework\TestCase;
 use TYPO3\CMS\Core\Database\DatabaseConnection;
 use TYPO3\CMS\Extbase\Object\ObjectManager;
@@ -17,7 +17,7 @@ class DatabaseConfigurationFactoryTest extends TestCase
 
     protected $databaseConnection;
 
-    public function setup()
+    public function setUp()
     {
         $this->databaseConnection = \Mockery::mock(DatabaseConnection::class . '[initialize,connectDB,isConnected]');
         $this->databaseConnection
@@ -30,7 +30,7 @@ class DatabaseConfigurationFactoryTest extends TestCase
     {
         $this->databaseConnection
             ->shouldReceive('isConnected')
-            ->withAnyArgs()
+            ->withNoArgs()
             ->andReturnTrue();
 
         $objectManager = \Mockery::mock(ObjectManager::class);
@@ -50,7 +50,7 @@ class DatabaseConfigurationFactoryTest extends TestCase
     {
         $this->databaseConnection
             ->shouldReceive('isConnected')
-            ->withAnyArgs()
+            ->withNoArgs()
             ->andReturnTrue();
 
         $objectManager = \Mockery::mock(ObjectManager::class);
@@ -71,7 +71,7 @@ class DatabaseConfigurationFactoryTest extends TestCase
     {
         $this->databaseConnection
             ->shouldReceive('isConnected')
-            ->withAnyArgs()
+            ->withNoArgs()
             ->andReturnFalse();
 
         $objectManager = \Mockery::mock(ObjectManager::class);

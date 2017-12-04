@@ -1,6 +1,6 @@
 <?php
 
-namespace MoveElevator\MeBackendSecurity\Tests\Fixtures\Domain\Model;
+namespace MoveElevator\MeBackendSecurity\Tests\Fixtures;
 
 use MoveElevator\MeBackendSecurity\Validation\Validator\CapitalCharactersValidator;
 use MoveElevator\MeBackendSecurity\Validation\Validator\DigitsValidator;
@@ -10,7 +10,7 @@ use MoveElevator\MeBackendSecurity\Validation\Validator\PasswordLengthValidator;
 use MoveElevator\MeBackendSecurity\Validation\Validator\SpecialCharactersValidator;
 
 /**
- * @package MoveElevator\MeBackendSecurity\Tests\Fixture\Domain\Model
+ * @package MoveElevator\MeBackendSecurity\Tests\Fixtures
  */
 trait TypoScriptSetupFixture
 {

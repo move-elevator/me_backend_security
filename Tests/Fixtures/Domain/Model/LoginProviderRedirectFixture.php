@@ -5,14 +5,14 @@ namespace MoveElevator\MeBackendSecurity\Tests\Fixtures\Domain\Model;
 use MoveElevator\MeBackendSecurity\Domain\Model\LoginProviderRedirect;
 
 /**
- * @package MoveElevator\MeBackendSecurity\Tests\Fixture\Domain\Model
+ * @package MoveElevator\MeBackendSecurity\Tests\Fixtures\Domain\Model
  */
 trait LoginProviderRedirectFixture
 {
     /**
      * @var string
      */
-    protected $url = "http://localhost";
+    protected $url = "http://foo.bar";
 
     /**
      * @return LoginProviderRedirect

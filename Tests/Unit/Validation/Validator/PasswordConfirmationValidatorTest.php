@@ -16,17 +16,17 @@ class PasswordConfirmationValidatorTest extends TestCase
 
     protected $passwordConfirmationValidator;
 
-    public function setup()
+    public function setUp()
     {
-        $this->passwordConfirmationValidator =
-            $this->getMockBuilder(PasswordConfirmationValidator::class)
-                ->setMethods(['translateErrorMessage'])
-                ->setConstructorArgs([['extensionConfiguration' => $this->getExtensionConfigurationFixture()]])
-                ->getMock();
-
+        $this->passwordConfirmationValidator = \Mockery::mock(
+            PasswordConfirmationValidator::class . '[translateErrorMessage]',
+            [['extensionConfiguration' => $this->getExtensionConfigurationFixture()]]
+        );
         $this->passwordConfirmationValidator
-            ->method('translateErrorMessage')
-            ->willReturn('translated message');
+            ->shouldAllowMockingProtectedMethods()
+            ->shouldReceive('translateErrorMessage')
+            ->withAnyArgs()
+            ->andReturn('translated message');
     }
 
     public function testPositiveValidation()

@@ -5,7 +5,7 @@ namespace MoveElevator\MeBackendSecurity\Tests\Fixtures\Domain\Model;
 use MoveElevator\MeBackendSecurity\Domain\Model\ExtensionConfiguration;
 
 /**
- * @package MoveElevator\MeBackendSecurity\Tests\Fixture\Domain\Model
+ * @package MoveElevator\MeBackendSecurity\Tests\Fixtures\Domain\Model
  */
 trait ExtensionConfigurationFixture
 {

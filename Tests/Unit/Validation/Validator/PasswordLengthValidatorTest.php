@@ -16,17 +16,17 @@ class PasswordLengthValidatorTest extends TestCase
 
     protected $passwordLengthValidator;
 
-    public function setup()
+    public function setUp()
     {
-        $this->passwordLengthValidator =
-            $this->getMockBuilder(PasswordLengthValidator::class)
-                ->setMethods(['translateErrorMessage'])
-                ->setConstructorArgs([['extensionConfiguration' => $this->getExtensionConfigurationFixture()]])
-                ->getMock();
-
+        $this->passwordLengthValidator = \Mockery::mock(
+            PasswordLengthValidator::class . '[translateErrorMessage]',
+            [['extensionConfiguration' => $this->getExtensionConfigurationFixture()]]
+        );
         $this->passwordLengthValidator
-            ->method('translateErrorMessage')
-            ->willReturn('translated message');
+            ->shouldAllowMockingProtectedMethods()
+            ->shouldReceive('translateErrorMessage')
+            ->withAnyArgs()
+            ->andReturn('translated message');
     }
 
     public function testPositiveValidation()

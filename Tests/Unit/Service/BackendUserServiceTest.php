@@ -21,16 +21,12 @@ class BackendUserServiceTest extends TestCase
     use ExtensionConfigurationFixture;
 
     protected $backendUserAuthentication;
-
     protected $databaseConnection;
-
     protected $extensionConfiguration;
-
     protected $compositeValidator;
-
     protected $saltingInstance;
 
-    public function setup()
+    public function setUp()
     {
         $this->backendUserAuthentication = \Mockery::mock(BackendUserAuthentication::class);
 

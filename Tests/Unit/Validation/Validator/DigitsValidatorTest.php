@@ -16,17 +16,17 @@ class DigitsValidatorTest extends TestCase
 
     protected $digitsValidator;
 
-    public function setup()
+    public function setUp()
     {
-        $this->digitsValidator =
-            $this->getMockBuilder(DigitsValidator::class)
-                ->setMethods(['translateErrorMessage'])
-                ->setConstructorArgs([['extensionConfiguration' => $this->getExtensionConfigurationFixture()]])
-                ->getMock();
-
+        $this->digitsValidator = \Mockery::mock(
+            DigitsValidator::class . '[translateErrorMessage]',
+            [['extensionConfiguration' => $this->getExtensionConfigurationFixture()]]
+        );
         $this->digitsValidator
-            ->method('translateErrorMessage')
-            ->willReturn('translated message');
+            ->shouldAllowMockingProtectedMethods()
+            ->shouldReceive('translateErrorMessage')
+            ->withAnyArgs()
+            ->andReturn('translated message');
     }
 
     public function testPositiveValidation()

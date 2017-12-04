@@ -16,17 +16,17 @@ class CapitalCharactersValidatorTest extends TestCase
 
     protected $capitalCharactersValidator;
 
-    public function setup()
+    public function setUp()
     {
-        $this->capitalCharactersValidator =
-            $this->getMockBuilder(CapitalCharactersValidator::class)
-                ->setMethods(['translateErrorMessage'])
-                ->setConstructorArgs([['extensionConfiguration' => $this->getExtensionConfigurationFixture()]])
-                ->getMock();
-
+        $this->capitalCharactersValidator = \Mockery::mock(
+            CapitalCharactersValidator::class . '[translateErrorMessage]',
+            [['extensionConfiguration' => $this->getExtensionConfigurationFixture()]]
+        );
         $this->capitalCharactersValidator
-            ->method('translateErrorMessage')
-            ->willReturn('translated message');
+            ->shouldAllowMockingProtectedMethods()
+            ->shouldReceive('translateErrorMessage')
+            ->withAnyArgs()
+            ->andReturn('translated message');
     }
 
     public function testPositiveValidation()

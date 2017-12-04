@@ -1,9 +1,9 @@
 <?php
 
-namespace MoveElevator\MeBackendSecurity\Tests\Fixtures\Domain\Model;
+namespace MoveElevator\MeBackendSecurity\Tests\Fixtures;
 
 /**
- * @package MoveElevator\MeBackendSecurity\Tests\Fixture\Domain\Model
+ * @package MoveElevator\MeBackendSecurity\Tests\Fixtures
  */
 trait DatabaseConfigurationFixture
 {

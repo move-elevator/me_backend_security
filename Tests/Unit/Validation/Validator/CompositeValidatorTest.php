@@ -18,27 +18,27 @@ class CompositeValidatorTest extends TestCase
     protected $capitalCharactersValidator;
     protected $compositeValidator;
 
-    public function setup()
+    public function setUp()
     {
-        $this->compositeValidator =
-            $this->getMockBuilder(CompositeValidator::class)
-                ->setMethods(['translateErrorMessage'])
-                ->setConstructorArgs([['extensionConfiguration' => $this->getExtensionConfigurationFixture()]])
-                ->getMock();
-
+        $this->compositeValidator = \Mockery::mock(
+            CompositeValidator::class . '[translateErrorMessage]',
+            [['extensionConfiguration' => $this->getExtensionConfigurationFixture()]]
+        );
         $this->compositeValidator
-            ->method('translateErrorMessage')
-            ->willReturn('translated message');
+            ->shouldAllowMockingProtectedMethods()
+            ->shouldReceive('translateErrorMessage')
+            ->withAnyArgs()
+            ->andReturn('translated message');
 
-        $capitalCharactersValidator =
-            $this->getMockBuilder(CapitalCharactersValidator::class)
-                ->setMethods(['translateErrorMessage'])
-                ->setConstructorArgs([['extensionConfiguration' => $this->getExtensionConfigurationFixture()]])
-                ->getMock();
-
+        $capitalCharactersValidator = \Mockery::mock(
+            CapitalCharactersValidator::class . '[translateErrorMessage]',
+            [['extensionConfiguration' => $this->getExtensionConfigurationFixture()]]
+        );
         $capitalCharactersValidator
-            ->method('translateErrorMessage')
-            ->willReturn('translated message');
+            ->shouldAllowMockingProtectedMethods()
+            ->shouldReceive('translateErrorMessage')
+            ->withAnyArgs()
+            ->andReturn('translated message');
 
         $this->compositeValidator->append(
             $capitalCharactersValidator

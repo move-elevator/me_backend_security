@@ -16,17 +16,17 @@ class LowercaseCharactersValidatorTest extends TestCase
 
     protected $lowercaseCharactersValidator;
 
-    public function setup()
+    public function setUp()
     {
-        $this->lowercaseCharactersValidator =
-            $this->getMockBuilder(LowercaseCharactersValidator::class)
-                ->setMethods(['translateErrorMessage'])
-                ->setConstructorArgs([['extensionConfiguration' => $this->getExtensionConfigurationFixture()]])
-                ->getMock();
-
+        $this->lowercaseCharactersValidator = \Mockery::mock(
+            LowercaseCharactersValidator::class . '[translateErrorMessage]',
+            [['extensionConfiguration' => $this->getExtensionConfigurationFixture()]]
+        );
         $this->lowercaseCharactersValidator
-            ->method('translateErrorMessage')
-            ->willReturn('translated message');
+            ->shouldAllowMockingProtectedMethods()
+            ->shouldReceive('translateErrorMessage')
+            ->withAnyArgs()
+            ->andReturn('translated message');
     }
 
     public function testPositiveValidation()
