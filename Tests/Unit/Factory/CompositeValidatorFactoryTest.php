@@ -26,7 +26,6 @@ class CompositeValidatorFactoryTest extends TestCase
         $this->objectManager = \Mockery::mock(ObjectManager::class);
         $this->objectManager
             ->shouldReceive('get')
-            ->withAnyArgs()
             ->andReturnUsing(function($class, $options) { return new $class($options); });
     }
 
