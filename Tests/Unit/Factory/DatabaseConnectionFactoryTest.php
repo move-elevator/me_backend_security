@@ -46,6 +46,27 @@ class DatabaseConfigurationFactoryTest extends TestCase
         $this->assertInstanceOf(DatabaseConnection::class, $databaseConnection);
     }
 
+    public function testCreateObjectFromInvalidArguments()
+    {
+        $this->databaseConnection
+            ->shouldReceive('isConnected')
+            ->withAnyArgs()
+            ->andReturnTrue();
+
+        $objectManager = \Mockery::mock(ObjectManager::class);
+        $objectManager
+            ->shouldReceive('get')
+            ->withArgs([DatabaseConnection::class])
+            ->andReturn($this->databaseConnection);
+
+        $rawDatabaseConfiguration = $this->getRawDatabaseConfigurationFixture();
+        unset($rawDatabaseConfiguration['host']);
+
+        $this->expectException(\InvalidArgumentException::class);
+
+        DatabaseConnectionFactory::create($objectManager, $rawDatabaseConfiguration);
+    }
+
     public function testCreateObjectFromValidArgumentsWithConnectionFailed()
     {
         $this->databaseConnection
