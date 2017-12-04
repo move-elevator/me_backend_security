@@ -34,7 +34,6 @@ class CompositeValidatorFactory
 
         $validators = $rawTypoScriptSetup['config.']['tx_mebackendsecurity.']['validators.'];
 
-        /** @var string $validatorClass */
         foreach ($validators as $validatorClass) {
             /** @var AbstractValidator $validator */
             $validator = $objectManager->get(
