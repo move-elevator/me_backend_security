@@ -81,6 +81,10 @@ class UserAuthHook
             return;
         }
 
+        if (empty($pObj->user['tx_igldapssoauth_dn']) === false) {
+            return;
+        }
+
         /** @var DatabaseConnection $databaseConnection */
         $databaseConnection = DatabaseConnectionFactory::create(
             $this->objectManager,
