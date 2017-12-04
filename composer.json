@@ -24,16 +24,16 @@
         "url": "https://github.com/mi-schi/phpmd-extension/releases/download/stable/phpmd-extension.phar",
         "force-replace": true
       },
+      "phpcs": {
+        "url": "https://github.com/squizlabs/PHP_CodeSniffer/releases/download/2.8.1/phpcs.phar",
+        "force-replace": true
+      },
       "phpcpd": {
         "url": "https://phar.phpunit.de/phpcpd.phar",
         "force-replace": true
       },
       "pdepend": {
         "url": "http://static.pdepend.org/php/latest/pdepend.phar",
-        "force-replace": true
-      },
-      "phpcs": {
-        "url": "https://github.com/squizlabs/PHP_CodeSniffer/releases/download/2.8.1/phpcs.phar",
         "force-replace": true
       },
       "phpmetrics": {
