@@ -17,7 +17,7 @@
   "extra": {
     "tools": {
       "phpunit": {
-        "url": "https://phar.phpunit.de/phpunit-6.0.13.phar",
+        "url": "https://phar.phpunit.de/phpunit-5.7.9.phar",
         "force-replace": true
       },
       "phpmd": {
