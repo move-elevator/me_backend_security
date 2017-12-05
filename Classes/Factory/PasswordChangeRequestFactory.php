@@ -22,7 +22,8 @@ class PasswordChangeRequestFactory
             empty($changeRequestParameters['password2'])
         ) {
             throw new \InvalidArgumentException(
-                'The given arguments are incomplete!'
+                'Some request parameters are missing for password change.',
+                1512481285
             );
         }
 

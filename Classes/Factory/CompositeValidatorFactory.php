@@ -28,7 +28,8 @@ class CompositeValidatorFactory
 
         if (empty($rawTypoScriptSetup['config.']['tx_mebackendsecurity.']['validators.'])) {
             throw new \InvalidArgumentException(
-                'No typoscript setup for validator initialization.'
+                'No typoscript setup for validator initialization.',
+                1512481167
             );
         }
 

@@ -26,7 +26,8 @@ class ExtensionConfigurationFactory
             isset($rawExtensionConfiguration['maximumValidDays']['value']) === false
         ) {
             throw new \InvalidArgumentException(
-                'The given arguments are incomplete!'
+                'Some parameters are missing in given extension configuration.',
+                1512479995
             );
         }
 

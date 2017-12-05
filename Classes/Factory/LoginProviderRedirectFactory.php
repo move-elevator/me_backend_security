@@ -22,7 +22,8 @@ class LoginProviderRedirectFactory
         if (is_string($username) === false ||
             is_array($errorCodes) === false) {
             throw new \InvalidArgumentException(
-                'The given arguments are invalid!'
+                'Some redirect parameters are not from valid type.',
+                1512480235
             );
         }
 

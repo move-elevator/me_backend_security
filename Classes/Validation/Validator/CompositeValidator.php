@@ -30,7 +30,8 @@ class CompositeValidator extends AbstractValidator
     {
         if ($value instanceof PasswordChangeRequest === false) {
             throw new \InvalidArgumentException(
-                'The given argument is invalid.'
+                'The given value is not from type ' . PasswordChangeRequest::class . '.',
+                1512480115
             );
         }
 
