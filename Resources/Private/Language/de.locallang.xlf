@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xliff version="1.0">
+	<file target-language="de" datatype="plaintext" original="messages" date="2017-10-06T16:21:00Z" product-name="lang">
+		<header/>
+		<body>
+			<trans-unit id="title" xml:space="preserve">
+				<target>Ihr Passwort muss geändert werden</target>
+			</trans-unit>
+			<trans-unit id="description" xml:space="preserve">
+				<target>Aus Sicherheitsgründen muss Ihr Passwort jeden Tag geändert werden. Bitte ändern Sie es jetzt um sich einzuloggen.</target>
+			</trans-unit>
+			<trans-unit id="description.plural" xml:space="preserve">
+				<target>Aus Sicherheitsgründen muss Ihr Passwort alle %s Tage geändert werden. Bitte ändern Sie es jetzt um sich einzuloggen.</target>
+			</trans-unit>
+			<trans-unit id="error.title" xml:space="preserve">
+				<target>Passwortänderung fehlgeschlagen</target>
+			</trans-unit>
+			<trans-unit id="error.1510742741" xml:space="preserve">
+				<target>Das Passwort ist zu kurz</target>
+			</trans-unit>
+			<trans-unit id="error.1510742742" xml:space="preserve">
+				<target>Die Passwörter stimmen nicht überein</target>
+			</trans-unit>
+			<trans-unit id="error.1510742743" xml:space="preserve">
+				<target>Nicht genügend Sonderzeichen</target>
+			</trans-unit>
+			<trans-unit id="error.1510742744" xml:space="preserve">
+				<target>Nicht genügend Zahlen</target>
+			</trans-unit>
+			<trans-unit id="error.1510742745" xml:space="preserve">
+				<target>Nicht genügend Großbuchstaben</target>
+			</trans-unit>
+			<trans-unit id="error.1510742746" xml:space="preserve">
+				<target>Nicht genügend Kleinbuchstaben</target>
+			</trans-unit>
+			<trans-unit id="error.1510742747" xml:space="preserve">
+				<target>Benutzer existiert nicht</target>
+			</trans-unit>
+			<trans-unit id="rule.passwordlength">
+				<target>Mindestens %s Zeichen</target>
+			</trans-unit>
+			<trans-unit id="rule.passwordlength.plural">
+				<target>Mindestens %s Zeichen</target>
+			</trans-unit>
+			<trans-unit id="rule.specialchar">
+				<target>Mindestens %s Sonderzeichen</target>
+			</trans-unit>
+			<trans-unit id="rule.specialchar.plural">
+				<target>Mindestens %s Sonderzeichen</target>
+			</trans-unit>
+			<trans-unit id="rule.digit">
+				<target>Mindestens %s Zahl</target>
+			</trans-unit>
+			<trans-unit id="rule.digit.plural">
+				<target>Mindestens %s Zahlen</target>
+			</trans-unit>
+			<trans-unit id="rule.capitalchar">
+				<target>Mindestens %s Großbuchstabe</target>
+			</trans-unit>
+			<trans-unit id="rule.capitalchar.plural">
+				<target>Mindestens %s Großbuchstaben</target>
+			</trans-unit>
+			<trans-unit id="rule.lowercasechar">
+				<target>Mindestens %s Kleinbuchstabe</target>
+			</trans-unit>
+			<trans-unit id="rule.lowercasechar.plural">
+				<target>Mindestens %s Kleinbuchstaben</target>
+			</trans-unit>
+			<trans-unit id="password.current">
+				<target>Aktuelles Passwort</target>
+			</trans-unit>
+			<trans-unit id="password.new">
+				<target>Neues Passwort</target>
+			</trans-unit>
+			<trans-unit id="password.confirmation">
+				<target>Passwort wiederholen</target>
+			</trans-unit>
+			<trans-unit id="be_users.tx_mebackendsecurity_lastpasswordchange" xml:space="preserve">
+				<target>Passwort zuletzt geändert</target>
+			</trans-unit>
+		</body>
+	</file>
+</xliff>

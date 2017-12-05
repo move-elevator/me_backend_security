@@ -1,0 +1,10 @@
+config.tx_mebackendsecurity {
+	validators {
+		1 = MoveElevator\MeBackendSecurity\Validation\Validator\PasswordConfirmationValidator
+		2 = MoveElevator\MeBackendSecurity\Validation\Validator\PasswordLengthValidator
+		3 = MoveElevator\MeBackendSecurity\Validation\Validator\SpecialCharactersValidator
+		4 = MoveElevator\MeBackendSecurity\Validation\Validator\DigitsValidator
+		5 = MoveElevator\MeBackendSecurity\Validation\Validator\CapitalCharactersValidator
+		6 = MoveElevator\MeBackendSecurity\Validation\Validator\LowercaseCharactersValidator
+	}
+}
