@@ -27,7 +27,8 @@ class DatabaseConnectionFactory
             empty($databaseConfiguration['database'])
         ) {
             throw new \InvalidArgumentException(
-                'The given arguments are incomplete!'
+                'Some parameters are missing in given database configuration.',
+                1512481307
             );
         }
 
@@ -60,7 +61,8 @@ class DatabaseConnectionFactory
 
         if ($databaseConnection->isConnected() === false) {
             throw new \RuntimeException(
-                'Could not connect to database server!'
+                'Could not connect to database server.',
+                1512481350
             );
         }
 
