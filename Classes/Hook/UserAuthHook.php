@@ -92,6 +92,8 @@ class UserAuthHook
 
     /**
      * @param $pObj
+     *
+     * @SuppressWarnings(PHPMD.Superglobals)
      */
     private function initializeObjects($pObj)
     {
