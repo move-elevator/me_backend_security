@@ -84,6 +84,17 @@ class UserAuthHook
             return;
         }
 
+        $this->initializeObjects($pObj);
+        $this->initializeLanguageService();
+        $this->processPasswordChange();
+        $this->processPasswordLifeTimeCheck();
+    }
+
+    /**
+     * @param $pObj
+     */
+    private function initializeObjects($pObj)
+    {
         /** @var DatabaseConnection $databaseConnection */
         $databaseConnection = DatabaseConnectionFactory::create(
             $this->objectManager,
@@ -122,10 +133,6 @@ class UserAuthHook
             $compositeValidator,
             $saltingInstance
         );
-
-        $this->initializeLanguageService();
-        $this->processPasswordChange();
-        $this->processPasswordLifeTimeCheck();
     }
 
     /**
