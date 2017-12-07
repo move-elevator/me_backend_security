@@ -18,7 +18,7 @@ class DatabaseConnectionFactory
      *
      * @SuppressWarnings(PHPMD.CyclomaticComplexity)
      */
-    public static function create(ObjectManager $objectManager, $databaseConfiguration)
+    public static function create(ObjectManager $objectManager, array $databaseConfiguration)
     {
         if (empty($databaseConfiguration['username']) ||
             empty($databaseConfiguration['password']) ||
@@ -41,7 +41,7 @@ class DatabaseConnectionFactory
      *
      * @return DatabaseConnection
      */
-    private static function createDatabaseConnection(ObjectManager $objectManager, $databaseConfiguration)
+    private static function createDatabaseConnection(ObjectManager $objectManager, array $databaseConfiguration)
     {
         /** @var \TYPO3\CMS\Core\Database\DatabaseConnection $databaseConnection */
         $databaseConnection = $objectManager->get(DatabaseConnection::class);

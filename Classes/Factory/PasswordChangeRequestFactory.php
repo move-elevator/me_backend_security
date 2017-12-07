@@ -16,7 +16,7 @@ class PasswordChangeRequestFactory
      *
      * @return PasswordChangeRequest
      */
-    public static function create($changeRequestParameters, RsaEncryptionDecoder $rsaEncryptionDecoder)
+    public static function create(array $changeRequestParameters, RsaEncryptionDecoder $rsaEncryptionDecoder)
     {
         if (empty($changeRequestParameters['password']) ||
             empty($changeRequestParameters['password2'])
