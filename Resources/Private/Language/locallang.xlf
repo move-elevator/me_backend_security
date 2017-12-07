@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xliff version="1.0">
+	<file source-language="en" datatype="plaintext" original="messages" date="2017-10-06T16:21:00Z" product-name="lang">
+		<header/>
+		<body>
+			<trans-unit id="title" xml:space="preserve">
+				<source>Your password have to be changed</source>
+			</trans-unit>
+			<trans-unit id="description" xml:space="preserve">
+				<source>For security reasons, your password have to be changed every day. Please change it now to log in.</source>
+			</trans-unit>
+			<trans-unit id="description.plural" xml:space="preserve">
+				<source>For security reasons, your password have to be changed every %s days. Please change it now to log in.</source>
+			</trans-unit>
+			<trans-unit id="error.title" xml:space="preserve">
+				<source>Your password change did not succeed</source>
+			</trans-unit>
+			<trans-unit id="error.1510742741" xml:space="preserve">
+				<source>The password is to short</source>
+			</trans-unit>
+			<trans-unit id="error.1510742742" xml:space="preserve">
+				<source>The passwords do not match</source>
+			</trans-unit>
+			<trans-unit id="error.1510742743" xml:space="preserve">
+				<source>Not enough special character</source>
+			</trans-unit>
+			<trans-unit id="error.1510742744" xml:space="preserve">
+				<source>Not enough digits</source>
+			</trans-unit>
+			<trans-unit id="error.1510742745" xml:space="preserve">
+				<source>Not enough capital character</source>
+			</trans-unit>
+			<trans-unit id="error.1510742746" xml:space="preserve">
+				<source>Not enough lowercase character</source>
+			</trans-unit>
+			<trans-unit id="error.1510742747" xml:space="preserve">
+				<source>User does not exist</source>
+			</trans-unit>
+			<trans-unit id="rule.passwordlength">
+				<source>At least %s character</source>
+			</trans-unit>
+			<trans-unit id="rule.passwordlength.plural">
+				<source>At least %s characters</source>
+			</trans-unit>
+			<trans-unit id="rule.specialchar">
+				<source>At least %s special character</source>
+			</trans-unit>
+			<trans-unit id="rule.specialchar.plural">
+				<source>At least %s special characters</source>
+			</trans-unit>
+			<trans-unit id="rule.digit">
+				<source>At least %s digit</source>
+			</trans-unit>
+			<trans-unit id="rule.digit.plural">
+				<source>At least %s digits</source>
+			</trans-unit>
+			<trans-unit id="rule.capitalchar">
+				<source>At least %s capital character</source>
+			</trans-unit>
+			<trans-unit id="rule.capitalchar.plural">
+				<source>At least %s capital characters</source>
+			</trans-unit>
+			<trans-unit id="rule.lowercasechar">
+				<source>At least %s lowercase character</source>
+			</trans-unit>
+			<trans-unit id="rule.lowercasechar.plural">
+				<source>At least %s lowercase characters</source>
+			</trans-unit>
+			<trans-unit id="password.current">
+				<source>Current password</source>
+			</trans-unit>
+			<trans-unit id="password.new">
+				<source>New password</source>
+			</trans-unit>
+			<trans-unit id="password.confirmation">
+				<source>Repeat password</source>
+			</trans-unit>
+			<trans-unit id="be_users.tx_mebackendsecurity_lastpasswordchange" xml:space="preserve">
+				<source>Last password change</source>
+			</trans-unit>
+		</body>
+	</file>
+</xliff>

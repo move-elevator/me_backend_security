@@ -1,0 +1,17 @@
+# cat=Basic; type=int [0-99]; label=How many special characters (!$%&/=?,.) must the password contain? (Default is 1)
+minimumSpecialCharacters = 1
+
+# cat=Basic; type=int [0-99]; label=How many digits must the password contain? (Default is 1)
+minimumDigits = 1
+
+# cat=Basic; type=int [0-99]; label=How many capital characters (A-Z, Ä, Ö, Ü) must the password contain? (Default is 1)
+minimumCapitalCharacters = 1
+
+# cat=Basic; type=int [0-99]; label=How many lowercase characters (a-z, ä, ö, ü) must the password contain? (Default is 1)
+minimumLowercaseCharacters = 1
+
+# cat=Basic; type=int [5-99]; label=What is the mimimal length of a password? (Default is 8)
+passwordLength = 8
+
+# cat=Basic; type=int [1-365]; label=How many days can the password be used before it needs to be changed? (Default is 14)
+maximalValidDays = 14
