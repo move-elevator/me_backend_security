@@ -36,6 +36,6 @@ class LoginProviderRedirectFactoryTest extends TestCase
     {
         $this->expectException(\InvalidArgumentException::class);
 
-        LoginProviderRedirectFactory::create(false, true);
+        LoginProviderRedirectFactory::create(false, []);
     }
 }
