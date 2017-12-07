@@ -22,7 +22,7 @@ class CompositeValidatorFactory
     public static function create(
         ObjectManager $objectManager,
         ExtensionConfiguration $extensionConfiguration,
-        $rawTypoScriptSetup
+        array $rawTypoScriptSetup
     ) {
         $compositeValidator = self::createEmptyCompositeValidator($objectManager, $extensionConfiguration);
 

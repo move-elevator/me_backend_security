@@ -17,10 +17,9 @@ class LoginProviderRedirectFactory
      *
      * @return LoginProviderRedirect
      */
-    public static function create($username = '', $errorCodes = [])
+    public static function create($username = '', array $errorCodes = [])
     {
-        if (is_string($username) === false ||
-            is_array($errorCodes) === false) {
+        if (is_string($username) === false) {
             throw new \InvalidArgumentException(
                 'Some redirect parameters are not from valid type.',
                 1512480235
