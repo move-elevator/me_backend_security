@@ -23,7 +23,6 @@ class DatabaseConnectionFactory
         if (empty($databaseConfiguration['username']) ||
             empty($databaseConfiguration['password']) ||
             empty($databaseConfiguration['host']) ||
-            empty($databaseConfiguration['port']) ||
             empty($databaseConfiguration['database'])
         ) {
             throw new \InvalidArgumentException(
@@ -49,8 +48,11 @@ class DatabaseConnectionFactory
         $databaseConnection->setDatabaseUsername((string) $databaseConfiguration['username']);
         $databaseConnection->setDatabasePassword((string) $databaseConfiguration['password']);
         $databaseConnection->setDatabaseHost((string) $databaseConfiguration['host']);
-        $databaseConnection->setDatabasePort((string) $databaseConfiguration['port']);
         $databaseConnection->setDatabaseName((string) $databaseConfiguration['database']);
+
+        if (empty($databaseConfiguration['port']) === false) {
+            $databaseConnection->setDatabasePort((string) $databaseConfiguration['port']);
+        }
 
         if (empty($databaseConfiguration['socket']) === false) {
             $databaseConnection->setDatabaseSocket((string) $databaseConfiguration['socket']);

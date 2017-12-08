@@ -60,6 +60,27 @@ Run each command in the project root directory.
 * Website: http://www.move-elevator.de
 
 # Changelog
+2017-12-08 - Philipp Heckelt <phe@move-elevator.de>
+```
+Release 1.0.3
+---
+Bugfix: Optional port in database configuration
+```
+
+2017-12-08 - Philipp Heckelt <phe@move-elevator.de>
+```
+Release 1.0.2
+---
+Bugfix: Language service
+```
+
+2017-12-08 - Philipp Heckelt <phe@move-elevator.de>
+```
+Release 1.0.1
+---
+Bugfix: Extension configuration
+```
+
 2017-12-04 - Philipp Heckelt <phe@move-elevator.de>
 ```
 Release 1.0.0
