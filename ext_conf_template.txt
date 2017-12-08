@@ -14,4 +14,4 @@ minimumLowercaseCharacters = 1
 passwordLength = 8
 
 # cat=Basic; type=int [1-365]; label=How many days can the password be used before it needs to be changed? (Default is 14)
-maximalValidDays = 14
+maximumValidDays = 14
