@@ -148,12 +148,13 @@ class UserAuthHook
             return;
         }
 
+        $GLOBALS['LANG'] = $this->objectManager->get(LanguageService::class);
+
         if (empty($this->backendUserAuthentication->user['uc'])) {
             return;
         }
 
         $userUc = unserialize($this->backendUserAuthentication->user['uc']);
-        $GLOBALS['LANG'] = $this->objectManager->get(LanguageService::class);
         $GLOBALS['LANG']->init($userUc['lang']);
     }
 
