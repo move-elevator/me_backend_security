@@ -97,12 +97,6 @@ class UserAuthHook
      */
     private function initializeObjects($pObj)
     {
-        /** @var DatabaseConnection $databaseConnection */
-        $databaseConnection = DatabaseConnectionFactory::create(
-            $this->objectManager,
-            $GLOBALS['TYPO3_CONF_VARS']['DB']
-        );
-
         /** @var ConfigurationUtility $configurationUtility */
         $configurationUtility = $this->objectManager->get(ConfigurationUtility::class);
 
@@ -130,7 +124,7 @@ class UserAuthHook
         $this->backendUserService = $this->objectManager->get(
             BackendUserService::class,
             $this->backendUserAuthentication,
-            $databaseConnection,
+            $GLOBALS['TYPO3_DB'],
             $extensionConfiguration,
             $compositeValidator,
             $saltingInstance

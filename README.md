@@ -60,6 +60,13 @@ Run each command in the project root directory.
 * Website: http://www.move-elevator.de
 
 # Changelog
+2017-12-04 - Philipp Heckelt <phe@move-elevator.de>
+```
+Release 1.0.4
+---
+Feature: Use internal database connection for TYPOv8 compatibility, remove database connection factory
+```
+
 2017-12-08 - Philipp Heckelt <phe@move-elevator.de>
 ```
 Release 1.0.3
