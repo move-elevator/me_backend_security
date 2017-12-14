@@ -98,10 +98,7 @@ class UserAuthHook
     private function initializeObjects($pObj)
     {
         /** @var DatabaseConnection $databaseConnection */
-        $databaseConnection = DatabaseConnectionFactory::create(
-            $this->objectManager,
-            $GLOBALS['TYPO3_CONF_VARS']['DB']
-        );
+        $databaseConnection = $GLOBALS['TYPO3_DB'];
 
         /** @var ConfigurationUtility $configurationUtility */
         $configurationUtility = $this->objectManager->get(ConfigurationUtility::class);
