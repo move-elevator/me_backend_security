@@ -6,5 +6,6 @@ config.tx_mebackendsecurity {
 		4 = MoveElevator\MeBackendSecurity\Validation\Validator\DigitsValidator
 		5 = MoveElevator\MeBackendSecurity\Validation\Validator\CapitalCharactersValidator
 		6 = MoveElevator\MeBackendSecurity\Validation\Validator\LowercaseCharactersValidator
+		7 = MoveElevator\MeBackendSecurity\Validation\Validator\SamePasswordValidator
 	}
 }

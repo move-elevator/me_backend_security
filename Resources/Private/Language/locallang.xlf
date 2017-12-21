@@ -36,6 +36,9 @@
 			<trans-unit id="error.1510742747" xml:space="preserve">
 				<source>User does not exist</source>
 			</trans-unit>
+			<trans-unit id="error.1513850698" xml:space="preserve">
+				<source>The current and the new password must be different</source>
+			</trans-unit>
 			<trans-unit id="rule.passwordlength">
 				<source>At least %s character</source>
 			</trans-unit>
@@ -65,6 +68,9 @@
 			</trans-unit>
 			<trans-unit id="rule.lowercasechar.plural">
 				<source>At least %s lowercase characters</source>
+			</trans-unit>
+			<trans-unit id="rule.differentPasswords">
+				<target>New and old password not the same</target>
 			</trans-unit>
 			<trans-unit id="password.current">
 				<source>Current password</source>

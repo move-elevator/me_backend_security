@@ -36,6 +36,9 @@
 			<trans-unit id="error.1510742747" xml:space="preserve">
 				<target>Benutzer existiert nicht</target>
 			</trans-unit>
+			<trans-unit id="error.1513850698" xml:space="preserve">
+				<target>Das aktuelle und das neue Passwort müssen sich unterscheiden</target>
+			</trans-unit>
 			<trans-unit id="rule.passwordlength">
 				<target>Mindestens %s Zeichen</target>
 			</trans-unit>
@@ -65,6 +68,9 @@
 			</trans-unit>
 			<trans-unit id="rule.lowercasechar.plural">
 				<target>Mindestens %s Kleinbuchstaben</target>
+			</trans-unit>
+			<trans-unit id="rule.differentPasswords">
+				<target>Neues und altes Passwort nicht identisch</target>
 			</trans-unit>
 			<trans-unit id="password.current">
 				<target>Aktuelles Passwort</target>
