@@ -93,8 +93,8 @@ class UserEditHook
 
         /** @var PasswordChangeRequest $passwordChangeRequest */
         $passwordChangeRequest = PasswordChangeRequestFactory::create(
-            $requestParameters,
-            $this->rsaEncryptionDecoder
+            $this->rsaEncryptionDecoder,
+            $requestParameters
         );
 
         $validationResult = $compositeValidator->validate($passwordChangeRequest);
