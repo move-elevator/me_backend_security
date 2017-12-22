@@ -31,8 +31,8 @@ class PasswordChangeRequestFactoryTest extends TestCase
         $expectedPasswordChangeRequest = $this->getPasswordChangeRequestFixture();
 
         $passwordChangeRequest = PasswordChangeRequestFactory::create(
-            $rawPasswordChangeRequest,
-            $this->rsaEncryptionDecoder
+            $this->rsaEncryptionDecoder,
+            $rawPasswordChangeRequest
         );
 
         $this->assertEquals($passwordChangeRequest->getPassword(), $expectedPasswordChangeRequest->getPassword());
@@ -46,6 +46,6 @@ class PasswordChangeRequestFactoryTest extends TestCase
     {
         $this->expectException(\InvalidArgumentException::class);
 
-        PasswordChangeRequestFactory::create([], $this->rsaEncryptionDecoder);
+        PasswordChangeRequestFactory::create($this->rsaEncryptionDecoder, []);
     }
 }
