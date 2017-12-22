@@ -64,6 +64,12 @@ class UsernamePasswordLoginProvider extends \TYPO3\CMS\Backend\LoginProvider\Use
             $view->assign('errors', unserialize(base64_decode(urldecode($errors))));
         }
 
+        $messages = GeneralUtility::_GP('m');
+
+        if (empty($messages) === false) {
+            $view->assign('messages', unserialize(base64_decode(urldecode($messages))));
+        }
+
         $pageRenderer->loadRequireJsModule(
             'TYPO3/CMS/MeBackendSecurity/PasswordValidator'
         );

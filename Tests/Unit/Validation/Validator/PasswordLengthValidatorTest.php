@@ -42,7 +42,7 @@ class PasswordLengthValidatorTest extends TestCase
     public function testNegativeValidation()
     {
         $passwordChangeRequest = new PasswordChangeRequest();
-        $passwordChangeRequest->setPassword('foo');
+        $passwordChangeRequest->setPassword('');
 
         $result = $this->passwordLengthValidator->validate($passwordChangeRequest);
 

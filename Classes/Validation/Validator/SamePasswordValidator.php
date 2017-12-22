@@ -2,15 +2,14 @@
 
 namespace MoveElevator\MeBackendSecurity\Validation\Validator;
 
-use MoveElevator\MeBackendSecurity\Domain\Model\ExtensionConfiguration;
 use MoveElevator\MeBackendSecurity\Domain\Model\PasswordChangeRequest;
 
 /**
  * @package MoveElevator\MeBackendSecurity\Validation\Validator
  */
-class PasswordLengthValidator extends AbstractValidator
+class SamePasswordValidator extends AbstractValidator
 {
-    const ERROR_CODE = 1510742741;
+    const ERROR_CODE = 1513850698;
 
     /**
      * @param PasswordChangeRequest $passwordChangeRequest
@@ -19,16 +18,16 @@ class PasswordLengthValidator extends AbstractValidator
      */
     protected function isValid($passwordChangeRequest)
     {
-        /** @var ExtensionConfiguration $configuration */
-        $configuration = $this->options['extensionConfiguration'];
+        if (empty($passwordChangeRequest->getCurrentPassword())) {
+            return;
+        }
 
-        if (strlen($passwordChangeRequest->getPassword()) >= $configuration->getPasswordLength()) {
+        if ($passwordChangeRequest->getCurrentPassword() !== $passwordChangeRequest->getPassword()) {
             return;
         }
 
         $this->addTranslatedError(
-            self::ERROR_CODE,
-            $configuration->getPasswordLength()
+            self::ERROR_CODE
         );
     }
 }

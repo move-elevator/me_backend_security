@@ -10,12 +10,33 @@ class PasswordChangeRequest
     /**
      * @var string
      */
+    protected $currentPassword = '';
+
+    /**
+     * @var string
+     */
     protected $password = '';
 
     /**
      * @var string
      */
     protected $passwordConfirmation = '';
+
+    /**
+     * @return string
+     */
+    public function getCurrentPassword()
+    {
+        return $this->currentPassword;
+    }
+
+    /**
+     * @param string $currentPassword
+     */
+    public function setCurrentPassword($currentPassword)
+    {
+        $this->currentPassword = $currentPassword;
+    }
 
     /**
      * @return string

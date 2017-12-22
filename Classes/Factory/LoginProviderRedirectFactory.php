@@ -13,11 +13,12 @@ class LoginProviderRedirectFactory
 
     /**
      * @param string $username
-     * @param array  $errorCodes
+     * @param array  $errors
+     * @param array  $messages
      *
      * @return LoginProviderRedirect
      */
-    public static function create($username = '', array $errorCodes = [])
+    public static function create($username = '', array $errors = [], array $messages = [])
     {
         if (is_string($username) === false) {
             throw new \InvalidArgumentException(
@@ -34,8 +35,12 @@ class LoginProviderRedirectFactory
             $parameter['u'] = $username;
         }
 
-        if (empty($errorCodes) === false) {
-            $parameter['e'] = urlencode(base64_encode(serialize($errorCodes)));
+        if (empty($errors) === false) {
+            $parameter['e'] = urlencode(base64_encode(serialize($errors)));
+        }
+
+        if (empty($messages) === false) {
+            $parameter['m'] = urlencode(base64_encode(serialize($messages)));
         }
 
         $loginProviderRedirect = new LoginProviderRedirect();

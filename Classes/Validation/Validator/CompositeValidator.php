@@ -57,7 +57,8 @@ class CompositeValidator extends AbstractValidator
         foreach ($result->getErrors() as $error) {
             $this->addError(
                 $error->getMessage(),
-                $error->getCode()
+                $error->getCode(),
+                $error->getArguments()
             );
         }
     }

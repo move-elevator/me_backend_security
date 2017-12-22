@@ -29,6 +29,9 @@ class LowercaseCharactersValidator extends AbstractValidator
             return;
         }
 
-        $this->addTranslatedError(self::ERROR_CODE);
+        $this->addTranslatedError(
+            self::ERROR_CODE,
+            $configuration->getMinimumLowercaseCharacters()
+        );
     }
 }

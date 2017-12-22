@@ -3,8 +3,9 @@ define( [ "jquery" ], function( $ ) {
 
 	var PasswordValidator = {};
 
-	PasswordValidator.field = $( "#validator-field" );
 	PasswordValidator.view = $( "#validator-view" );
+	PasswordValidator.field = $( "#validator-field" );
+	PasswordValidator.currentPassword = $( "#t3-password" );
 	PasswordValidator.rules = PasswordValidator.view.find( ".rule" );
 
 	PasswordValidator.reset = function() {
@@ -94,6 +95,16 @@ define( [ "jquery" ], function( $ ) {
 		}
 	};
 
+	PasswordValidator.validateDifferentPasswords = function() {
+		var rule = PasswordValidator.view.find( ".rule[data-validator-rule='differentPasswords']" );
+
+		if ( PasswordValidator.currentPassword.val() !== '' &&
+			PasswordValidator.currentPassword.val() !== PasswordValidator.field.val() ) {
+			rule.find( ".icon" ).eq( 0 ).hide();
+			rule.find( ".icon" ).eq( 1 ).show();
+		}
+	};
+
 	PasswordValidator.init = function() {
 		PasswordValidator.reset();
 		PasswordValidator.view.hide();
@@ -114,6 +125,7 @@ define( [ "jquery" ], function( $ ) {
 			PasswordValidator.validateDigit();
 			PasswordValidator.validateCapitalChar();
 			PasswordValidator.validateLowercaseChar();
+			PasswordValidator.validateDifferentPasswords();
 		} );
 	};
 

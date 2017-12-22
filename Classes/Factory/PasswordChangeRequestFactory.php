@@ -13,11 +13,15 @@ class PasswordChangeRequestFactory
     /**
      * @param array                $changeRequestParameters
      * @param RsaEncryptionDecoder $rsaEncryptionDecoder
+     * @param string               $currentPassword
      *
      * @return PasswordChangeRequest
      */
-    public static function create(array $changeRequestParameters, RsaEncryptionDecoder $rsaEncryptionDecoder)
-    {
+    public static function create(
+        RsaEncryptionDecoder $rsaEncryptionDecoder,
+        array $changeRequestParameters,
+        $currentPassword = ''
+    ) {
         if (empty($changeRequestParameters['password']) ||
             empty($changeRequestParameters['password2'])
         ) {
@@ -28,6 +32,13 @@ class PasswordChangeRequestFactory
         }
 
         $passwordChange = new PasswordChangeRequest();
+
+        if (empty($currentPassword) === false) {
+            $passwordChange->setCurrentPassword(
+                $rsaEncryptionDecoder->decrypt($currentPassword)
+            );
+        }
+
         $passwordChange->setPassword(
             $rsaEncryptionDecoder->decrypt($changeRequestParameters['password'])
         );

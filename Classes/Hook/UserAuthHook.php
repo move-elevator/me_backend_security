@@ -33,6 +33,7 @@ class UserAuthHook
 {
     const EXTKEY = 'me_backend_security';
     const PARAMETER_IDENTIFIER = 'tx_mebackendsecurity';
+    const PASSWORD_IDENTIFIER = 'userident';
 
     /**
      * @var ObjectManager
@@ -158,15 +159,17 @@ class UserAuthHook
     private function processPasswordChange()
     {
         $requestParameters = GeneralUtility::_GP(self::PARAMETER_IDENTIFIER);
+        $currentPassword = GeneralUtility::_GP(self::PASSWORD_IDENTIFIER);
 
-        if (empty($requestParameters)) {
+        if (empty($requestParameters) || empty($currentPassword)) {
             return;
         }
 
         /** @var PasswordChangeRequest $passwordChangeRequest */
         $passwordChangeRequest = PasswordChangeRequestFactory::create(
+            $this->rsaEncryptionDecoder,
             $requestParameters,
-            $this->rsaEncryptionDecoder
+            $currentPassword
         );
 
         $result = $this->backendUserService->handlePasswordChangeRequest($passwordChangeRequest);

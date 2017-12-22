@@ -6,35 +6,56 @@
 			<trans-unit id="title" xml:space="preserve">
 				<source>Your password have to be changed</source>
 			</trans-unit>
-			<trans-unit id="description" xml:space="preserve">
+			<trans-unit id="message.1513928250" xml:space="preserve">
+				<source>Before the first login, the password of your account must be changed.</source>
+			</trans-unit>
+			<trans-unit id="message.default.singular" xml:space="preserve">
 				<source>For security reasons, your password have to be changed every day. Please change it now to log in.</source>
 			</trans-unit>
-			<trans-unit id="description.plural" xml:space="preserve">
+			<trans-unit id="message.default" xml:space="preserve">
 				<source>For security reasons, your password have to be changed every %s days. Please change it now to log in.</source>
 			</trans-unit>
 			<trans-unit id="error.title" xml:space="preserve">
 				<source>Your password change did not succeed</source>
 			</trans-unit>
 			<trans-unit id="error.1510742741" xml:space="preserve">
-				<source>The password is to short</source>
+				<source>The password is shorter then %s characters</source>
+			</trans-unit>
+			<trans-unit id="error.1510742741.singular" xml:space="preserve">
+				<source>The password is shorter then %s character</source>
 			</trans-unit>
 			<trans-unit id="error.1510742742" xml:space="preserve">
 				<source>The passwords do not match</source>
 			</trans-unit>
 			<trans-unit id="error.1510742743" xml:space="preserve">
-				<source>Not enough special character</source>
+				<source>The password contains less then %s special characters</source>
+			</trans-unit>
+			<trans-unit id="error.1510742743.singular" xml:space="preserve">
+				<source>The password contains less then %s special character</source>
 			</trans-unit>
 			<trans-unit id="error.1510742744" xml:space="preserve">
-				<source>Not enough digits</source>
+				<source>The password contains less then %s digits</source>
+			</trans-unit>
+			<trans-unit id="error.1510742744.singular" xml:space="preserve">
+				<source>The password contains less then %s digit</source>
 			</trans-unit>
 			<trans-unit id="error.1510742745" xml:space="preserve">
-				<source>Not enough capital character</source>
+				<source>The password contains less then %s capital characters</source>
+			</trans-unit>
+			<trans-unit id="error.1510742745.singular" xml:space="preserve">
+				<source>The password contains less then %s capital character</source>
 			</trans-unit>
 			<trans-unit id="error.1510742746" xml:space="preserve">
-				<source>Not enough lowercase character</source>
+				<source>The password contains less then %s lowercase characters</source>
+			</trans-unit>
+			<trans-unit id="error.1510742746.singular" xml:space="preserve">
+				<source>The password contains less then %s lowercase character</source>
 			</trans-unit>
 			<trans-unit id="error.1510742747" xml:space="preserve">
 				<source>User does not exist</source>
+			</trans-unit>
+			<trans-unit id="error.1513850698" xml:space="preserve">
+				<source>The new password is the same as the current password</source>
 			</trans-unit>
 			<trans-unit id="rule.passwordlength">
 				<source>At least %s character</source>
@@ -65,6 +86,9 @@
 			</trans-unit>
 			<trans-unit id="rule.lowercasechar.plural">
 				<source>At least %s lowercase characters</source>
+			</trans-unit>
+			<trans-unit id="rule.differentPasswords">
+				<target>New and old password not the same</target>
 			</trans-unit>
 			<trans-unit id="password.current">
 				<source>Current password</source>
