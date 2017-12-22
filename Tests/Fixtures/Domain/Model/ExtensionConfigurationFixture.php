@@ -32,7 +32,7 @@ trait ExtensionConfigurationFixture
     /**
      * @var int
      */
-    protected $passwordLength = 8;
+    protected $passwordLength = 1;
 
     /**
      * @var int
