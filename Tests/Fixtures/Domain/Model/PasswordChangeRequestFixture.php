@@ -43,9 +43,11 @@ trait PasswordChangeRequestFixture
     protected function getRawPasswordChangeRequestFixture()
     {
         return [
-            'userident' => $this->currentPassword,
-            'password' => $this->password,
-            'password2' => $this->passwordConfirmation
+            'changeRequestParameters' => [
+                'password' => $this->password,
+                'password2' => $this->passwordConfirmation
+            ],
+            'currentPassword' => $this->currentPassword
         ];
     }
 }
