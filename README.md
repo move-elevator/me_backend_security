@@ -60,6 +60,15 @@ Run each command in the project root directory.
 * Website: http://www.move-elevator.de
 
 # Changelog
+2017-12-22 - Philipp Heckelt <phe@move-elevator.de>
+```
+Release 1.1.0
+---
+Feature: Optimized validator error messages
+Feature: Validator for same passwords
+Feature: Different Message for first password change
+```
+
 2017-12-04 - Philipp Heckelt <phe@move-elevator.de>
 ```
 Release 1.0.4
@@ -92,3 +101,7 @@ Bugfix: Extension configuration
 ```
 Release 1.0.0
 ```
+
+# Roadmap
+* Blacklist for usernames like "admin"
+* Brute force protection
