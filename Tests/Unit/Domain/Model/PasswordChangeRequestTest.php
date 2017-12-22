@@ -16,6 +16,7 @@ class PasswordChangeRequestTest extends TestCase
     {
         $passwordChangeRequest = $this->getPasswordChangeRequestFixture();
 
+        $this->assertEquals($this->currentPassword, $passwordChangeRequest->getCurrentPassword());
         $this->assertEquals($this->password, $passwordChangeRequest->getPassword());
         $this->assertEquals($this->passwordConfirmation, $passwordChangeRequest->getPasswordConfirmation());
     }

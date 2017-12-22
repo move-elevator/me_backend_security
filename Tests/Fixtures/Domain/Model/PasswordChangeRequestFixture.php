@@ -12,6 +12,11 @@ trait PasswordChangeRequestFixture
     /**
      * @var string
      */
+    protected $currentPassword = 'foo';
+
+    /**
+     * @var string
+     */
     protected $password = 'fooBar';
 
     /**
@@ -25,6 +30,7 @@ trait PasswordChangeRequestFixture
     protected function getPasswordChangeRequestFixture()
     {
         $passwordChangeRequest = new PasswordChangeRequest();
+        $passwordChangeRequest->setCurrentPassword($this->currentPassword);
         $passwordChangeRequest->setPassword($this->password);
         $passwordChangeRequest->setPasswordConfirmation($this->passwordConfirmation);
 
@@ -37,6 +43,7 @@ trait PasswordChangeRequestFixture
     protected function getRawPasswordChangeRequestFixture()
     {
         return [
+            'userident' => $this->currentPassword,
             'password' => $this->password,
             'password2' => $this->passwordConfirmation
         ];
