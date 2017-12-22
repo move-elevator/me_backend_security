@@ -6,10 +6,13 @@
 			<trans-unit id="title" xml:space="preserve">
 				<target>Ihr Passwort muss geändert werden</target>
 			</trans-unit>
-			<trans-unit id="description" xml:space="preserve">
+			<trans-unit id="message.1513928250" xml:space="preserve">
+				<target>Vor dem ersten Login muss das Kennwort Ihres Accounts geändert werden.</target>
+			</trans-unit>
+			<trans-unit id="message.default.singular" xml:space="preserve">
 				<target>Aus Sicherheitsgründen muss Ihr Passwort jeden Tag geändert werden. Bitte ändern Sie es jetzt um sich einzuloggen.</target>
 			</trans-unit>
-			<trans-unit id="description.plural" xml:space="preserve">
+			<trans-unit id="message.default" xml:space="preserve">
 				<target>Aus Sicherheitsgründen muss Ihr Passwort alle %s Tage geändert werden. Bitte ändern Sie es jetzt um sich einzuloggen.</target>
 			</trans-unit>
 			<trans-unit id="error.title" xml:space="preserve">

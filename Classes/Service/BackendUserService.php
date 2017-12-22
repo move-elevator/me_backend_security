@@ -21,6 +21,7 @@ class BackendUserService
     const USERS_TABLE_NAME = 'be_users';
     const LASTCHANGE_COLUMN_NAME = 'tx_mebackendsecurity_lastpasswordchange';
     const USER_DONT_EXIST_ERROR_CODE = 1510742747;
+    const FIRST_CHANGE_MESSAGE_CODE = 1513928250;
 
     /**
      * mixed
@@ -115,12 +116,22 @@ class BackendUserService
      */
     public function checkPasswordLifeTime()
     {
+        $lastPasswordChange = intval($this->backendUserAuthentication->user[self::LASTCHANGE_COLUMN_NAME]);
+
+        if ($lastPasswordChange === 0) {
+            return LoginProviderRedirectFactory::create(
+                $this->backendUserAuthentication->user['username'],
+                [],
+                [self::FIRST_CHANGE_MESSAGE_CODE]
+            );
+        }
+
         $validUntil = $this->extensionConfiguration->getMaximumValidDays();
 
         $now = new \DateTime();
         $expireDeathLine = new \DateTime();
         $expireDeathLine->setTimestamp(
-            intval($this->backendUserAuthentication->user[self::LASTCHANGE_COLUMN_NAME])
+            $lastPasswordChange
         );
         $expireDeathLine->add(
             new \DateInterval('P' . $validUntil . 'D')
