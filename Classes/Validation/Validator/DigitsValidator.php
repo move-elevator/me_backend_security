@@ -29,16 +29,9 @@ class DigitsValidator extends AbstractValidator
             return;
         }
 
-        $singular = false;
-
-        if ($configuration->getMinimumDigits() === 1) {
-            $singular = true;
-        }
-
         $this->addTranslatedError(
             self::ERROR_CODE,
-            $configuration->getMinimumDigits(),
-            $singular
+            $configuration->getMinimumDigits()
         );
     }
 }

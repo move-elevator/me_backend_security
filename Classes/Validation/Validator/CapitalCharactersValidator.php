@@ -29,16 +29,9 @@ class CapitalCharactersValidator extends AbstractValidator
             return;
         }
 
-        $singular = false;
-
-        if ($configuration->getMinimumCapitalCharacters() === 1) {
-            $singular = true;
-        }
-
         $this->addTranslatedError(
             self::ERROR_CODE,
-            $configuration->getMinimumCapitalCharacters(),
-            $singular
+            $configuration->getMinimumCapitalCharacters()
         );
     }
 }

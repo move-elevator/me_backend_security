@@ -29,16 +29,9 @@ class SpecialCharactersValidator extends AbstractValidator
             return;
         }
 
-        $singular = false;
-
-        if ($configuration->getMinimumSpecialCharacters() === 1) {
-            $singular = true;
-        }
-
         $this->addTranslatedError(
             self::ERROR_CODE,
-            $configuration->getMinimumSpecialCharacters(),
-            $singular
+            $configuration->getMinimumSpecialCharacters()
         );
     }
 }

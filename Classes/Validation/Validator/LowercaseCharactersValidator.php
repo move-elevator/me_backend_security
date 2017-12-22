@@ -29,16 +29,9 @@ class LowercaseCharactersValidator extends AbstractValidator
             return;
         }
 
-        $singular = false;
-
-        if ($configuration->getMinimumLowercaseCharacters() === 1) {
-            $singular = true;
-        }
-
         $this->addTranslatedError(
             self::ERROR_CODE,
-            $configuration->getMinimumLowercaseCharacters(),
-            $singular
+            $configuration->getMinimumLowercaseCharacters()
         );
     }
 }
