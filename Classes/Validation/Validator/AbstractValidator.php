@@ -23,14 +23,14 @@ abstract class AbstractValidator extends \TYPO3\CMS\Extbase\Validation\Validator
      */
     protected function addTranslatedError($errorCode, $minimum = 0)
     {
-        $languageKey = 'error.' . $errorCode;
+        $languageKey = 'error.' . (string)$errorCode;
         $arguments = [
             'minimum' => $minimum,
             'singular' => false
         ];
 
         if ($minimum === 1) {
-            $languageKey = 'error.' . $errorCode . '.singular';
+            $languageKey = 'error.' . (string)$errorCode . '.singular';
             $arguments['singular'] = true;
         }
 
@@ -40,7 +40,7 @@ abstract class AbstractValidator extends \TYPO3\CMS\Extbase\Validation\Validator
                 'me_backend_security',
                 $arguments
             ),
-            $errorCode,
+            (int)$errorCode,
             $arguments
         );
     }
