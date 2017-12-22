@@ -82,7 +82,7 @@ class BackendUserService
         if ($validationResults->hasErrors()) {
             return LoginProviderRedirectFactory::create(
                 $this->backendUserAuthentication->user['username'],
-                $this->getErrorCodes($validationResults)
+                $this->getErrorCodesWithArguments($validationResults)
             );
         }
 
@@ -164,15 +164,18 @@ class BackendUserService
      *
      * @return array
      */
-    private function getErrorCodes($validationResults)
+    private function getErrorCodesWithArguments($validationResults)
     {
-        $errorCodes = [];
+        $errors = [];
 
         /** @var Error $error */
         foreach ($validationResults->getErrors() as $error) {
-            $errorCodes[] = $error->getCode();
+            $errors[] = [
+                'errorCode' => $error->getCode(),
+                'arguments' => $error->getArguments()
+            ];
         }
 
-        return $errorCodes;
+        return $errors;
     }
 }

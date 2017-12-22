@@ -16,57 +16,72 @@
 				<target>Passwortänderung fehlgeschlagen</target>
 			</trans-unit>
 			<trans-unit id="error.1510742741" xml:space="preserve">
-				<target>Das Passwort ist zu kurz</target>
+				<target>Das Passwort ist kürzer als %s Zeichen</target>
+			</trans-unit>
+			<trans-unit id="error.1510742741.singular" xml:space="preserve">
+				<target>Das Passwort ist kürzer als %s Zeichen</target>
 			</trans-unit>
 			<trans-unit id="error.1510742742" xml:space="preserve">
 				<target>Die Passwörter stimmen nicht überein</target>
 			</trans-unit>
 			<trans-unit id="error.1510742743" xml:space="preserve">
-				<target>Nicht genügend Sonderzeichen</target>
+				<target>Das Passwort hat weniger als %s Sonderzeichen</target>
+			</trans-unit>
+			<trans-unit id="error.1510742743.singular" xml:space="preserve">
+				<target>Das Passwort hat weniger als %s Sonderzeichen</target>
 			</trans-unit>
 			<trans-unit id="error.1510742744" xml:space="preserve">
-				<target>Nicht genügend Zahlen</target>
+				<target>Das Passwort hat weniger als %s Zahlen</target>
+			</trans-unit>
+			<trans-unit id="error.1510742744.singular" xml:space="preserve">
+				<target>Das Passwort hat weniger als %s Zahl</target>
 			</trans-unit>
 			<trans-unit id="error.1510742745" xml:space="preserve">
-				<target>Nicht genügend Großbuchstaben</target>
+				<target>Das Passwort hat weniger als %s Großbuchstaben</target>
+			</trans-unit>
+			<trans-unit id="error.1510742745.singular" xml:space="preserve">
+				<target>Das Passwort hat weniger als %s Großbuchstaben</target>
 			</trans-unit>
 			<trans-unit id="error.1510742746" xml:space="preserve">
-				<target>Nicht genügend Kleinbuchstaben</target>
+				<target>Das Passwort hat weniger als %s Kleinbuchstaben</target>
+			</trans-unit>
+			<trans-unit id="error.1510742746.singular" xml:space="preserve">
+				<target>Das Passwort hat weniger als %s Kleinbuchstaben</target>
 			</trans-unit>
 			<trans-unit id="error.1510742747" xml:space="preserve">
 				<target>Benutzer existiert nicht</target>
 			</trans-unit>
 			<trans-unit id="error.1513850698" xml:space="preserve">
-				<target>Das aktuelle und das neue Passwort müssen sich unterscheiden</target>
+				<target>Das neue Passwort ist identisch zum aktuellen Passwort</target>
+			</trans-unit>
+			<trans-unit id="rule.passwordlength.singular">
+				<target>Mindestens %s Zeichen</target>
 			</trans-unit>
 			<trans-unit id="rule.passwordlength">
 				<target>Mindestens %s Zeichen</target>
 			</trans-unit>
-			<trans-unit id="rule.passwordlength.plural">
-				<target>Mindestens %s Zeichen</target>
+			<trans-unit id="rule.specialchar.singular">
+				<target>Mindestens %s Sonderzeichen</target>
 			</trans-unit>
 			<trans-unit id="rule.specialchar">
 				<target>Mindestens %s Sonderzeichen</target>
 			</trans-unit>
-			<trans-unit id="rule.specialchar.plural">
-				<target>Mindestens %s Sonderzeichen</target>
-			</trans-unit>
-			<trans-unit id="rule.digit">
+			<trans-unit id="rule.digit.singular">
 				<target>Mindestens %s Zahl</target>
 			</trans-unit>
-			<trans-unit id="rule.digit.plural">
+			<trans-unit id="rule.digit">
 				<target>Mindestens %s Zahlen</target>
 			</trans-unit>
-			<trans-unit id="rule.capitalchar">
+			<trans-unit id="rule.capitalchar.singular">
 				<target>Mindestens %s Großbuchstabe</target>
 			</trans-unit>
-			<trans-unit id="rule.capitalchar.plural">
+			<trans-unit id="rule.capitalchar">
 				<target>Mindestens %s Großbuchstaben</target>
 			</trans-unit>
-			<trans-unit id="rule.lowercasechar">
+			<trans-unit id="rule.lowercasechar.singular">
 				<target>Mindestens %s Kleinbuchstabe</target>
 			</trans-unit>
-			<trans-unit id="rule.lowercasechar.plural">
+			<trans-unit id="rule.lowercasechar">
 				<target>Mindestens %s Kleinbuchstaben</target>
 			</trans-unit>
 			<trans-unit id="rule.differentPasswords">

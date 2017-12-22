@@ -26,6 +26,16 @@ class PasswordLengthValidator extends AbstractValidator
             return;
         }
 
-        $this->addTranslatedError(self::ERROR_CODE);
+        $singular = false;
+
+        if ($configuration->getPasswordLength() === 1) {
+            $singular = true;
+        }
+
+        $this->addTranslatedError(
+            self::ERROR_CODE,
+            $configuration->getPasswordLength(),
+            $singular
+        );
     }
 }
