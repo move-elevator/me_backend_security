@@ -29,6 +29,17 @@ class SamePasswordValidatorTest extends TestCase
             ->andReturn('translated message');
     }
 
+    public function testIgnoredValidation()
+    {
+        $passwordChangeRequest = new PasswordChangeRequest();
+        $passwordChangeRequest->setPassword('bar');
+        $passwordChangeRequest->setPasswordConfirmation('bar');
+
+        $result = $this->samePasswordValidator->validate($passwordChangeRequest);
+
+        $this->assertEquals(count($result->getErrors()), 0);
+    }
+
     public function testPositiveValidation()
     {
         $passwordChangeRequest = new PasswordChangeRequest();
