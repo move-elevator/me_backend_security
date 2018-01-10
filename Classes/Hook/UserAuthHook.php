@@ -73,6 +73,10 @@ class UserAuthHook
      */
     public function postUserLookUp($params, $pObj)
     {
+        if (TYPO3_MODE === 'FE') {
+            return;
+        }
+
         if ($pObj instanceof BackendUserAuthentication === false) {
             return;
         }
