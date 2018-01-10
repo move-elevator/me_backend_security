@@ -60,6 +60,13 @@ Run each command in the project root directory.
 * Website: http://www.move-elevator.de
 
 # Changelog
+2018-01-10 - Philipp Heckelt <phe@move-elevator.de>
+```
+Release 1.1.1
+---
+Bugfix: Fix hook exception in frontend mode on active backend user login
+```
+
 2017-12-22 - Philipp Heckelt <phe@move-elevator.de>
 ```
 Release 1.1.0
