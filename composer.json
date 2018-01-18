@@ -3,7 +3,7 @@
   "description": "Advanced security for the TYPO3 backend",
   "type": "typo3-cms-extension",
   "license": [
-    "GPL-2.0+"
+    "GPL-2.0-or-later"
   ],
   "require": {
     "php": ">=5.6"
