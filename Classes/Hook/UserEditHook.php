@@ -18,6 +18,8 @@ use TYPO3\CMS\Extbase\Object\ObjectManager;
 use TYPO3\CMS\Extbase\Utility\LocalizationUtility;
 use TYPO3\CMS\Extensionmanager\Utility\ConfigurationUtility;
 use TYPO3\CMS\Rsaauth\RsaEncryptionDecoder;
+use TYPO3\CMS\Saltedpasswords\Salt\SaltInterface;
+use TYPO3\CMS\Saltedpasswords\Salt\SaltFactory;
 use TYPO3\CMS\Setup\Controller\SetupModuleController;
 
 /**
@@ -70,6 +72,7 @@ class UserEditHook
         }
 
         $requestParameters = $params['be_user_data'];
+        $currentPassword = null;
 
         /** @var ConfigurationUtility $configurationUtility */
         $configurationUtility = $this->objectManager->get(ConfigurationUtility::class);
@@ -91,10 +94,15 @@ class UserEditHook
             )
         );
 
+        if ($this->isPasswordSameAsCurrent($params['be_user_data']['password'])) {
+            $currentPassword = $params['be_user_data']['password'];
+        }
+
         /** @var PasswordChangeRequest $passwordChangeRequest */
         $passwordChangeRequest = PasswordChangeRequestFactory::create(
             $this->rsaEncryptionDecoder,
-            $requestParameters
+            $requestParameters,
+            $currentPassword
         );
 
         $validationResult = $compositeValidator->validate($passwordChangeRequest);
@@ -107,6 +115,22 @@ class UserEditHook
 
         $params['be_user_data']['password'] = '';
         $params['be_user_data']['password2'] = '';
+    }
+
+    /**
+     * @param $password
+     *
+     * @return bool
+     */
+    protected function isPasswordSameAsCurrent($password)
+    {
+        /** @var SaltInterface $saltingInstance */
+        $saltingInstance = SaltFactory::getSaltingInstance(null, 'BE');
+
+        return $saltingInstance->checkPassword(
+            $password,
+            $GLOBALS['BE_USER']->user['password']
+        );
     }
 
     /**
