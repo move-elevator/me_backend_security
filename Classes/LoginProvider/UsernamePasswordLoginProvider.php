@@ -57,6 +57,7 @@ class UsernamePasswordLoginProvider extends \TYPO3\CMS\Backend\LoginProvider\Use
         );
 
         $view->assign('configuration', $this->extensionConfiguration);
+        $view->assign('presetUsername', GeneralUtility::_GP('u'));
 
         $errors = GeneralUtility::_GP('e');
 
