@@ -89,6 +89,25 @@ class BackendUserServiceTest extends TestCase
         $this->assertNull($result);
     }
 
+    public function testCheckPasswordIsNonMigrated()
+    {
+        $this->backendUserAuthentication->user['tx_mebackendsecurity_lastpasswordchange'] = 0;
+        $this->backendUserAuthentication->user['lastlogin'] = time();
+        $this->backendUserAuthentication->user['username'] = 'testuser';
+
+        $backendUserService = new BackendUserService(
+            $this->backendUserAuthentication,
+            $this->databaseConnection,
+            $this->extensionConfiguration,
+            $this->compositeValidator,
+            $this->saltingInstance
+        );
+
+        $result = $backendUserService->checkPasswordLifeTime();
+
+        $this->assertNull($result);
+    }
+
     public function testCheckPasswordIsNeverChanged()
     {
         $this->backendUserAuthentication->user['tx_mebackendsecurity_lastpasswordchange'] = 0;
