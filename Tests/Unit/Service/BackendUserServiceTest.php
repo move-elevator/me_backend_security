@@ -74,6 +74,7 @@ class BackendUserServiceTest extends TestCase
     public function testCheckPasswordIsValid()
     {
         $this->backendUserAuthentication->user['tx_mebackendsecurity_lastpasswordchange'] = time();
+        $this->backendUserAuthentication->user['lastlogin'] = time();
 
         $backendUserService = new BackendUserService(
             $this->backendUserAuthentication,
@@ -91,6 +92,7 @@ class BackendUserServiceTest extends TestCase
     public function testCheckPasswordIsNeverChanged()
     {
         $this->backendUserAuthentication->user['tx_mebackendsecurity_lastpasswordchange'] = 0;
+        $this->backendUserAuthentication->user['lastlogin'] = 0;
         $this->backendUserAuthentication->user['username'] = 'testuser';
 
         $backendUserService = new BackendUserService(
@@ -109,6 +111,7 @@ class BackendUserServiceTest extends TestCase
     public function testCheckPasswordIsInvalid()
     {
         $this->backendUserAuthentication->user['tx_mebackendsecurity_lastpasswordchange'] = 631152000;
+        $this->backendUserAuthentication->user['lastlogin'] = time();
         $this->backendUserAuthentication->user['username'] = 'testuser';
 
         $backendUserService = new BackendUserService(
