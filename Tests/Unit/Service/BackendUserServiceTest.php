@@ -93,6 +93,7 @@ class BackendUserServiceTest extends TestCase
     {
         $this->backendUserAuthentication->user['tx_mebackendsecurity_lastpasswordchange'] = 0;
         $this->backendUserAuthentication->user['lastlogin'] = time();
+        $this->backendUserAuthentication->user['uid'] = 1;
         $this->backendUserAuthentication->user['username'] = 'testuser';
 
         $backendUserService = new BackendUserService(
