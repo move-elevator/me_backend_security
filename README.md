@@ -60,6 +60,13 @@ Run each command in the project root directory.
 * Website: http://www.move-elevator.de
 
 # Changelog
+2018-01-18 - Philipp Heckelt <phe@move-elevator.de>
+```
+Release 1.1.2
+---
+Bugfix: Fix redirect on non-ssl websites if password change is required
+```
+
 2018-01-10 - Philipp Heckelt <phe@move-elevator.de>
 ```
 Release 1.1.1
