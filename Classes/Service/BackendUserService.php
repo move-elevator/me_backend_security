@@ -20,6 +20,7 @@ class BackendUserService
 {
     const USERS_TABLE_NAME = 'be_users';
     const LASTCHANGE_COLUMN_NAME = 'tx_mebackendsecurity_lastpasswordchange';
+    const LASTLOGIN_COLUMN_NAME = 'lastlogin';
     const USER_DONT_EXIST_ERROR_CODE = 1510742747;
     const FIRST_CHANGE_MESSAGE_CODE = 1513928250;
 
@@ -116,6 +117,12 @@ class BackendUserService
      */
     public function checkPasswordLifeTime()
     {
+        if ($this->isNonMigratedAccount()) {
+            $this->migrateAccount();
+
+            return null;
+        }
+
         $lastPasswordChange = intval($this->backendUserAuthentication->user[self::LASTCHANGE_COLUMN_NAME]);
 
         if ($lastPasswordChange === 0) {
@@ -143,6 +150,42 @@ class BackendUserService
 
         return LoginProviderRedirectFactory::create(
             $this->backendUserAuthentication->user['username']
+        );
+    }
+
+    /**
+     * @return bool
+     */
+    private function isNonMigratedAccount()
+    {
+        $lastPasswordChange = intval($this->backendUserAuthentication->user[self::LASTCHANGE_COLUMN_NAME]);
+        $lastLogin = intval($this->backendUserAuthentication->user[self::LASTLOGIN_COLUMN_NAME]);
+
+        if ($lastPasswordChange !== 0) {
+            return false;
+        }
+
+        if ($lastLogin === 0) {
+            return false;
+        }
+
+        return true;
+    }
+
+    /**
+     * @return void
+     */
+    private function migrateAccount()
+    {
+        $this->databaseConnection->exec_UPDATEquery(
+            self::USERS_TABLE_NAME,
+            'uid=' . $this->databaseConnection->fullQuoteStr(
+                $this->backendUserAuthentication->user['uid'],
+                self::USERS_TABLE_NAME
+            ),
+            [
+                self::LASTCHANGE_COLUMN_NAME => time() + date('Z')
+            ]
         );
     }
 
