@@ -2,6 +2,9 @@
   "name": "move-elevator/me-backend-security",
   "description": "Advanced security for the TYPO3 backend",
   "type": "typo3-cms-extension",
+  "license": [
+    "GPL-2.0+"
+  ],
   "require": {
     "php": ">=5.6"
   },
