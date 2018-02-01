@@ -39,7 +39,7 @@ define( [ "jquery" ], function( $ ) {
 			return;
 		}
 
-		var matches = PasswordValidator.field.val().match( /[\[\]\/\-(){}#?!$%&=*+~,.;:<>_]/g );
+		var matches = PasswordValidator.field.val().match( /[\\\[\]\/\-(){}#?!$%&=*+~,.;:<>_]/g );
 
 		if ( matches !== null && matches.length >= minimum ) {
 			rule.find( ".icon" ).eq( 0 ).hide();
