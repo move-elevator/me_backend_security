@@ -1,4 +1,4 @@
-# cat=Basic; type=int [0-99]; label=How many special characters (!$%&/=?,.) must the password contain? (Default is 1)
+# cat=Basic; type=int [0-99]; label=How many special characters must the password contain? (Default is 1)
 minimumSpecialCharacters = 1
 
 # cat=Basic; type=int [0-99]; label=How many digits must the password contain? (Default is 1)
