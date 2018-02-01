@@ -60,6 +60,15 @@ Run each command in the project root directory.
 * Website: http://www.move-elevator.de
 
 # Changelog
+2018-02-01 - Philipp Heckelt <phe@move-elevator.de>
+```
+Release 1.1.3
+---
+Bugfix: Validate that the old and new password are not the same in the user settings
+Bugfix: Existing accounts no longer must change their password immediately after activating the extension
+Feature: Allow new special characters to validator
+```
+
 2018-01-18 - Philipp Heckelt <phe@move-elevator.de>
 ```
 Release 1.1.2
