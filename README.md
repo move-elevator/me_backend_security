@@ -22,7 +22,7 @@ Users imported from extension ig_ldap_sso_auth will be ignored.
 1. Basic install via composer in TYPO3 projects add this line to the composer.json
 
     ```
-    "move-elevator/me-backend-security": "1.0.0"
+    "move-elevator/me-backend-security": "1.1.3"
     ```
 2. Modify extension settings in TYPO3 backend
 3. Be safer :)
