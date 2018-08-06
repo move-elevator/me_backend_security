@@ -117,7 +117,7 @@ class BackendUserService
      */
     public function checkPasswordLifeTime()
     {
-        $this->markNewAccount();
+        $this->handleNewAccount();
 
         if ($this->isNonMigratedAccount()) {
             $this->migrateAccount();
@@ -158,7 +158,7 @@ class BackendUserService
     /**
      * @return void
      */
-    private function markNewAccount()
+    private function handleNewAccount()
     {
         $lastLogin = intval($this->backendUserAuthentication->user[self::LASTLOGIN_COLUMN_NAME]);
 
@@ -166,6 +166,7 @@ class BackendUserService
             return;
         }
 
+        $this->backendUserAuthentication->user[self::LASTLOGIN_COLUMN_NAME] = time();
         $this->backendUserAuthentication->user[self::LASTCHANGE_COLUMN_NAME] = 1;
 
         $this->databaseConnection->exec_UPDATEquery(
@@ -187,13 +188,8 @@ class BackendUserService
     private function isNonMigratedAccount()
     {
         $lastPasswordChange = intval($this->backendUserAuthentication->user[self::LASTCHANGE_COLUMN_NAME]);
-        $lastLogin = intval($this->backendUserAuthentication->user[self::LASTLOGIN_COLUMN_NAME]);
 
         if ($lastPasswordChange !== 0) {
-            return false;
-        }
-
-        if ($lastLogin === 0) {
             return false;
         }
 
