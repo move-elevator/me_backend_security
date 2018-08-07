@@ -117,15 +117,17 @@ class BackendUserService
      */
     public function checkPasswordLifeTime()
     {
+        $this->handleNewAccount();
+
         if ($this->isNonMigratedAccount()) {
             $this->migrateAccount();
 
             return null;
         }
 
-        $lastPasswordChange = intval($this->backendUserAuthentication->user[self::LASTCHANGE_COLUMN_NAME]);
+        $lastPasswordChange = (int)$this->backendUserAuthentication->user[self::LASTCHANGE_COLUMN_NAME];
 
-        if ($lastPasswordChange === 0) {
+        if ($lastPasswordChange === 1) {
             return LoginProviderRedirectFactory::create(
                 $this->backendUserAuthentication->user['username'],
                 [],
@@ -154,18 +156,40 @@ class BackendUserService
     }
 
     /**
+     * @return void
+     */
+    private function handleNewAccount()
+    {
+        $lastLogin = (int)$this->backendUserAuthentication->user[self::LASTLOGIN_COLUMN_NAME];
+
+        if ($lastLogin !== 0) {
+            return;
+        }
+
+        $this->backendUserAuthentication->user[self::LASTLOGIN_COLUMN_NAME] = time();
+        $this->backendUserAuthentication->user[self::LASTCHANGE_COLUMN_NAME] = 1;
+
+        $this->databaseConnection->exec_UPDATEquery(
+            self::USERS_TABLE_NAME,
+            'uid=' . $this->databaseConnection->fullQuoteStr(
+                $this->backendUserAuthentication->user['uid'],
+                self::USERS_TABLE_NAME
+            ),
+            [
+                self::LASTLOGIN_COLUMN_NAME => time(),
+                self::LASTCHANGE_COLUMN_NAME => 1
+            ]
+        );
+    }
+
+    /**
      * @return bool
      */
     private function isNonMigratedAccount()
     {
-        $lastPasswordChange = intval($this->backendUserAuthentication->user[self::LASTCHANGE_COLUMN_NAME]);
-        $lastLogin = intval($this->backendUserAuthentication->user[self::LASTLOGIN_COLUMN_NAME]);
+        $lastPasswordChange = (int)$this->backendUserAuthentication->user[self::LASTCHANGE_COLUMN_NAME];
 
         if ($lastPasswordChange !== 0) {
-            return false;
-        }
-
-        if ($lastLogin === 0) {
             return false;
         }
 

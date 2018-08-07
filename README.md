@@ -60,6 +60,13 @@ Run each command in the project root directory.
 * Website: http://www.move-elevator.de
 
 # Changelog
+2018-08-06 - Philipp Heckelt <phe@move-elevator.de>
+```
+Release 1.1.4
+---
+Bugfix: Fix detection of existing accounts
+```
+
 2018-02-01 - Philipp Heckelt <phe@move-elevator.de>
 ```
 Release 1.1.3

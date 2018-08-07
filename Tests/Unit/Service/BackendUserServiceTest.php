@@ -1,6 +1,6 @@
 <?php
 
-namespace MoveElevator\MeBackendSecurity\Tests\Unit\Domain\Model;
+namespace MoveElevator\MeBackendSecurity\Tests\Unit\Service;
 
 use MoveElevator\MeBackendSecurity\Domain\Model\LoginProviderRedirect;
 use MoveElevator\MeBackendSecurity\Domain\Model\PasswordChangeRequest;
@@ -113,6 +113,7 @@ class BackendUserServiceTest extends TestCase
     {
         $this->backendUserAuthentication->user['tx_mebackendsecurity_lastpasswordchange'] = 0;
         $this->backendUserAuthentication->user['lastlogin'] = 0;
+        $this->backendUserAuthentication->user['uid'] = 1;
         $this->backendUserAuthentication->user['username'] = 'testuser';
 
         $backendUserService = new BackendUserService(
