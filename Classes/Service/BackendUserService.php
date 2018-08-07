@@ -125,7 +125,7 @@ class BackendUserService
             return null;
         }
 
-        $lastPasswordChange = intval($this->backendUserAuthentication->user[self::LASTCHANGE_COLUMN_NAME]);
+        $lastPasswordChange = (int)($this->backendUserAuthentication->user[self::LASTCHANGE_COLUMN_NAME]);
 
         if ($lastPasswordChange === 1) {
             return LoginProviderRedirectFactory::create(
@@ -160,7 +160,7 @@ class BackendUserService
      */
     private function handleNewAccount()
     {
-        $lastLogin = intval($this->backendUserAuthentication->user[self::LASTLOGIN_COLUMN_NAME]);
+        $lastLogin = (int)($this->backendUserAuthentication->user[self::LASTLOGIN_COLUMN_NAME]);
 
         if ($lastLogin !== 0) {
             return;
@@ -187,7 +187,7 @@ class BackendUserService
      */
     private function isNonMigratedAccount()
     {
-        $lastPasswordChange = intval($this->backendUserAuthentication->user[self::LASTCHANGE_COLUMN_NAME]);
+        $lastPasswordChange = (int)($this->backendUserAuthentication->user[self::LASTCHANGE_COLUMN_NAME]);
 
         if ($lastPasswordChange !== 0) {
             return false;
