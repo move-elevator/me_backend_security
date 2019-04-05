@@ -8,17 +8,17 @@ use MoveElevator\MeBackendSecurity\Domain\Model\PasswordChangeRequest;
 use MoveElevator\MeBackendSecurity\Factory\LoginProviderRedirectFactory;
 use MoveElevator\MeBackendSecurity\Validation\Validator\CompositeValidator;
 use TYPO3\CMS\Core\Authentication\BackendUserAuthentication;
-use TYPO3\CMS\Core\Database\DatabaseConnection;
+use TYPO3\CMS\Core\Crypto\PasswordHashing\PasswordHashInterface;
+use TYPO3\CMS\Core\Database\ConnectionPool;
 use TYPO3\CMS\Extbase\Error\Error;
 use TYPO3\CMS\Extbase\Error\Result;
-use TYPO3\CMS\Saltedpasswords\Salt\SaltInterface;
 
 /**
  * @package MoveElevator\MeBackendSecurity\Service
  */
 class BackendUserService
 {
-    const USERS_TABLE_NAME = 'be_users';
+    const USERS_TABLE = 'be_users';
     const LASTCHANGE_COLUMN_NAME = 'tx_mebackendsecurity_lastpasswordchange';
     const LASTLOGIN_COLUMN_NAME = 'lastlogin';
     const USER_DONT_EXIST_ERROR_CODE = 1510742747;
@@ -30,9 +30,9 @@ class BackendUserService
     protected $backendUserAuthentication;
 
     /**
-     * @var DatabaseConnection
+     * @var ConnectionPool
      */
-    protected $databaseConnection;
+    protected $queryBuilder;
 
     /**
      * @var array
@@ -45,30 +45,31 @@ class BackendUserService
     protected $compositeValidator;
 
     /**
-     * @var SaltInterface
+     * @var PasswordHashInterface
      */
-    protected $saltingInstance;
+    protected $passwordHashInstance;
 
     /**
      * @param BackendUserAuthentication $backendUserAuthentication
-     * @param DatabaseConnection        $databaseConnection
+     * @param ConnectionPool            $connectionPool
      * @param ExtensionConfiguration    $extensionConfiguration
      * @param CompositeValidator        $compositeValidator
-     * @param SaltInterface             $saltingInstance
+     * @param PasswordHashInterface     $passwordHashInstance
+     *
      * @SuppressWarnings(PHPMD.ExcessiveParameterList)
      */
     public function __construct(
         BackendUserAuthentication $backendUserAuthentication,
-        DatabaseConnection $databaseConnection,
+        ConnectionPool $connectionPool,
         ExtensionConfiguration $extensionConfiguration,
         CompositeValidator $compositeValidator,
-        SaltInterface $saltingInstance
+        PasswordHashInterface $passwordHashInstance
     ) {
         $this->backendUserAuthentication = $backendUserAuthentication;
-        $this->databaseConnection = $databaseConnection;
+        $this->queryBuilder = $connectionPool->getQueryBuilderForTable(self::USERS_TABLE);
         $this->extensionConfiguration = $extensionConfiguration;
         $this->compositeValidator = $compositeValidator;
-        $this->saltingInstance = $saltingInstance;
+        $this->passwordHashInstance = $passwordHashInstance;
     }
 
     /**
@@ -95,17 +96,14 @@ class BackendUserService
             );
         }
 
-        $this->databaseConnection->exec_UPDATEquery(
-            self::USERS_TABLE_NAME,
-            'uid=' . $this->databaseConnection->fullQuoteStr(
-                $this->backendUserAuthentication->user['uid'],
-                self::USERS_TABLE_NAME
-            ),
-            [
-                'password' => $this->saltingInstance->getHashedPassword($passwordChangeRequest->getPassword()),
-                self::LASTCHANGE_COLUMN_NAME => time() + date('Z')
-            ]
-        );
+        $this->queryBuilder
+            ->update(self::USERS_TABLE)
+            ->where(
+                $this->queryBuilder->expr()->eq('uid', $this->backendUserAuthentication->user['uid'])
+            )
+            ->set('password', $this->passwordHashInstance->getHashedPassword($passwordChangeRequest->getPassword()))
+            ->set(self::LASTCHANGE_COLUMN_NAME, time() + date('Z'))
+            ->execute();
 
         $this->backendUserAuthentication->user[self::LASTCHANGE_COLUMN_NAME] = time() + date('Z');
 
@@ -114,6 +112,8 @@ class BackendUserService
 
     /**
      * @return LoginProviderRedirect|null
+     *
+     * @throws \Exception
      */
     public function checkPasswordLifeTime()
     {
@@ -169,17 +169,14 @@ class BackendUserService
         $this->backendUserAuthentication->user[self::LASTLOGIN_COLUMN_NAME] = time();
         $this->backendUserAuthentication->user[self::LASTCHANGE_COLUMN_NAME] = 1;
 
-        $this->databaseConnection->exec_UPDATEquery(
-            self::USERS_TABLE_NAME,
-            'uid=' . $this->databaseConnection->fullQuoteStr(
-                $this->backendUserAuthentication->user['uid'],
-                self::USERS_TABLE_NAME
-            ),
-            [
-                self::LASTLOGIN_COLUMN_NAME => time(),
-                self::LASTCHANGE_COLUMN_NAME => 1
-            ]
-        );
+        $this->queryBuilder
+            ->update(self::USERS_TABLE)
+            ->where(
+                $this->queryBuilder->expr()->eq('uid', $this->backendUserAuthentication->user['uid'])
+            )
+            ->set(self::LASTLOGIN_COLUMN_NAME, time())
+            ->set(self::LASTCHANGE_COLUMN_NAME, 1)
+            ->execute();
     }
 
     /**
@@ -201,16 +198,13 @@ class BackendUserService
      */
     private function migrateAccount()
     {
-        $this->databaseConnection->exec_UPDATEquery(
-            self::USERS_TABLE_NAME,
-            'uid=' . $this->databaseConnection->fullQuoteStr(
-                $this->backendUserAuthentication->user['uid'],
-                self::USERS_TABLE_NAME
-            ),
-            [
-                self::LASTCHANGE_COLUMN_NAME => time() + date('Z')
-            ]
-        );
+        $this->queryBuilder
+            ->update(self::USERS_TABLE)
+            ->where(
+                $this->queryBuilder->expr()->eq('uid', $this->backendUserAuthentication->user['uid'])
+            )
+            ->set(self::LASTCHANGE_COLUMN_NAME, time() + date('Z'))
+            ->execute();
     }
 
     /**
@@ -218,17 +212,15 @@ class BackendUserService
      */
     private function isExistingUser()
     {
-        $userExists = $this->databaseConnection->exec_SELECTcountRows(
-            'uid',
-            self::USERS_TABLE_NAME,
-            'uid=' . $this->databaseConnection->fullQuoteStr(
-                $this->backendUserAuthentication->user['uid'],
-                self::USERS_TABLE_NAME
-            ) . ' AND username=' . $this->databaseConnection->fullQuoteStr(
-                $this->backendUserAuthentication->user['username'],
-                self::USERS_TABLE_NAME
+        $userExists = $this->queryBuilder
+            ->count('uid')
+            ->from(self::USERS_TABLE)
+            ->where(
+                $this->queryBuilder->expr()->eq('uid', $this->backendUserAuthentication->user['uid']),
+                $this->queryBuilder->expr()->eq('username', $this->backendUserAuthentication->user['username'])
             )
-        );
+            ->execute()
+            ->fetchColumn(0);
 
         if ($userExists === false) {
             return false;

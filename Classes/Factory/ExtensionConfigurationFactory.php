@@ -18,12 +18,12 @@ class ExtensionConfigurationFactory
      */
     public static function create(array $rawExtensionConfiguration)
     {
-        if (isset($rawExtensionConfiguration['minimumSpecialCharacters']['value']) === false ||
-            isset($rawExtensionConfiguration['minimumDigits']['value']) === false ||
-            isset($rawExtensionConfiguration['minimumCapitalCharacters']['value']) === false ||
-            isset($rawExtensionConfiguration['minimumLowercaseCharacters']['value']) === false ||
-            isset($rawExtensionConfiguration['passwordLength']['value']) === false ||
-            isset($rawExtensionConfiguration['maximumValidDays']['value']) === false
+        if (isset($rawExtensionConfiguration['minimumSpecialCharacters']) === false ||
+            isset($rawExtensionConfiguration['minimumDigits']) === false ||
+            isset($rawExtensionConfiguration['minimumCapitalCharacters']) === false ||
+            isset($rawExtensionConfiguration['minimumLowercaseCharacters']) === false ||
+            isset($rawExtensionConfiguration['passwordLength']) === false ||
+            isset($rawExtensionConfiguration['maximumValidDays']) === false
         ) {
             throw new \InvalidArgumentException(
                 'Some parameters are missing in given extension configuration.',
@@ -42,12 +42,12 @@ class ExtensionConfigurationFactory
     private static function createExtensionConfiguration($rawExtensionConfiguration)
     {
         $extensionConfiguration = new ExtensionConfiguration(
-            (int) $rawExtensionConfiguration['minimumSpecialCharacters']['value'],
-            (int) $rawExtensionConfiguration['minimumDigits']['value'],
-            (int) $rawExtensionConfiguration['minimumCapitalCharacters']['value'],
-            (int) $rawExtensionConfiguration['minimumLowercaseCharacters']['value'],
-            (int) $rawExtensionConfiguration['passwordLength']['value'],
-            (int) $rawExtensionConfiguration['maximumValidDays']['value']
+            (int) $rawExtensionConfiguration['minimumSpecialCharacters'],
+            (int) $rawExtensionConfiguration['minimumDigits'],
+            (int) $rawExtensionConfiguration['minimumCapitalCharacters'],
+            (int) $rawExtensionConfiguration['minimumLowercaseCharacters'],
+            (int) $rawExtensionConfiguration['passwordLength'],
+            (int) $rawExtensionConfiguration['maximumValidDays']
         );
 
         return $extensionConfiguration;

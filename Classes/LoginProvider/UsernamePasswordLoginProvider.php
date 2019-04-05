@@ -3,12 +3,14 @@
 namespace MoveElevator\MeBackendSecurity\LoginProvider;
 
 use MoveElevator\MeBackendSecurity\Domain\Model\ExtensionConfiguration;
+use TYPO3\CMS\Core\Configuration\Exception\ExtensionConfigurationExtensionNotConfiguredException;
+use TYPO3\CMS\Core\Configuration\Exception\ExtensionConfigurationPathDoesNotExistException;
+use TYPO3\CMS\Core\Configuration\ExtensionConfiguration as ExtensionConfigurationUtility;
 use MoveElevator\MeBackendSecurity\Factory\ExtensionConfigurationFactory;
 use TYPO3\CMS\Backend\Controller\LoginController;
 use TYPO3\CMS\Core\Page\PageRenderer;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Extbase\Object\ObjectManager;
-use TYPO3\CMS\Extensionmanager\Utility\ConfigurationUtility;
 use TYPO3\CMS\Fluid\View\StandaloneView;
 
 /**
@@ -19,21 +21,26 @@ class UsernamePasswordLoginProvider extends \TYPO3\CMS\Backend\LoginProvider\Use
     const EXTKEY = 'me_backend_security';
     const PARAMETER_IDENTIFIER = 'tx_mebackendsecurity';
 
-    /** @var ExtensionConfiguration $extensionConfiguration */
+    /**
+     * @var ExtensionConfiguration $extensionConfiguration
+     */
     protected $extensionConfiguration;
 
     /**
+     * @throws ExtensionConfigurationExtensionNotConfiguredException
+     * @throws ExtensionConfigurationPathDoesNotExistException
+     *
      * @codeCoverageIgnore
      */
     public function __construct()
     {
         $objectManager = GeneralUtility::makeInstance(ObjectManager::class);
 
-        /** @var ConfigurationUtility $configurationUtility */
-        $configurationUtility = $objectManager->get(ConfigurationUtility::class);
+        /** @var ExtensionConfigurationUtility $extensionConfigurationUtility */
+        $extensionConfigurationUtility = $objectManager->get(ExtensionConfigurationUtility::class);
 
         $this->extensionConfiguration = ExtensionConfigurationFactory::create(
-            $configurationUtility->getCurrentConfiguration(self::EXTKEY)
+            $extensionConfigurationUtility->get(self::EXTKEY)
         );
     }
 

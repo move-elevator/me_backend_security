@@ -1,6 +1,6 @@
 <?php
 
-namespace MoveElevator\MeBackendSecurity\Hook;
+namespace MoveElevator\MeBackendSecurity\Evaluation;
 
 use MoveElevator\MeBackendSecurity\Domain\Model\ExtensionConfiguration;
 use MoveElevator\MeBackendSecurity\Domain\Model\PasswordChangeRequest;
@@ -8,6 +8,10 @@ use MoveElevator\MeBackendSecurity\Factory\ExtensionConfigurationFactory;
 use MoveElevator\MeBackendSecurity\Factory\PasswordChangeRequestFactory;
 use MoveElevator\MeBackendSecurity\Factory\CompositeValidatorFactory;
 use MoveElevator\MeBackendSecurity\Validation\Validator\CompositeValidator;
+use TYPO3\CMS\Core\Configuration\Exception\ExtensionConfigurationExtensionNotConfiguredException;
+use TYPO3\CMS\Core\Configuration\Exception\ExtensionConfigurationPathDoesNotExistException;
+use TYPO3\CMS\Core\Crypto\PasswordHashing\InvalidPasswordHashException;
+use TYPO3\CMS\Core\Crypto\PasswordHashing\PasswordHashFactory;
 use TYPO3\CMS\Core\Messaging\FlashMessage;
 use TYPO3\CMS\Core\Messaging\FlashMessageQueue;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
@@ -16,20 +20,16 @@ use TYPO3\CMS\Extbase\Error\Error;
 use TYPO3\CMS\Extbase\Error\Result;
 use TYPO3\CMS\Extbase\Object\ObjectManager;
 use TYPO3\CMS\Extbase\Utility\LocalizationUtility;
-use TYPO3\CMS\Extensionmanager\Utility\ConfigurationUtility;
-use TYPO3\CMS\Rsaauth\RsaEncryptionDecoder;
-use TYPO3\CMS\Saltedpasswords\Salt\SaltInterface;
-use TYPO3\CMS\Saltedpasswords\Salt\SaltFactory;
-use TYPO3\CMS\Setup\Controller\SetupModuleController;
+use TYPO3\CMS\Core\Configuration\ExtensionConfiguration as ExtensionConfigurationUtility;
 
 /**
- * @package MoveElevator\MeBackendSecurity\Hook
- *
- * @codeCoverageIgnore
+ * @package MoveElevator\MeBackendSecurity\Evaluation
  */
-class UserEditHook
+class PasswordEvaluator
 {
     const EXTKEY = 'me_backend_security';
+    const USERS_TABLE = 'be_users';
+    const LASTCHANGE_COLUMN_NAME = 'tx_mebackendsecurity_lastpasswordchange';
 
     /**
      * @var ObjectManager
@@ -37,9 +37,9 @@ class UserEditHook
     protected $objectManager;
 
     /**
-     * @var RsaEncryptionDecoder
+     * @var PasswordHashFactory
      */
-    protected $rsaEncryptionDecoder;
+    protected $passwordHashFactory;
 
     /**
      * @var FlashMessageQueue
@@ -52,34 +52,39 @@ class UserEditHook
     public function __construct()
     {
         $this->objectManager = GeneralUtility::makeInstance(ObjectManager::class);
-        $this->rsaEncryptionDecoder = $this->objectManager->get(RsaEncryptionDecoder::class);
+        $this->passwordHashFactory = $this->objectManager->get(PasswordHashFactory::class);
         $this->messageQueue = $this->objectManager->get(FlashMessageQueue::class, 'core.template.flashMessages');
     }
 
+    public function returnFieldJS()
+    {
+        return 'return value;';
+    }
+
     /**
-     * @param array                 $params
-     * @param SetupModuleController $parentObject
+     * @param string $value
+     * @param string $is_in
+     * @param bool $set
+     *
+     * @return string
+     *
+     * @throws ExtensionConfigurationExtensionNotConfiguredException
+     * @throws ExtensionConfigurationPathDoesNotExistException
+     * @throws InvalidPasswordHashException
      *
      * @SuppressWarnings(PHPMD.UnusedFormalParameter)
      * @SuppressWarnings(PHPMD.ExcessiveMethodLength)
      */
-    public function modifyUserDataBeforeSave(array &$params, SetupModuleController &$parentObject)
+    public function evaluateFieldValue(string $value, string $is_in, bool &$set): string
     {
-        if (empty($params['be_user_data']['password']) &&
-            empty($params['be_user_data']['password2'])
-        ) {
-            return;
-        }
+        $requestParameters = ['password' => $value, 'password2' => $value];
 
-        $requestParameters = $params['be_user_data'];
-        $currentPassword = null;
-
-        /** @var ConfigurationUtility $configurationUtility */
-        $configurationUtility = $this->objectManager->get(ConfigurationUtility::class);
+        /** @var ExtensionConfigurationUtility $extensionConfigurationUtility */
+        $extensionConfigurationUtility = $this->objectManager->get(ExtensionConfigurationUtility::class);
 
         /** @var ExtensionConfiguration $extensionConfiguration */
         $extensionConfiguration = ExtensionConfigurationFactory::create(
-            $configurationUtility->getCurrentConfiguration(self::EXTKEY)
+            $extensionConfigurationUtility->get(self::EXTKEY)
         );
 
         /** @var ConfigurationManagerInterface $configurationManager */
@@ -94,43 +99,21 @@ class UserEditHook
             )
         );
 
-        if ($this->isPasswordSameAsCurrent($params['be_user_data']['password'])) {
-            $currentPassword = $params['be_user_data']['password'];
-        }
-
         /** @var PasswordChangeRequest $passwordChangeRequest */
         $passwordChangeRequest = PasswordChangeRequestFactory::create(
-            $this->rsaEncryptionDecoder,
             $requestParameters,
-            $currentPassword
+            null
         );
 
         $validationResult = $compositeValidator->validate($passwordChangeRequest);
 
-        if ($validationResult->hasErrors() === false) {
-            return;
+        if ($validationResult->hasErrors()) {
+            $this->addFlashMessage($validationResult);
+            $set = false;
+            return '';
         }
 
-        $this->addFlashMessage($validationResult);
-
-        $params['be_user_data']['password'] = '';
-        $params['be_user_data']['password2'] = '';
-    }
-
-    /**
-     * @param $password
-     *
-     * @return bool
-     */
-    protected function isPasswordSameAsCurrent($password)
-    {
-        /** @var SaltInterface $saltingInstance */
-        $saltingInstance = SaltFactory::getSaltingInstance(null, 'BE');
-
-        return $saltingInstance->checkPassword(
-            $password,
-            $GLOBALS['BE_USER']->user['password']
-        );
+        return $value;
     }
 
     /**
