@@ -45,6 +45,9 @@ class TableHook
      */
     protected $currentPassword;
 
+    /**
+     * @codeCoverageIgnore
+     */
     public function __construct()
     {
         /** @var ObjectManager $objectManager */
@@ -141,6 +144,9 @@ class TableHook
             ->execute();
     }
 
+    /**
+     * @codeCoverageIgnore
+     */
     protected function addFlashMessage(): void
     {
         $flashMessage = new FlashMessage(

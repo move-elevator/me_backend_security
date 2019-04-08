@@ -47,7 +47,7 @@ class PasswordEvaluator
     protected $messageQueue;
 
     /**
-     * UserAuthHook constructor.
+     * @codeCoverageIgnore
      */
     public function __construct()
     {
@@ -58,6 +58,8 @@ class PasswordEvaluator
 
     /**
      * @return string
+     *
+     * @codeCoverageIgnore
      */
     public function returnFieldJS(): string
     {
@@ -75,6 +77,7 @@ class PasswordEvaluator
      * @throws ExtensionConfigurationPathDoesNotExistException
      * @throws InvalidPasswordHashException
      *
+     * @codeCoverageIgnore
      * @SuppressWarnings(PHPMD.UnusedFormalParameter)
      * @SuppressWarnings(PHPMD.ExcessiveMethodLength)
      */
@@ -121,6 +124,8 @@ class PasswordEvaluator
 
     /**
      * @param Result $validationResult
+     *
+     * @codeCoverageIgnore
      */
     protected function addFlashMessage(Result $validationResult): void
     {
