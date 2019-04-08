@@ -62,7 +62,7 @@ Run each command in the project root directory.
 # Changelog
 2019-04-08 - Philipp Heckelt <phe@move-elevator.de>
 ```
-Release 1.2.0
+Release 2.0.0
 ---
 Feature: TYPO3v9 compatibility
 ```
