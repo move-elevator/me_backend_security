@@ -45,7 +45,8 @@ class TableHook
      */
     protected $currentPassword;
 
-    public function __construct() {
+    public function __construct()
+    {
         /** @var ObjectManager $objectManager */
         $objectManager = GeneralUtility::makeInstance(ObjectManager::class);
 

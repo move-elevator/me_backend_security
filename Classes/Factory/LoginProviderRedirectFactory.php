@@ -18,8 +18,11 @@ class LoginProviderRedirectFactory
      *
      * @return LoginProviderRedirect
      */
-    public static function create(string $username = '', array $errors = [], array $messages = []): LoginProviderRedirect
-    {
+    public static function create(
+        string $username = '',
+        array $errors = [],
+        array $messages = []
+    ): LoginProviderRedirect {
         $parameter = [
             'r' => 1
         ];
