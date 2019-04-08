@@ -49,7 +49,7 @@ class UsernamePasswordLoginProvider extends \TYPO3\CMS\Backend\LoginProvider\Use
      *
      * @codeCoverageIgnore
      */
-    public function render(StandaloneView $view, PageRenderer $pageRenderer, LoginController $loginController)
+    public function render(StandaloneView $view, PageRenderer $pageRenderer, LoginController $loginController): void
     {
         parent::render($view, $pageRenderer, $loginController);
 
@@ -88,7 +88,7 @@ class UsernamePasswordLoginProvider extends \TYPO3\CMS\Backend\LoginProvider\Use
      *
      * @codeCoverageIgnore
      */
-    private function isResetFormRequired()
+    private function isResetFormRequired(): bool
     {
         $resetForm = GeneralUtility::_GP('r');
         $resetFormVars = GeneralUtility::_GP(self::PARAMETER_IDENTIFIER);

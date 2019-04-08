@@ -10,15 +10,15 @@ use MoveElevator\MeBackendSecurity\Domain\Model\PasswordChangeRequest;
 class PasswordChangeRequestFactory
 {
     /**
-     * @param array                $changeRequestParameters
-     * @param string               $currentPassword
+     * @param array  $changeRequestParameters
+     * @param string $currentPassword
      *
      * @return PasswordChangeRequest
      */
     public static function create(
         array $changeRequestParameters,
-        $currentPassword = ''
-    ) {
+        string $currentPassword = ''
+    ): PasswordChangeRequest {
         if (empty($changeRequestParameters['password']) ||
             empty($changeRequestParameters['password2'])
         ) {

@@ -18,7 +18,7 @@ class CompositeValidator extends AbstractValidator
     /**
      * @param AbstractValidator $validator
      */
-    public function append(AbstractValidator $validator)
+    public function append(AbstractValidator $validator): void
     {
         $this->validators[] = $validator;
     }
@@ -26,7 +26,7 @@ class CompositeValidator extends AbstractValidator
     /**
      * @param mixed $value
      */
-    protected function isValid($value)
+    protected function isValid($value): void
     {
         if ($value instanceof PasswordChangeRequest === false) {
             throw new \InvalidArgumentException(
@@ -45,7 +45,7 @@ class CompositeValidator extends AbstractValidator
      * @param AbstractValidator $validator
      * @param mixed             $value
      */
-    private function executeValidator($validator, $value)
+    private function executeValidator(AbstractValidator $validator, $value): void
     {
         $result = $validator->validate($value);
 

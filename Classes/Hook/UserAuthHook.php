@@ -34,6 +34,12 @@ class UserAuthHook
     const EXTKEY = 'me_backend_security';
     const PARAMETER_IDENTIFIER = 'tx_mebackendsecurity';
     const PASSWORD_IDENTIFIER = 'userident';
+    const USERS_TABLE = 'be_users';
+
+    /**
+     * @var BackendUserAuthentication
+     */
+    protected $backendUserAuthentication;
 
     /**
      * @var ObjectManager
@@ -44,11 +50,6 @@ class UserAuthHook
      * @var PasswordHashFactory
      */
     protected $passwordHashFactory;
-
-    /**
-     * @var BackendUserAuthentication
-     */
-    protected $backendUserAuthentication;
 
     /**
      * @var BackendUserService
@@ -65,8 +66,8 @@ class UserAuthHook
     }
 
     /**
-     * @param $params
-     * @param $pObj
+     * @param array                     $params
+     * @param BackendUserAuthentication $pObj
      *
      * @throws ExtensionConfigurationExtensionNotConfiguredException
      * @throws ExtensionConfigurationPathDoesNotExistException
@@ -74,7 +75,7 @@ class UserAuthHook
      * @SuppressWarnings(PHPMD.Superglobals)
      * @SuppressWarnings(PHPMD.UnusedFormalParameter)
      */
-    public function postUserLookUp($params, $pObj)
+    public function postUserLookUp(array $params, BackendUserAuthentication $pObj)
     {
         if (TYPO3_MODE === 'FE') {
             return;
@@ -99,13 +100,15 @@ class UserAuthHook
     }
 
     /**
-     * @param $pObj
+     * @param BackendUserAuthentication $pObj
      *
      * @throws ExtensionConfigurationExtensionNotConfiguredException
      * @throws ExtensionConfigurationPathDoesNotExistException
      */
-    private function initializeObjects($pObj)
+    private function initializeObjects(BackendUserAuthentication $pObj): void
     {
+        $this->backendUserAuthentication = $pObj;
+
         /** @var ExtensionConfigurationUtility $extensionConfigurationUtility */
         $extensionConfigurationUtility = $this->objectManager->get(ExtensionConfigurationUtility::class);
 
@@ -132,12 +135,9 @@ class UserAuthHook
         /** @var ConnectionPool $connectionPool */
         $connectionPool = $this->objectManager->get(ConnectionPool::class);
 
-        /** @var BackendUserAuthentication backendUserAuthentication */
-        $this->backendUserAuthentication = $pObj;
-
         $this->backendUserService = new BackendUserService(
             $this->backendUserAuthentication,
-            $connectionPool,
+            $connectionPool->getQueryBuilderForTable(self::USERS_TABLE),
             $extensionConfiguration,
             $compositeValidator,
             $passwordHashInstance
@@ -149,7 +149,7 @@ class UserAuthHook
      *
      * @SuppressWarnings(PHPMD.Superglobals)
      */
-    private function initializeLanguageService()
+    private function initializeLanguageService(): void
     {
         if (empty($GLOBALS['LANG']) === false) {
             return;
@@ -168,7 +168,7 @@ class UserAuthHook
     /**
      * @return void
      */
-    private function processPasswordChange()
+    private function processPasswordChange(): void
     {
         $requestParameters = GeneralUtility::_GP(self::PARAMETER_IDENTIFIER);
         $currentPassword = GeneralUtility::_GP(self::PASSWORD_IDENTIFIER);
@@ -193,7 +193,7 @@ class UserAuthHook
     /**
      * @throws \Exception
      */
-    private function processPasswordLifeTimeCheck()
+    private function processPasswordLifeTimeCheck(): void
     {
         $result = $this->backendUserService->checkPasswordLifeTime();
 

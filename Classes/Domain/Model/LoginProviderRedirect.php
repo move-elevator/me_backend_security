@@ -15,7 +15,7 @@ class LoginProviderRedirect
     /**
      * @return string
      */
-    public function getUrl()
+    public function getUrl(): string
     {
         return $this->url;
     }
@@ -23,7 +23,7 @@ class LoginProviderRedirect
     /**
      * @param string $url
      */
-    public function setUrl($url)
+    public function setUrl(string $url): void
     {
         $this->url = $url;
     }

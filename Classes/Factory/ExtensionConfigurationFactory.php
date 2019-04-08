@@ -16,7 +16,7 @@ class ExtensionConfigurationFactory
      *
      * @SuppressWarnings(PHPMD.CyclomaticComplexity)
      */
-    public static function create(array $rawExtensionConfiguration)
+    public static function create(array $rawExtensionConfiguration): ExtensionConfiguration
     {
         if (isset($rawExtensionConfiguration['minimumSpecialCharacters']) === false ||
             isset($rawExtensionConfiguration['minimumDigits']) === false ||
@@ -39,7 +39,7 @@ class ExtensionConfigurationFactory
      *
      * @return ExtensionConfiguration
      */
-    private static function createExtensionConfiguration($rawExtensionConfiguration)
+    private static function createExtensionConfiguration(array $rawExtensionConfiguration): ExtensionConfiguration
     {
         $extensionConfiguration = new ExtensionConfiguration(
             (int) $rawExtensionConfiguration['minimumSpecialCharacters'],

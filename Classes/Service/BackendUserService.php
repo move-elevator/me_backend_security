@@ -9,7 +9,7 @@ use MoveElevator\MeBackendSecurity\Factory\LoginProviderRedirectFactory;
 use MoveElevator\MeBackendSecurity\Validation\Validator\CompositeValidator;
 use TYPO3\CMS\Core\Authentication\BackendUserAuthentication;
 use TYPO3\CMS\Core\Crypto\PasswordHashing\PasswordHashInterface;
-use TYPO3\CMS\Core\Database\ConnectionPool;
+use TYPO3\CMS\Core\Database\Query\QueryBuilder;
 use TYPO3\CMS\Extbase\Error\Error;
 use TYPO3\CMS\Extbase\Error\Result;
 
@@ -30,7 +30,7 @@ class BackendUserService
     protected $backendUserAuthentication;
 
     /**
-     * @var ConnectionPool
+     * @var QueryBuilder
      */
     protected $queryBuilder;
 
@@ -51,7 +51,7 @@ class BackendUserService
 
     /**
      * @param BackendUserAuthentication $backendUserAuthentication
-     * @param ConnectionPool            $connectionPool
+     * @param QueryBuilder              $queryBuilder
      * @param ExtensionConfiguration    $extensionConfiguration
      * @param CompositeValidator        $compositeValidator
      * @param PasswordHashInterface     $passwordHashInstance
@@ -60,13 +60,13 @@ class BackendUserService
      */
     public function __construct(
         BackendUserAuthentication $backendUserAuthentication,
-        ConnectionPool $connectionPool,
+        QueryBuilder $queryBuilder,
         ExtensionConfiguration $extensionConfiguration,
         CompositeValidator $compositeValidator,
         PasswordHashInterface $passwordHashInstance
     ) {
         $this->backendUserAuthentication = $backendUserAuthentication;
-        $this->queryBuilder = $connectionPool->getQueryBuilderForTable(self::USERS_TABLE);
+        $this->queryBuilder = $queryBuilder;
         $this->extensionConfiguration = $extensionConfiguration;
         $this->compositeValidator = $compositeValidator;
         $this->passwordHashInstance = $passwordHashInstance;
@@ -77,7 +77,7 @@ class BackendUserService
      *
      * @return LoginProviderRedirect|null
      */
-    public function handlePasswordChangeRequest(PasswordChangeRequest $passwordChangeRequest)
+    public function handlePasswordChangeRequest(PasswordChangeRequest $passwordChangeRequest): ?LoginProviderRedirect
     {
         /** @var Result $validationResults */
         $validationResults = $this->compositeValidator->validate($passwordChangeRequest);
@@ -115,7 +115,7 @@ class BackendUserService
      *
      * @throws \Exception
      */
-    public function checkPasswordLifeTime()
+    public function checkPasswordLifeTime(): ?LoginProviderRedirect
     {
         $this->handleNewAccount();
 
@@ -158,7 +158,7 @@ class BackendUserService
     /**
      * @return void
      */
-    private function handleNewAccount()
+    private function handleNewAccount(): void
     {
         $lastLogin = (int)$this->backendUserAuthentication->user[self::LASTLOGIN_COLUMN_NAME];
 
@@ -182,7 +182,7 @@ class BackendUserService
     /**
      * @return bool
      */
-    private function isNonMigratedAccount()
+    private function isNonMigratedAccount(): bool
     {
         $lastPasswordChange = (int)$this->backendUserAuthentication->user[self::LASTCHANGE_COLUMN_NAME];
 
@@ -196,7 +196,7 @@ class BackendUserService
     /**
      * @return void
      */
-    private function migrateAccount()
+    private function migrateAccount(): void
     {
         $this->queryBuilder
             ->update(self::USERS_TABLE)
@@ -210,15 +210,16 @@ class BackendUserService
     /**
      * @return bool
      */
-    private function isExistingUser()
+    private function isExistingUser(): bool
     {
         $userExists = $this->queryBuilder
             ->count('uid')
             ->from(self::USERS_TABLE)
             ->where(
                 $this->queryBuilder->expr()->eq('uid', $this->backendUserAuthentication->user['uid']),
-                $this->queryBuilder->expr()->eq('username', $this->backendUserAuthentication->user['username'])
+                $this->queryBuilder->expr()->eq('username', ':u')
             )
+            ->setParameter('u', $this->backendUserAuthentication->user['username'])
             ->execute()
             ->fetchColumn(0);
 
@@ -234,7 +235,7 @@ class BackendUserService
      *
      * @return array
      */
-    private function getErrorCodesWithArguments($validationResults)
+    private function getErrorCodesWithArguments(Result $validationResults): array
     {
         $errors = [];
 

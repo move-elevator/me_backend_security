@@ -15,10 +15,17 @@ class CompositeValidatorTest extends TestCase
 {
     use ExtensionConfigurationFixture;
 
+    /**
+     * @var CapitalCharactersValidator
+     */
     protected $capitalCharactersValidator;
+
+    /**
+     * @var CompositeValidator
+     */
     protected $compositeValidator;
 
-    public function setUp()
+    public function setUp(): void
     {
         $this->compositeValidator = \Mockery::mock(
             CompositeValidator::class . '[translateErrorMessage]',
@@ -45,7 +52,7 @@ class CompositeValidatorTest extends TestCase
         );
     }
 
-    public function testPositiveValidation()
+    public function testPositiveValidation(): void
     {
         $passwordChangeRequest = new PasswordChangeRequest();
         $passwordChangeRequest->setPassword('A');
@@ -55,7 +62,7 @@ class CompositeValidatorTest extends TestCase
         $this->assertEquals(count($result->getErrors()), 0);
     }
 
-    public function testNegativeValidation()
+    public function testNegativeValidation(): void
     {
         $passwordChangeRequest = new PasswordChangeRequest();
         $passwordChangeRequest->setPassword('a');
@@ -65,7 +72,7 @@ class CompositeValidatorTest extends TestCase
         $this->assertEquals(count($result->getErrors()), 1);
     }
 
-    public function testValidationWithInvalidArguments()
+    public function testValidationWithInvalidArguments(): void
     {
         $this->expectException(\InvalidArgumentException::class);
 

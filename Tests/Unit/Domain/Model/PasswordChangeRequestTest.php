@@ -12,7 +12,7 @@ class PasswordChangeRequestTest extends TestCase
 {
     use PasswordChangeRequestFixture;
 
-    public function testNoManipulationInSetterAndGetter()
+    public function testNoManipulationInSetterAndGetter(): void
     {
         $passwordChangeRequest = $this->getPasswordChangeRequestFixture();
 

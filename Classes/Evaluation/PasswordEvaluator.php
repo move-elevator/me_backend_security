@@ -56,7 +56,10 @@ class PasswordEvaluator
         $this->messageQueue = $this->objectManager->get(FlashMessageQueue::class, 'core.template.flashMessages');
     }
 
-    public function returnFieldJS()
+    /**
+     * @return string
+     */
+    public function returnFieldJS(): string
     {
         return 'return value;';
     }
@@ -119,7 +122,7 @@ class PasswordEvaluator
     /**
      * @param Result $validationResult
      */
-    protected function addFlashMessage($validationResult)
+    protected function addFlashMessage(Result $validationResult): void
     {
         $errorMessages = [];
         $messageTitle = LocalizationUtility::translate(

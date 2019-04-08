@@ -14,9 +14,12 @@ class PasswordLengthValidatorTest extends TestCase
 {
     use ExtensionConfigurationFixture;
 
+    /**
+     * @var PasswordLengthValidator
+     */
     protected $passwordLengthValidator;
 
-    public function setUp()
+    public function setUp(): void
     {
         $this->passwordLengthValidator = \Mockery::mock(
             PasswordLengthValidator::class . '[translateErrorMessage]',
@@ -29,7 +32,7 @@ class PasswordLengthValidatorTest extends TestCase
             ->andReturn('translated message');
     }
 
-    public function testPositiveValidation()
+    public function testPositiveValidation(): void
     {
         $passwordChangeRequest = new PasswordChangeRequest();
         $passwordChangeRequest->setPassword('12345678');
@@ -39,7 +42,7 @@ class PasswordLengthValidatorTest extends TestCase
         $this->assertEquals(count($result->getErrors()), 0);
     }
 
-    public function testNegativeValidation()
+    public function testNegativeValidation(): void
     {
         $passwordChangeRequest = new PasswordChangeRequest();
         $passwordChangeRequest->setPassword('');

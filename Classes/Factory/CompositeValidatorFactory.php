@@ -23,7 +23,7 @@ class CompositeValidatorFactory
         ObjectManager $objectManager,
         ExtensionConfiguration $extensionConfiguration,
         array $rawTypoScriptSetup
-    ) {
+    ): CompositeValidator {
         $compositeValidator = self::createEmptyCompositeValidator($objectManager, $extensionConfiguration);
 
         if (empty($rawTypoScriptSetup['config.']['tx_mebackendsecurity.']['validators.'])) {
@@ -56,7 +56,7 @@ class CompositeValidatorFactory
     private static function createEmptyCompositeValidator(
         ObjectManager $objectManager,
         ExtensionConfiguration $extensionConfiguration
-    ) {
+    ): CompositeValidator {
         /** @var CompositeValidator $compositeValidator */
         $compositeValidator = $objectManager->get(
             CompositeValidator::class,

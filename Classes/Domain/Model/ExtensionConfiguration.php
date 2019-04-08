@@ -44,15 +44,16 @@ class ExtensionConfiguration
      * @param int $minimumLowercaseCharacters
      * @param int $passwordLength
      * @param int $maximumValidDays
+     *
      * @SuppressWarnings(PHPMD.ExcessiveParameterList)
      */
     public function __construct(
-        $minimumSpecialCharacters,
-        $minimumDigits,
-        $minimumCapitalCharacters,
-        $minimumLowercaseCharacters,
-        $passwordLength,
-        $maximumValidDays
+        int $minimumSpecialCharacters,
+        int $minimumDigits,
+        int $minimumCapitalCharacters,
+        int $minimumLowercaseCharacters,
+        int $passwordLength,
+        int $maximumValidDays
     ) {
         $this->minimumSpecialCharacters = $minimumSpecialCharacters;
         $this->minimumDigits = $minimumDigits;
@@ -65,7 +66,7 @@ class ExtensionConfiguration
     /**
      * @return int
      */
-    public function getMinimumSpecialCharacters()
+    public function getMinimumSpecialCharacters(): int
     {
         return $this->minimumSpecialCharacters;
     }
@@ -73,7 +74,7 @@ class ExtensionConfiguration
     /**
      * @return int
      */
-    public function getMinimumDigits()
+    public function getMinimumDigits(): int
     {
         return $this->minimumDigits;
     }
@@ -81,7 +82,7 @@ class ExtensionConfiguration
     /**
      * @return int
      */
-    public function getMinimumCapitalCharacters()
+    public function getMinimumCapitalCharacters(): int
     {
         return $this->minimumCapitalCharacters;
     }
@@ -89,7 +90,7 @@ class ExtensionConfiguration
     /**
      * @return int
      */
-    public function getMinimumLowercaseCharacters()
+    public function getMinimumLowercaseCharacters(): int
     {
         return $this->minimumLowercaseCharacters;
     }
@@ -97,7 +98,7 @@ class ExtensionConfiguration
     /**
      * @return int
      */
-    public function getPasswordLength()
+    public function getPasswordLength(): int
     {
         return $this->passwordLength;
     }
@@ -105,7 +106,7 @@ class ExtensionConfiguration
     /**
      * @return int
      */
-    public function getMaximumValidDays()
+    public function getMaximumValidDays(): int
     {
         return $this->maximumValidDays;
     }

@@ -14,9 +14,12 @@ class LowercaseCharactersValidatorTest extends TestCase
 {
     use ExtensionConfigurationFixture;
 
+    /**
+     * @var LowercaseCharactersValidator
+     */
     protected $lowercaseCharactersValidator;
 
-    public function setUp()
+    public function setUp(): void
     {
         $this->lowercaseCharactersValidator = \Mockery::mock(
             LowercaseCharactersValidator::class . '[translateErrorMessage]',
@@ -29,7 +32,7 @@ class LowercaseCharactersValidatorTest extends TestCase
             ->andReturn('translated message');
     }
 
-    public function testPositiveValidation()
+    public function testPositiveValidation(): void
     {
         $passwordChangeRequest = new PasswordChangeRequest();
         $passwordChangeRequest->setPassword('a');
@@ -39,7 +42,7 @@ class LowercaseCharactersValidatorTest extends TestCase
         $this->assertEquals(count($result->getErrors()), 0);
     }
 
-    public function testNegativeValidation()
+    public function testNegativeValidation(): void
     {
         $passwordChangeRequest = new PasswordChangeRequest();
         $passwordChangeRequest->setPassword('A');

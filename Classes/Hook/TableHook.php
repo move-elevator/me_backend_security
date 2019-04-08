@@ -61,10 +61,10 @@ class TableHook
     }
 
     /**
-     * @param $incomingFieldArray
-     * @param $table
-     * @param $id
-     * @param $pObj
+     * @param array $incomingFieldArray
+     * @param string $table
+     * @param int $id
+     * @param array $pObj
      *
      * @codeCoverageIgnore
      * @SuppressWarnings(PHPMD.ShortVariable)
@@ -73,7 +73,7 @@ class TableHook
      * @SuppressWarnings(PHPMD.UnusedFormalParameter)
      * @SuppressWarnings(PHPMD.ExcessiveParameterList)
      */
-    public function processDatamap_preProcessFieldArray(&$incomingFieldArray, $table, $id, &$pObj) // @codingStandardsIgnoreLine
+    public function processDatamap_preProcessFieldArray(array &$incomingFieldArray, string $table, int $id, array &$pObj): void // @codingStandardsIgnoreLine
     {
         if ($table !== 'be_users') {
             return;
@@ -95,11 +95,11 @@ class TableHook
     }
 
     /**
-     * @param $status
-     * @param $table
-     * @param $id
-     * @param $fieldArray
-     * @param $tcemain
+     * @param string $status
+     * @param string $table
+     * @param int $id
+     * @param array $fieldArray
+     * @param array $tcemain
      *
      * @codeCoverageIgnore
      * @SuppressWarnings(PHPMD.ShortVariable)
@@ -108,7 +108,7 @@ class TableHook
      * @SuppressWarnings(PHPMD.UnusedFormalParameter)
      * @SuppressWarnings(PHPMD.ExcessiveParameterList)
      */
-    public function processDatamap_afterDatabaseOperations($status, $table, $id, &$fieldArray, &$tcemain) // @codingStandardsIgnoreLine
+    public function processDatamap_afterDatabaseOperations(string $status, string $table, int $id, array &$fieldArray, array &$tcemain): void // @codingStandardsIgnoreLine
     {
         $lastChange = time() + date('Z');
 
@@ -140,7 +140,7 @@ class TableHook
             ->execute();
     }
 
-    protected function addFlashMessage()
+    protected function addFlashMessage(): void
     {
         $flashMessage = new FlashMessage(
             LocalizationUtility::translate(

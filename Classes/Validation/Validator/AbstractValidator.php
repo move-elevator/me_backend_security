@@ -19,9 +19,8 @@ abstract class AbstractValidator extends \TYPO3\CMS\Extbase\Validation\Validator
     /**
      * @param int  $errorCode
      * @param int  $minimum
-     * @param bool $singular
      */
-    protected function addTranslatedError($errorCode, $minimum = 0)
+    protected function addTranslatedError(int $errorCode, int $minimum = 0): void
     {
         $languageKey = 'error.' . $errorCode;
         $arguments = [

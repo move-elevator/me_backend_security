@@ -6,12 +6,12 @@
     "GPL-2.0-or-later"
   ],
   "require": {
-    "php": ">=5.6"
+    "php": ">=7.2"
   },
   "require-dev": {
     "tm/tooly-composer-script": "1.2.5",
     "mockery/mockery": "^1.0",
-    "typo3/cms": "^7.6"
+    "typo3/minimal": "^9.5"
   },
   "scripts": {
     "post-install-cmd": "Tooly\\ScriptHandler::installPharTools",
@@ -20,27 +20,27 @@
   "extra": {
     "tools": {
       "phpunit": {
-        "url": "https://phar.phpunit.de/phpunit-5.7.9.phar",
+        "url": "https://phar.phpunit.de/phpunit-8.0.1.phar",
         "force-replace": true
       },
       "phpmd": {
-        "url": "https://github.com/mi-schi/phpmd-extension/releases/download/stable/phpmd-extension.phar",
+        "url": "http://static.phpmd.org/php/2.6.0/phpmd.phar",
         "force-replace": true
       },
       "phpcs": {
-        "url": "https://github.com/squizlabs/PHP_CodeSniffer/releases/download/2.8.1/phpcs.phar",
+        "url": "https://github.com/squizlabs/PHP_CodeSniffer/releases/download/3.4.0/phpcs.phar",
         "force-replace": true
       },
       "phpcpd": {
-        "url": "https://phar.phpunit.de/phpcpd.phar",
+        "url": "https://github.com/sebastianbergmann/phpcpd/releases/download/2.0.0/phpcpd.phar",
         "force-replace": true
       },
       "pdepend": {
-        "url": "http://static.pdepend.org/php/latest/pdepend.phar",
+        "url": "http://static.pdepend.org/php/2.5.0/pdepend.phar",
         "force-replace": true
       },
       "phpmetrics": {
-        "url": "https://github.com/phpmetrics/PhpMetrics/raw/master/build/phpmetrics.phar",
+        "url": "https://github.com/phpmetrics/PhpMetrics/releases/download/v2.4.1/phpmetrics.phar",
         "force-replace": true
       }
     }

@@ -12,7 +12,7 @@ class LoginProviderRedirectTest extends TestCase
 {
     use LoginProviderRedirectFixture;
 
-    public function testNoManipulationInSetterAndGetter()
+    public function testNoManipulationInSetterAndGetter(): void
     {
         $loginProviderRedirect = $this->getLoginProviderRedirectFixture();
 

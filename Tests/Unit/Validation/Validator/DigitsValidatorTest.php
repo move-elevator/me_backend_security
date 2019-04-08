@@ -14,9 +14,12 @@ class DigitsValidatorTest extends TestCase
 {
     use ExtensionConfigurationFixture;
 
+    /**
+     * @var DigitsValidator
+     */
     protected $digitsValidator;
 
-    public function setUp()
+    public function setUp(): void
     {
         $this->digitsValidator = \Mockery::mock(
             DigitsValidator::class . '[translateErrorMessage]',
@@ -29,7 +32,7 @@ class DigitsValidatorTest extends TestCase
             ->andReturn('translated message');
     }
 
-    public function testPositiveValidation()
+    public function testPositiveValidation(): void
     {
         $passwordChangeRequest = new PasswordChangeRequest();
         $passwordChangeRequest->setPassword('1');
@@ -39,7 +42,7 @@ class DigitsValidatorTest extends TestCase
         $this->assertEquals(count($result->getErrors()), 0);
     }
 
-    public function testNegativeValidation()
+    public function testNegativeValidation(): void
     {
         $passwordChangeRequest = new PasswordChangeRequest();
         $passwordChangeRequest->setPassword('a');

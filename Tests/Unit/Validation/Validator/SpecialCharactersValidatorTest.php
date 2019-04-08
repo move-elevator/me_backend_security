@@ -14,9 +14,12 @@ class SpecialCharactersValidatorTest extends TestCase
 {
     use ExtensionConfigurationFixture;
 
+    /**
+     * @var SpecialCharactersValidator
+     */
     protected $specialCharactersValidator;
 
-    public function setUp()
+    public function setUp(): void
     {
         $this->specialCharactersValidator = \Mockery::mock(
             SpecialCharactersValidator::class . '[translateErrorMessage]',
@@ -29,7 +32,7 @@ class SpecialCharactersValidatorTest extends TestCase
             ->andReturn('translated message');
     }
 
-    public function testPositiveValidation()
+    public function testPositiveValidation(): void
     {
         $passwordChangeRequest = new PasswordChangeRequest();
         $passwordChangeRequest->setPassword('%');
@@ -39,7 +42,7 @@ class SpecialCharactersValidatorTest extends TestCase
         $this->assertEquals(count($result->getErrors()), 0);
     }
 
-    public function testNegativeValidation()
+    public function testNegativeValidation(): void
     {
         $passwordChangeRequest = new PasswordChangeRequest();
         $passwordChangeRequest->setPassword('A');

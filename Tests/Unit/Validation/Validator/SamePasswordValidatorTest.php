@@ -14,9 +14,12 @@ class SamePasswordValidatorTest extends TestCase
 {
     use ExtensionConfigurationFixture;
 
+    /**
+     * @var SamePasswordValidator
+     */
     protected $samePasswordValidator;
 
-    public function setUp()
+    public function setUp(): void
     {
         $this->samePasswordValidator = \Mockery::mock(
             SamePasswordValidator::class . '[translateErrorMessage]',
@@ -29,7 +32,7 @@ class SamePasswordValidatorTest extends TestCase
             ->andReturn('translated message');
     }
 
-    public function testIgnoredValidation()
+    public function testIgnoredValidation(): void
     {
         $passwordChangeRequest = new PasswordChangeRequest();
         $passwordChangeRequest->setPassword('bar');
@@ -40,7 +43,7 @@ class SamePasswordValidatorTest extends TestCase
         $this->assertEquals(count($result->getErrors()), 0);
     }
 
-    public function testPositiveValidation()
+    public function testPositiveValidation(): void
     {
         $passwordChangeRequest = new PasswordChangeRequest();
         $passwordChangeRequest->setCurrentPassword('foo');
@@ -52,7 +55,7 @@ class SamePasswordValidatorTest extends TestCase
         $this->assertEquals(count($result->getErrors()), 0);
     }
 
-    public function testNegativeValidation()
+    public function testNegativeValidation(): void
     {
         $passwordChangeRequest = new PasswordChangeRequest();
         $passwordChangeRequest->setCurrentPassword('foo');

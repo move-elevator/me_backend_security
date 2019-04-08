@@ -16,7 +16,7 @@ class SamePasswordValidator extends AbstractValidator
      *
      * @return void
      */
-    protected function isValid($passwordChangeRequest)
+    protected function isValid($passwordChangeRequest): void
     {
         if (empty($passwordChangeRequest->getCurrentPassword())) {
             return;

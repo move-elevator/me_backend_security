@@ -60,6 +60,13 @@ Run each command in the project root directory.
 * Website: http://www.move-elevator.de
 
 # Changelog
+2019-04-08 - Philipp Heckelt <phe@move-elevator.de>
+```
+Release 1.2.0
+---
+Feature: TYPO3v9 compatibility
+```
+
 2018-08-06 - Philipp Heckelt <phe@move-elevator.de>
 ```
 Release 1.1.4

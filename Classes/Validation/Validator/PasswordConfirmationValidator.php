@@ -16,7 +16,7 @@ class PasswordConfirmationValidator extends AbstractValidator
      *
      * @return void
      */
-    protected function isValid($passwordChangeRequest)
+    protected function isValid($passwordChangeRequest): void
     {
         if ($passwordChangeRequest->getPassword() === $passwordChangeRequest->getPasswordConfirmation()) {
             return;
