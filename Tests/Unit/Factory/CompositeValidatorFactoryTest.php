@@ -19,7 +19,7 @@ class CompositeValidatorFactoryTest extends TestCase
 
     protected $objectManager;
 
-    public function setUp()
+    public function setUp(): void
     {
         $this->objectManager = \Mockery::mock(ObjectManager::class);
         $this->objectManager
@@ -28,7 +28,7 @@ class CompositeValidatorFactoryTest extends TestCase
             ->andReturnUsing(function($class, $options) { return new $class($options); });
     }
 
-    public function testCreateObjectFromValidArguments()
+    public function testCreateObjectFromValidArguments(): void
     {
         $extensionConfiguration = $this->getExtensionConfigurationFixture();
         $rawTypoScriptSetupFixture = $this->getRawTypoScriptSetupFixture();
@@ -42,7 +42,7 @@ class CompositeValidatorFactoryTest extends TestCase
         $this->assertInstanceOf(CompositeValidator::class, $compositeValidator);
     }
 
-    public function testCreateObjectFromInvalidArguments()
+    public function testCreateObjectFromInvalidArguments(): void
     {
         $extensionConfiguration = $this->getExtensionConfigurationFixture();
 

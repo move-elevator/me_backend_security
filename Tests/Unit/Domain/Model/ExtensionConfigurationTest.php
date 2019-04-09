@@ -12,7 +12,7 @@ class ExtensionConfigurationTest extends TestCase
 {
     use ExtensionConfigurationFixture;
 
-    public function testNoManipulationInSetterAndGetter()
+    public function testNoManipulationInSetterAndGetter(): void
     {
         $extensionConfiguration = $this->getExtensionConfigurationFixture();
 

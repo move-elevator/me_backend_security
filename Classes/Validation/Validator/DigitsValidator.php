@@ -18,7 +18,7 @@ class DigitsValidator extends AbstractValidator
      *
      * @return void
      */
-    protected function isValid($passwordChangeRequest)
+    protected function isValid($passwordChangeRequest): void
     {
         /** @var ExtensionConfiguration $configuration */
         $configuration = $this->options['extensionConfiguration'];

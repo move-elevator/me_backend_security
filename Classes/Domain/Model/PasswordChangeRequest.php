@@ -25,7 +25,7 @@ class PasswordChangeRequest
     /**
      * @return string
      */
-    public function getCurrentPassword()
+    public function getCurrentPassword(): string
     {
         return $this->currentPassword;
     }
@@ -33,7 +33,7 @@ class PasswordChangeRequest
     /**
      * @param string $currentPassword
      */
-    public function setCurrentPassword($currentPassword)
+    public function setCurrentPassword(string $currentPassword): void
     {
         $this->currentPassword = $currentPassword;
     }
@@ -41,7 +41,7 @@ class PasswordChangeRequest
     /**
      * @return string
      */
-    public function getPassword()
+    public function getPassword(): string
     {
         return $this->password;
     }
@@ -49,7 +49,7 @@ class PasswordChangeRequest
     /**
      * @param string $password
      */
-    public function setPassword($password)
+    public function setPassword(string $password): void
     {
         $this->password = $password;
     }
@@ -57,7 +57,7 @@ class PasswordChangeRequest
     /**
      * @return string
      */
-    public function getPasswordConfirmation()
+    public function getPasswordConfirmation(): string
     {
         return $this->passwordConfirmation;
     }
@@ -65,7 +65,7 @@ class PasswordChangeRequest
     /**
      * @param string $passwordConfirmation
      */
-    public function setPasswordConfirmation($passwordConfirmation)
+    public function setPasswordConfirmation(string $passwordConfirmation): void
     {
         $this->passwordConfirmation = $passwordConfirmation;
     }

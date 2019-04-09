@@ -17,7 +17,7 @@ trait LoginProviderRedirectFixture
     /**
      * @return LoginProviderRedirect
      */
-    protected function getLoginProviderRedirectFixture()
+    protected function getLoginProviderRedirectFixture(): LoginProviderRedirect
     {
         $loginProviderRedirect = new LoginProviderRedirect();
         $loginProviderRedirect->setUrl($this->url);

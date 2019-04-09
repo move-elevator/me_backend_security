@@ -10,14 +10,14 @@ use PHPUnit\Framework\TestCase;
  */
 class LoginProviderRedirectFactoryTest extends TestCase
 {
-    public function testCreateObjectWithoutArguments()
+    public function testCreateObjectWithoutArguments(): void
     {
         $loginProviderRedirect = LoginProviderRedirectFactory::create();
 
         $this->assertEquals($loginProviderRedirect->getUrl(), 'index.php?r=1');
     }
 
-    public function testCreateObjectFromValidArguments()
+    public function testCreateObjectFromValidArguments(): void
     {
         $username = 'testuser';
         $errorCodes = [100, 200, 300];
@@ -30,12 +30,5 @@ class LoginProviderRedirectFactoryTest extends TestCase
             $loginProviderRedirect->getUrl(),
             'index.php?r=1&u=' . $username . '&e=' . urlencode(base64_encode(serialize($errorCodes)))
         );
-    }
-
-    public function testCreateObjectFromInvalidArguments()
-    {
-        $this->expectException(\InvalidArgumentException::class);
-
-        LoginProviderRedirectFactory::create(false, []);
     }
 }

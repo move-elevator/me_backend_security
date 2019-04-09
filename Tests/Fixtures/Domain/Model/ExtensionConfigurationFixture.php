@@ -42,7 +42,7 @@ trait ExtensionConfigurationFixture
     /**
      * @return ExtensionConfiguration
      */
-    protected function getExtensionConfigurationFixture()
+    protected function getExtensionConfigurationFixture(): ExtensionConfiguration
     {
         return new ExtensionConfiguration(
             $this->minimumSpecialCharacters,
@@ -57,15 +57,15 @@ trait ExtensionConfigurationFixture
     /**
      * @return array
      */
-    protected function getRawExtensionConfigurationFixture()
+    protected function getRawExtensionConfigurationFixture(): array
     {
         return [
-            'minimumSpecialCharacters' => ['value' => $this->minimumSpecialCharacters],
-            'minimumDigits' => ['value' => $this->minimumDigits],
-            'minimumCapitalCharacters' => ['value' => $this->minimumCapitalCharacters],
-            'minimumLowercaseCharacters' => ['value' => $this->minimumLowercaseCharacters],
-            'passwordLength' => ['value' => $this->passwordLength],
-            'maximumValidDays' => ['value' => $this->maximumValidDays]
+            'minimumSpecialCharacters' => $this->minimumSpecialCharacters,
+            'minimumDigits' => $this->minimumDigits,
+            'minimumCapitalCharacters' => $this->minimumCapitalCharacters,
+            'minimumLowercaseCharacters' => $this->minimumLowercaseCharacters,
+            'passwordLength' => $this->passwordLength,
+            'maximumValidDays' => $this->maximumValidDays
         ];
     }
 }

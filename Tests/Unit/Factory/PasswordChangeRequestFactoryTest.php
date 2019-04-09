@@ -14,24 +14,12 @@ class PasswordChangeRequestFactoryTest extends TestCase
 {
     use PasswordChangeRequestFixture;
 
-    protected $rsaEncryptionDecoder;
-
-    public function setUp()
-    {
-        $this->rsaEncryptionDecoder = \Mockery::mock(RsaEncryptionDecoder::class);
-        $this->rsaEncryptionDecoder
-            ->shouldReceive('decrypt')
-            ->withAnyArgs()
-            ->andReturnUsing(function($argument) { return $argument; });
-    }
-
-    public function testCreateObjectFromValidArguments()
+    public function testCreateObjectFromValidArguments(): void
     {
         $rawPasswordChangeRequest = $this->getRawPasswordChangeRequestFixture();
         $expectedPasswordChangeRequest = $this->getPasswordChangeRequestFixture();
 
         $passwordChangeRequest = PasswordChangeRequestFactory::create(
-            $this->rsaEncryptionDecoder,
             $rawPasswordChangeRequest['changeRequestParameters'],
             $rawPasswordChangeRequest['currentPassword']
         );
@@ -43,10 +31,10 @@ class PasswordChangeRequestFactoryTest extends TestCase
         );
     }
 
-    public function testCreateObjectFromInvalidArguments()
+    public function testCreateObjectFromInvalidArguments(): void
     {
         $this->expectException(\InvalidArgumentException::class);
 
-        PasswordChangeRequestFactory::create($this->rsaEncryptionDecoder, []);
+        PasswordChangeRequestFactory::create([]);
     }
 }

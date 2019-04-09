@@ -10,11 +10,12 @@ $column = [
             'be_users.tx_mebackendsecurity_lastpasswordchange',
         'config' => [
             'type' => 'input',
-            'size' => 12,
+            'renderType' => 'inputDateTime',
             'eval' => 'datetime',
+            'readOnly' => true
         ]
     ],
 ];
 
 ExtensionManagementUtility::addTCAcolumns('be_users', $column);
-ExtensionManagementUtility::addToAllTCAtypes('be_users', 'tx_mebackendsecurity_lastpasswordchange;;;;1-1-1');
+ExtensionManagementUtility::addToAllTCAtypes('be_users', 'tx_mebackendsecurity_lastpasswordchange', '', 'after:lastlogin');

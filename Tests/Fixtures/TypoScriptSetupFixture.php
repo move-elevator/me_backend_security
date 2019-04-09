@@ -29,7 +29,7 @@ trait TypoScriptSetupFixture
     /**
      * @return array
      */
-    protected function getRawTypoScriptSetupFixture()
+    protected function getRawTypoScriptSetupFixture(): array
     {
         return [
             'config.' => [

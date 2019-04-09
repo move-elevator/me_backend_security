@@ -3,7 +3,6 @@
 namespace MoveElevator\MeBackendSecurity\Factory;
 
 use MoveElevator\MeBackendSecurity\Domain\Model\PasswordChangeRequest;
-use TYPO3\CMS\Rsaauth\RsaEncryptionDecoder;
 
 /**
  * @package MoveElevator\MeBackendSecurity\Factory
@@ -11,17 +10,15 @@ use TYPO3\CMS\Rsaauth\RsaEncryptionDecoder;
 class PasswordChangeRequestFactory
 {
     /**
-     * @param array                $changeRequestParameters
-     * @param RsaEncryptionDecoder $rsaEncryptionDecoder
-     * @param string               $currentPassword
+     * @param array  $changeRequestParameters
+     * @param string $currentPassword
      *
      * @return PasswordChangeRequest
      */
     public static function create(
-        RsaEncryptionDecoder $rsaEncryptionDecoder,
         array $changeRequestParameters,
-        $currentPassword = ''
-    ) {
+        string $currentPassword = ''
+    ): PasswordChangeRequest {
         if (empty($changeRequestParameters['password']) ||
             empty($changeRequestParameters['password2'])
         ) {
@@ -34,17 +31,11 @@ class PasswordChangeRequestFactory
         $passwordChange = new PasswordChangeRequest();
 
         if (empty($currentPassword) === false) {
-            $passwordChange->setCurrentPassword(
-                $rsaEncryptionDecoder->decrypt($currentPassword)
-            );
+            $passwordChange->setCurrentPassword($currentPassword);
         }
 
-        $passwordChange->setPassword(
-            $rsaEncryptionDecoder->decrypt($changeRequestParameters['password'])
-        );
-        $passwordChange->setPasswordConfirmation(
-            $rsaEncryptionDecoder->decrypt($changeRequestParameters['password2'])
-        );
+        $passwordChange->setPassword($changeRequestParameters['password']);
+        $passwordChange->setPasswordConfirmation($changeRequestParameters['password2']);
 
         return $passwordChange;
     }

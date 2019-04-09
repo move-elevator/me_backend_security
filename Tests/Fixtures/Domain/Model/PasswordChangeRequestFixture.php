@@ -27,7 +27,7 @@ trait PasswordChangeRequestFixture
     /**
      * @return PasswordChangeRequest
      */
-    protected function getPasswordChangeRequestFixture()
+    protected function getPasswordChangeRequestFixture(): PasswordChangeRequest
     {
         $passwordChangeRequest = new PasswordChangeRequest();
         $passwordChangeRequest->setCurrentPassword($this->currentPassword);
@@ -40,7 +40,7 @@ trait PasswordChangeRequestFixture
     /**
      * @return array
      */
-    protected function getRawPasswordChangeRequestFixture()
+    protected function getRawPasswordChangeRequestFixture(): array
     {
         return [
             'changeRequestParameters' => [
