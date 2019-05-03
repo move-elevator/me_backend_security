@@ -66,8 +66,8 @@ class UserAuthHook
     }
 
     /**
-     * @param array                     $params
-     * @param BackendUserAuthentication $pObj
+     * @param mixed $params
+     * @param mixed $pObj
      *
      * @throws ExtensionConfigurationExtensionNotConfiguredException
      * @throws ExtensionConfigurationPathDoesNotExistException
@@ -75,7 +75,7 @@ class UserAuthHook
      * @SuppressWarnings(PHPMD.Superglobals)
      * @SuppressWarnings(PHPMD.UnusedFormalParameter)
      */
-    public function postUserLookUp(array $params, BackendUserAuthentication $pObj)
+    public function postUserLookUp($params, $pObj): void
     {
         if (TYPO3_MODE === 'FE') {
             return;

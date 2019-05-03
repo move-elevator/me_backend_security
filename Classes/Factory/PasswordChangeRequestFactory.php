@@ -17,7 +17,7 @@ class PasswordChangeRequestFactory
      */
     public static function create(
         array $changeRequestParameters,
-        string $currentPassword = ''
+        ?string $currentPassword
     ): PasswordChangeRequest {
         if (empty($changeRequestParameters['password']) ||
             empty($changeRequestParameters['password2'])

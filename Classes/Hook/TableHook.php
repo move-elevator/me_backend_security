@@ -65,10 +65,10 @@ class TableHook
     }
 
     /**
-     * @param array $incomingFieldArray
-     * @param string $table
-     * @param int $id
-     * @param array $pObj
+     * @param mixed $incomingFieldArray
+     * @param mixed $table
+     * @param mixed $id
+     * @param mixed $pObj
      *
      * @codeCoverageIgnore
      * @SuppressWarnings(PHPMD.ShortVariable)
@@ -77,7 +77,7 @@ class TableHook
      * @SuppressWarnings(PHPMD.UnusedFormalParameter)
      * @SuppressWarnings(PHPMD.ExcessiveParameterList)
      */
-    public function processDatamap_preProcessFieldArray(array &$incomingFieldArray, string $table, int $id, array &$pObj): void // @codingStandardsIgnoreLine
+    public function processDatamap_preProcessFieldArray(&$incomingFieldArray, $table, $id, &$pObj): void // @codingStandardsIgnoreLine
     {
         if ($table !== 'be_users') {
             return;
@@ -99,11 +99,11 @@ class TableHook
     }
 
     /**
-     * @param string $status
-     * @param string $table
-     * @param int $id
-     * @param array $fieldArray
-     * @param array $tcemain
+     * @param mixed $status
+     * @param mixed $table
+     * @param mixed $id
+     * @param mixed $fieldArray
+     * @param mixed $tcemain
      *
      * @codeCoverageIgnore
      * @SuppressWarnings(PHPMD.ShortVariable)
@@ -112,7 +112,7 @@ class TableHook
      * @SuppressWarnings(PHPMD.UnusedFormalParameter)
      * @SuppressWarnings(PHPMD.ExcessiveParameterList)
      */
-    public function processDatamap_afterDatabaseOperations(string $status, string $table, int $id, array &$fieldArray, array &$tcemain): void // @codingStandardsIgnoreLine
+    public function processDatamap_afterDatabaseOperations($status, $table, $id, &$fieldArray, &$tcemain): void // @codingStandardsIgnoreLine
     {
         $lastChange = time() + date('Z');
 
