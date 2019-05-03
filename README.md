@@ -60,6 +60,13 @@ Run each command in the project root directory.
 * Website: http://www.move-elevator.de
 
 # Changelog
+2019-05-03 - Philipp Heckelt <phe@move-elevator.de>
+```
+Release 2.0.1
+---
+Bugfix: PHP7 typehints for hooks
+```
+
 2019-04-08 - Philipp Heckelt <phe@move-elevator.de>
 ```
 Release 2.0.0
