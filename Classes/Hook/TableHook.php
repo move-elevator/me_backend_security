@@ -87,6 +87,10 @@ class TableHook
             return;
         }
 
+        if (is_int($id) === false) {
+            return;
+        }
+
         $this->newPasswordPlain = $incomingFieldArray['password'];
         $this->currentPassword = $this->queryBuilder
             ->select('password')
@@ -124,24 +128,31 @@ class TableHook
             return;
         }
 
+        if (is_int($id) === false) {
+            return;
+        }
+
         // If old password is the same, ignore it
-        if ($this->passwordHashInstance->checkPassword($this->newPasswordPlain, $this->currentPassword)) {
+        if ($this->passwordHashInstance->checkPassword($this->newPasswordPlain, $this->currentPassword)
+        ) {
             $this->addFlashMessage();
             return;
         }
 
-        // If user is created or copied
-        if ($status === 'insert') {
-            $lastChange = 0;
+        // If user is created or copied or current user is not the same as account
+        if ($status === 'insert' ||
+            (int) $id !== (int) $GLOBALS['BE_USER']->user['uid']
+        ) {
+            $lastChange = 1;
         }
 
         $this->queryBuilder
-            ->update(self::USERS_TABLE)
-            ->where(
-                $this->queryBuilder->expr()->eq('uid', $id)
-            )
-            ->set(self::LASTCHANGE_COLUMN_NAME, $lastChange)
-            ->execute();
+        ->update(self::USERS_TABLE)
+        ->where(
+            $this->queryBuilder->expr()->eq('uid', $id)
+        )
+        ->set(self::LASTCHANGE_COLUMN_NAME, $lastChange)
+        ->execute();
     }
 
     /**
