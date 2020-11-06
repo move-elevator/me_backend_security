@@ -22,7 +22,7 @@ class PasswordLengthValidator extends AbstractValidator
         /** @var ExtensionConfiguration $configuration */
         $configuration = $this->options['extensionConfiguration'];
 
-        if (strlen($passwordChangeRequest->getPassword()) >= $configuration->getPasswordLength()) {
+        if (mb_strlen($passwordChangeRequest->getPassword()) >= $configuration->getPasswordLength()) {
             return;
         }
 
