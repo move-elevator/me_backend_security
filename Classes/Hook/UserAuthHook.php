@@ -7,21 +7,21 @@ use MoveElevator\MeBackendSecurity\Domain\Model\LoginProviderRedirect;
 use MoveElevator\MeBackendSecurity\Domain\Model\PasswordChangeRequest;
 use MoveElevator\MeBackendSecurity\Factory\CompositeValidatorFactory;
 use MoveElevator\MeBackendSecurity\Factory\ExtensionConfigurationFactory;
-use MoveElevator\MeBackendSecurity\Service\BackendUserService;
 use MoveElevator\MeBackendSecurity\Factory\PasswordChangeRequestFactory;
+use MoveElevator\MeBackendSecurity\Service\BackendUserService;
 use MoveElevator\MeBackendSecurity\Validation\Validator\CompositeValidator;
 use TYPO3\CMS\Core\Authentication\BackendUserAuthentication;
 use TYPO3\CMS\Core\Configuration\Exception\ExtensionConfigurationExtensionNotConfiguredException;
 use TYPO3\CMS\Core\Configuration\Exception\ExtensionConfigurationPathDoesNotExistException;
+use TYPO3\CMS\Core\Configuration\ExtensionConfiguration as ExtensionConfigurationUtility;
 use TYPO3\CMS\Core\Crypto\PasswordHashing\PasswordHashFactory;
 use TYPO3\CMS\Core\Crypto\PasswordHashing\PasswordHashInterface;
 use TYPO3\CMS\Core\Database\ConnectionPool;
+use TYPO3\CMS\Core\Localization\LanguageService;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Core\Utility\HttpUtility;
 use TYPO3\CMS\Extbase\Configuration\ConfigurationManagerInterface;
 use TYPO3\CMS\Extbase\Object\ObjectManager;
-use TYPO3\CMS\Core\Configuration\ExtensionConfiguration as ExtensionConfigurationUtility;
-use TYPO3\CMS\Lang\LanguageService;
 
 /**
  * @package MoveElevator\MeBackendSecurity\Hook
