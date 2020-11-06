@@ -17,8 +17,8 @@ use TYPO3\CMS\Extbase\Utility\LocalizationUtility;
  */
 class TableHook
 {
-    const USERS_TABLE = 'be_users';
-    const LASTCHANGE_COLUMN_NAME = 'tx_mebackendsecurity_lastpasswordchange';
+    protected const USERS_TABLE = 'be_users';
+    protected const LASTCHANGE_COLUMN_NAME = 'tx_mebackendsecurity_lastpasswordchange';
 
     /**
      * @var FlashMessageQueue
@@ -99,7 +99,7 @@ class TableHook
                 $this->queryBuilder->expr()->eq('uid', $id)
             )
             ->execute()
-            ->fetchColumn(0);
+            ->fetchOne();
     }
 
     /**

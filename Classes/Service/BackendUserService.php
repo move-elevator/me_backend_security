@@ -18,14 +18,14 @@ use TYPO3\CMS\Extbase\Error\Result;
  */
 class BackendUserService
 {
-    const USERS_TABLE = 'be_users';
-    const LASTCHANGE_COLUMN_NAME = 'tx_mebackendsecurity_lastpasswordchange';
-    const LASTLOGIN_COLUMN_NAME = 'lastlogin';
-    const USER_DONT_EXIST_ERROR_CODE = 1510742747;
-    const FIRST_CHANGE_MESSAGE_CODE = 1513928250;
+    protected const USERS_TABLE = 'be_users';
+    protected const LASTCHANGE_COLUMN_NAME = 'tx_mebackendsecurity_lastpasswordchange';
+    protected const LASTLOGIN_COLUMN_NAME = 'lastlogin';
+    protected const USER_DONT_EXIST_ERROR_CODE = 1510742747;
+    protected const FIRST_CHANGE_MESSAGE_CODE = 1513928250;
 
     /**
-     * mixed
+     * @var mixed
      */
     protected $backendUserAuthentication;
 
@@ -155,9 +155,6 @@ class BackendUserService
         );
     }
 
-    /**
-     * @return void
-     */
     private function handleNewAccount(): void
     {
         $lastLogin = (int)$this->backendUserAuthentication->user[self::LASTLOGIN_COLUMN_NAME];
@@ -186,16 +183,9 @@ class BackendUserService
     {
         $lastPasswordChange = (int)$this->backendUserAuthentication->user[self::LASTCHANGE_COLUMN_NAME];
 
-        if ($lastPasswordChange !== 0) {
-            return false;
-        }
-
-        return true;
+        return $lastPasswordChange === 0;
     }
 
-    /**
-     * @return void
-     */
     private function migrateAccount(): void
     {
         $this->queryBuilder
@@ -221,13 +211,9 @@ class BackendUserService
             )
             ->setParameter('u', $this->backendUserAuthentication->user['username'])
             ->execute()
-            ->fetchColumn(0);
+            ->fetchOne();
 
-        if ($userExists === false) {
-            return false;
-        }
-
-        return true;
+        return $userExists !== false;
     }
 
     /**

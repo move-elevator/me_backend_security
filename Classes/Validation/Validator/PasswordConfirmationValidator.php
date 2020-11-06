@@ -9,12 +9,10 @@ use MoveElevator\MeBackendSecurity\Domain\Model\PasswordChangeRequest;
  */
 class PasswordConfirmationValidator extends AbstractValidator
 {
-    const ERROR_CODE = 1510742742;
+    protected const ERROR_CODE = 1510742742;
 
     /**
      * @param PasswordChangeRequest $passwordChangeRequest
-     *
-     * @return void
      */
     protected function isValid($passwordChangeRequest): void
     {

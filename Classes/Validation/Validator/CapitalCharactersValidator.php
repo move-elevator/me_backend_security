@@ -10,13 +10,11 @@ use MoveElevator\MeBackendSecurity\Domain\Model\PasswordChangeRequest;
  */
 class CapitalCharactersValidator extends AbstractValidator
 {
-    const PATTERN_CAPITALCHAR = '/[A-ZÄÖÜ]/';
-    const ERROR_CODE = 1510742745;
+    protected const PATTERN_CAPITALCHAR = '/[A-ZÄÖÜ]/';
+    protected const ERROR_CODE = 1510742745;
 
     /**
      * @param PasswordChangeRequest $passwordChangeRequest
-     *
-     * @return void
      */
     protected function isValid($passwordChangeRequest): void
     {

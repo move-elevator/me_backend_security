@@ -35,11 +35,11 @@ abstract class AbstractValidator extends \TYPO3\CMS\Extbase\Validation\Validator
 
         $this->addError(
             $this->translateErrorMessage(
-                (string)$languageKey,
+                $languageKey,
                 'me_backend_security',
                 $arguments
             ),
-            (int)$errorCode,
+            $errorCode,
             $arguments
         );
     }

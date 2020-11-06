@@ -10,13 +10,11 @@ use MoveElevator\MeBackendSecurity\Domain\Model\PasswordChangeRequest;
  */
 class DigitsValidator extends AbstractValidator
 {
-    const PATTERN_DIGIT = '/[0-9]/';
-    const ERROR_CODE = 1510742744;
+    protected const PATTERN_DIGIT = '/[0-9]/';
+    protected const ERROR_CODE = 1510742744;
 
     /**
      * @param PasswordChangeRequest $passwordChangeRequest
-     *
-     * @return void
      */
     protected function isValid($passwordChangeRequest): void
     {

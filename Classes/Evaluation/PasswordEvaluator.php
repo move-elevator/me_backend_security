@@ -4,12 +4,13 @@ namespace MoveElevator\MeBackendSecurity\Evaluation;
 
 use MoveElevator\MeBackendSecurity\Domain\Model\ExtensionConfiguration;
 use MoveElevator\MeBackendSecurity\Domain\Model\PasswordChangeRequest;
+use MoveElevator\MeBackendSecurity\Factory\CompositeValidatorFactory;
 use MoveElevator\MeBackendSecurity\Factory\ExtensionConfigurationFactory;
 use MoveElevator\MeBackendSecurity\Factory\PasswordChangeRequestFactory;
-use MoveElevator\MeBackendSecurity\Factory\CompositeValidatorFactory;
 use MoveElevator\MeBackendSecurity\Validation\Validator\CompositeValidator;
 use TYPO3\CMS\Core\Configuration\Exception\ExtensionConfigurationExtensionNotConfiguredException;
 use TYPO3\CMS\Core\Configuration\Exception\ExtensionConfigurationPathDoesNotExistException;
+use TYPO3\CMS\Core\Configuration\ExtensionConfiguration as ExtensionConfigurationUtility;
 use TYPO3\CMS\Core\Crypto\PasswordHashing\InvalidPasswordHashException;
 use TYPO3\CMS\Core\Crypto\PasswordHashing\PasswordHashFactory;
 use TYPO3\CMS\Core\Messaging\FlashMessage;
@@ -20,16 +21,15 @@ use TYPO3\CMS\Extbase\Error\Error;
 use TYPO3\CMS\Extbase\Error\Result;
 use TYPO3\CMS\Extbase\Object\ObjectManager;
 use TYPO3\CMS\Extbase\Utility\LocalizationUtility;
-use TYPO3\CMS\Core\Configuration\ExtensionConfiguration as ExtensionConfigurationUtility;
 
 /**
  * @package MoveElevator\MeBackendSecurity\Evaluation
  */
 class PasswordEvaluator
 {
-    const EXTKEY = 'me_backend_security';
-    const USERS_TABLE = 'be_users';
-    const LASTCHANGE_COLUMN_NAME = 'tx_mebackendsecurity_lastpasswordchange';
+    protected const EXTKEY = 'me_backend_security';
+    protected const USERS_TABLE = 'be_users';
+    protected const LASTCHANGE_COLUMN_NAME = 'tx_mebackendsecurity_lastpasswordchange';
 
     /**
      * @var ObjectManager

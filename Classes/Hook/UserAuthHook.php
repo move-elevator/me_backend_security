@@ -145,8 +145,6 @@ class UserAuthHook
     }
 
     /**
-     * @return void
-     *
      * @SuppressWarnings(PHPMD.Superglobals)
      */
     private function initializeLanguageService(): void
@@ -161,13 +159,10 @@ class UserAuthHook
             return;
         }
 
-        $userUc = unserialize($this->backendUserAuthentication->user['uc']);
+        $userUc = unserialize($this->backendUserAuthentication->user['uc'], ['allowed_classes' => false]);
         $GLOBALS['LANG']->init($userUc['lang']);
     }
 
-    /**
-     * @return void
-     */
     private function processPasswordChange(): void
     {
         $requestParameters = GeneralUtility::_GP(self::PARAMETER_IDENTIFIER);

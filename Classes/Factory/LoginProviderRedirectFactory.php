@@ -9,7 +9,7 @@ use MoveElevator\MeBackendSecurity\Domain\Model\LoginProviderRedirect;
  */
 class LoginProviderRedirectFactory
 {
-    const BASE_URL = 'index.php';
+    protected const BASE_URL = 'index.php';
 
     /**
      * @param string $username

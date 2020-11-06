@@ -3,11 +3,11 @@
 namespace MoveElevator\MeBackendSecurity\LoginProvider;
 
 use MoveElevator\MeBackendSecurity\Domain\Model\ExtensionConfiguration;
+use MoveElevator\MeBackendSecurity\Factory\ExtensionConfigurationFactory;
+use TYPO3\CMS\Backend\Controller\LoginController;
 use TYPO3\CMS\Core\Configuration\Exception\ExtensionConfigurationExtensionNotConfiguredException;
 use TYPO3\CMS\Core\Configuration\Exception\ExtensionConfigurationPathDoesNotExistException;
 use TYPO3\CMS\Core\Configuration\ExtensionConfiguration as ExtensionConfigurationUtility;
-use MoveElevator\MeBackendSecurity\Factory\ExtensionConfigurationFactory;
-use TYPO3\CMS\Backend\Controller\LoginController;
 use TYPO3\CMS\Core\Page\PageRenderer;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Extbase\Object\ObjectManager;
@@ -18,8 +18,8 @@ use TYPO3\CMS\Fluid\View\StandaloneView;
  */
 class UsernamePasswordLoginProvider extends \TYPO3\CMS\Backend\LoginProvider\UsernamePasswordLoginProvider
 {
-    const EXTKEY = 'me_backend_security';
-    const PARAMETER_IDENTIFIER = 'tx_mebackendsecurity';
+    protected const EXTKEY = 'me_backend_security';
+    protected const PARAMETER_IDENTIFIER = 'tx_mebackendsecurity';
 
     /**
      * @var ExtensionConfiguration $extensionConfiguration
@@ -69,13 +69,19 @@ class UsernamePasswordLoginProvider extends \TYPO3\CMS\Backend\LoginProvider\Use
         $errors = GeneralUtility::_GP('e');
 
         if (empty($errors) === false) {
-            $view->assign('errors', unserialize(base64_decode(urldecode($errors))));
+            $view->assign(
+                'errors',
+                unserialize(base64_decode(urldecode($errors)), ['allowed_classes' => false])
+            );
         }
 
         $messages = GeneralUtility::_GP('m');
 
         if (empty($messages) === false) {
-            $view->assign('messages', unserialize(base64_decode(urldecode($messages))));
+            $view->assign(
+                'messages',
+                unserialize(base64_decode(urldecode($messages)), ['allowed_classes' => false])
+            );
         }
 
         $pageRenderer->loadRequireJsModule(
@@ -93,10 +99,6 @@ class UsernamePasswordLoginProvider extends \TYPO3\CMS\Backend\LoginProvider\Use
         $resetForm = GeneralUtility::_GP('r');
         $resetFormVars = GeneralUtility::_GP(self::PARAMETER_IDENTIFIER);
 
-        if (empty($resetForm) === false || empty($resetFormVars) === false) {
-            return true;
-        }
-
-        return false;
+        return empty($resetForm) === false || empty($resetFormVars) === false;
     }
 }
