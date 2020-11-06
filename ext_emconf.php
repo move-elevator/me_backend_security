@@ -3,14 +3,12 @@
 $EM_CONF[$_EXTKEY] = [
     'title' => 'm:e Backend Security',
     'description' => 'Erweiterte Sicherheit für das TYPO3-Backend',
-    'version' => '2.0.1',
+    'version' => '3.0.0',
     'category' => 'services',
     'constraints' => [
         'depends' => [
-            'typo3' => '9.5.0-9.5.99'
+            'typo3' => '10.4.0-10.4.99',
         ],
-        'conflicts' => [],
-        'suggests' => []
     ],
     'state' => 'stable',
     'uploadfolder' => false,
@@ -19,5 +17,9 @@ $EM_CONF[$_EXTKEY] = [
     'author' => 'move elevator GmbH',
     'author_email' => 'entwicklung@move-elevator.de',
     'author_company' => 'move elevator GmbH',
-    'autoload' => []
+    'autoload' => [
+        'psr-4' => [
+            'MoveElevator\\MeBackendSecurity\\' => 'Classes',
+        ],
+    ],
 ];
