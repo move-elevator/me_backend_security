@@ -11,8 +11,6 @@ $EM_CONF[$_EXTKEY] = [
         ],
     ],
     'state' => 'stable',
-    'uploadfolder' => false,
-    'createDirs' => '',
     'clearCacheOnLoad' => true,
     'author' => 'move elevator GmbH',
     'author_email' => 'entwicklung@move-elevator.de',
