@@ -19,10 +19,10 @@ Users imported from extension ig_ldap_sso_auth will be ignored.
 
 ## Install and usage
 
-1. Basic install via composer in TYPO3 projects add this line to the composer.json
+1. Basic install via composer
 
     ```
-    "move-elevator/me-backend-security": "1.2.0"
+    composer req "move-elevator/me-backend-security":"^3.0"
     ```
 2. Modify extension settings in TYPO3 backend
 3. Be safer :)
@@ -60,6 +60,14 @@ Run each command in the project root directory.
 * Website: http://www.move-elevator.de
 
 # Changelog
+2020-11-06 - Ronny Hauptvogel <rh@move-elevator.de>
+```
+Release 3.0.0
+---
+Feature: TYPO3 10 compatibility
+Bugfix: Invalid password length with german umlauts
+```
+
 2019-05-03 - Philipp Heckelt <phe@move-elevator.de>
 ```
 Release 2.0.1
