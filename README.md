@@ -1,6 +1,6 @@
 # TYPO3 Extension "me_backend_security"
 
-A extension to specify secure password rules and force backend user to change his password, if the password is older then a defined limit.
+An extension to specify secure password rules and force backend users to change their passwords, if the password is older then a defined limit.
 
 In extension settings you can define:
 * Minimum number of capital characters
@@ -10,10 +10,10 @@ In extension settings you can define:
 * Minimum length of password
 * Maximum days before password must change
 
-If a backend user logs in and his password need to change, user will logged out and redirect to comfortable password change form.
+If a backend user logs in and his password needs to change, user will be logged out and redirected to comfortable password change form.
 After password was changed, the user will automatically logged in and can start his work in backend.
 
-The password rules will also be checked when the user try to change his password in user settings in backend.
+The password rules will also be checked when the user tries to change his password in user settings in backend.
 
 Users imported from extension ig_ldap_sso_auth will be ignored.
 
@@ -57,7 +57,7 @@ Run each command in the project root directory.
 # Contact
 
 * Mail: typo3@move-elevator.de
-* Website: http://www.move-elevator.de
+* Website: https://www.move-elevator.de
 
 # Changelog
 2019-05-03 - Philipp Heckelt <phe@move-elevator.de>
