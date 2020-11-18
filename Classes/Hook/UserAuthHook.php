@@ -32,10 +32,10 @@ use TYPO3\CMS\Extbase\Object\ObjectManager;
  */
 class UserAuthHook
 {
-    const EXTKEY = 'me_backend_security';
-    const PARAMETER_IDENTIFIER = 'tx_mebackendsecurity';
-    const PASSWORD_IDENTIFIER = 'userident';
-    const USERS_TABLE = 'be_users';
+    protected const EXTKEY = 'me_backend_security';
+    protected const PARAMETER_IDENTIFIER = 'tx_mebackendsecurity';
+    protected const PASSWORD_IDENTIFIER = 'userident';
+    protected const USERS_TABLE = 'be_users';
 
     /**
      * @var BackendUserAuthentication
