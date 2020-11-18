@@ -11,7 +11,7 @@ use MoveElevator\MeBackendSecurity\Domain\Model\PasswordChangeRequest;
  */
 class SpecialCharactersValidator extends AbstractValidator
 {
-    protected const PATTERN_SPECIALCHAR = '/[\\\[\]\/\-(){}#?!$%&=*+~,.;:<>_]/';
+    protected const PATTERN_SPECIALCHAR = '/[\\\[\]\/\-(){}@#?!$%&=*+~,.;:<>_]/';
     protected const ERROR_CODE = 1510742743;
 
     /**
