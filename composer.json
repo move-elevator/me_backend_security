@@ -11,7 +11,7 @@
   "require-dev": {
     "tm/tooly-composer-script": "1.2.5",
     "mockery/mockery": "^1.0",
-    "typo3/minimal": "^10.4"
+    "typo3/minimal": "^9.5 || ^10.4"
   },
   "scripts": {
     "post-install-cmd": "Tooly\\ScriptHandler::installPharTools",

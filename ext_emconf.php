@@ -7,7 +7,7 @@ $EM_CONF[$_EXTKEY] = [
     'category' => 'services',
     'constraints' => [
         'depends' => [
-            'typo3' => '10.4.0-10.4.99',
+            'typo3' => '9.5.0-10.4.99',
         ],
     ],
     'state' => 'stable',
