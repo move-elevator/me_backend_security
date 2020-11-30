@@ -100,7 +100,7 @@ class TableHook
                 $this->queryBuilder->expr()->eq('uid', $id)
             )
             ->execute()
-            ->fetchOne();
+            ->fetchColumn(0);
     }
 
     /**

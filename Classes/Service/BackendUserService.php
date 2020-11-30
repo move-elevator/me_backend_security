@@ -212,7 +212,7 @@ class BackendUserService
             )
             ->setParameter('u', $this->backendUserAuthentication->user['username'])
             ->execute()
-            ->fetchOne();
+            ->fetchColumn(0);
 
         return $userExists !== false;
     }
