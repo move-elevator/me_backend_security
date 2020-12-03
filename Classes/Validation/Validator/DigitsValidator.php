@@ -9,7 +9,7 @@ use MoveElevator\MeBackendSecurity\Domain\Model\PasswordChangeRequest;
 /**
  * @package MoveElevator\MeBackendSecurity\Validation\Validator
  */
-class DigitsValidator extends AbstractValidator
+final class DigitsValidator extends AbstractValidator
 {
     protected const PATTERN_DIGIT = '/[0-9]/';
     protected const ERROR_CODE = 1510742744;

@@ -8,7 +8,7 @@ use MoveElevator\MeBackendSecurity\Domain\Model\PasswordChangeRequest;
 /**
  * @package MoveElevator\MeBackendSecurity\Validation\Validator
  */
-class SamePasswordValidator extends AbstractValidator
+final class SamePasswordValidator extends AbstractValidator
 {
     protected const ERROR_CODE = 1513850698;
 

@@ -9,7 +9,7 @@ use TYPO3\CMS\Extbase\Error\Error;
 /**
  * @package MoveElevator\MeBackendSecurity\Validation\Validator
  */
-class CompositeValidator extends AbstractValidator
+final class CompositeValidator extends AbstractValidator
 {
     /**
      * @var array
