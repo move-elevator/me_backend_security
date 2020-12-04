@@ -9,10 +9,10 @@ use MoveElevator\MeBackendSecurity\Domain\Model\PasswordChangeRequest;
 /**
  * @package MoveElevator\MeBackendSecurity\Validation\Validator
  */
-final class LowercaseCharactersValidator extends AbstractValidator
+class LowercaseCharactersValidator extends AbstractValidator
 {
-    protected const PATTERN_LOWERCASECHAR = '/[a-zäöü]/';
-    protected const ERROR_CODE = 1510742746;
+    private const PATTERN_LOWERCASECHAR = '/[a-zäöü]/';
+    private const ERROR_CODE = 1510742746;
 
     /**
      * @param PasswordChangeRequest $passwordChangeRequest
