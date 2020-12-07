@@ -1,4 +1,5 @@
 <?php
+declare(strict_types=1);
 
 namespace MoveElevator\MeBackendSecurity\Validation\Validator;
 
@@ -10,20 +11,18 @@ use MoveElevator\MeBackendSecurity\Domain\Model\PasswordChangeRequest;
  */
 class SpecialCharactersValidator extends AbstractValidator
 {
-    const PATTERN_SPECIALCHAR = '/[\\\[\]\/\-(){}#?!$%&=*+~,.;:<>_]/';
-    const ERROR_CODE = 1510742743;
+    private const PATTERN_SPECIAL_CHAR = '/[\\\[\]\/\-(){}@#?!$%&=*+~,.;:<>_]/';
+    private const ERROR_CODE = 1510742743;
 
     /**
      * @param PasswordChangeRequest $passwordChangeRequest
-     *
-     * @return void
      */
     protected function isValid($passwordChangeRequest): void
     {
         /** @var ExtensionConfiguration $configuration */
         $configuration = $this->options['extensionConfiguration'];
 
-        $matches = preg_match_all(self::PATTERN_SPECIALCHAR, $passwordChangeRequest->getPassword());
+        $matches = preg_match_all(self::PATTERN_SPECIAL_CHAR, $passwordChangeRequest->getPassword());
 
         if ($matches >= $configuration->getMinimumSpecialCharacters()) {
             return;

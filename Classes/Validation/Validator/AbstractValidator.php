@@ -1,4 +1,5 @@
 <?php
+declare(strict_types=1);
 
 namespace MoveElevator\MeBackendSecurity\Validation\Validator;
 
@@ -35,11 +36,11 @@ abstract class AbstractValidator extends \TYPO3\CMS\Extbase\Validation\Validator
 
         $this->addError(
             $this->translateErrorMessage(
-                (string)$languageKey,
+                $languageKey,
                 'me_backend_security',
                 $arguments
             ),
-            (int)$errorCode,
+            $errorCode,
             $arguments
         );
     }

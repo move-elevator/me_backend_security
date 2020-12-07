@@ -1,4 +1,5 @@
 <?php
+declare(strict_types=1);
 
 namespace MoveElevator\MeBackendSecurity\Validation\Validator;
 
@@ -10,19 +11,17 @@ use MoveElevator\MeBackendSecurity\Domain\Model\PasswordChangeRequest;
  */
 class PasswordLengthValidator extends AbstractValidator
 {
-    const ERROR_CODE = 1510742741;
+    private const ERROR_CODE = 1510742741;
 
     /**
      * @param PasswordChangeRequest $passwordChangeRequest
-     *
-     * @return void
      */
     protected function isValid($passwordChangeRequest): void
     {
         /** @var ExtensionConfiguration $configuration */
         $configuration = $this->options['extensionConfiguration'];
 
-        if (strlen($passwordChangeRequest->getPassword()) >= $configuration->getPasswordLength()) {
+        if (mb_strlen($passwordChangeRequest->getPassword()) >= $configuration->getPasswordLength()) {
             return;
         }
 

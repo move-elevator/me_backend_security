@@ -1,4 +1,5 @@
 <?php
+declare(strict_types=1);
 
 namespace MoveElevator\MeBackendSecurity\Hook;
 
@@ -17,8 +18,8 @@ use TYPO3\CMS\Extbase\Utility\LocalizationUtility;
  */
 class TableHook
 {
-    const USERS_TABLE = 'be_users';
-    const LASTCHANGE_COLUMN_NAME = 'tx_mebackendsecurity_lastpasswordchange';
+    protected const USERS_TABLE = 'be_users';
+    protected const LASTCHANGE_COLUMN_NAME = 'tx_mebackendsecurity_lastpasswordchange';
 
     /**
      * @var FlashMessageQueue
