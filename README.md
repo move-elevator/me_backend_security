@@ -60,6 +60,13 @@ Run each command in the project root directory.
 * Website: https://www.move-elevator.de
 
 # Changelog
+2020-12-09 - Ronny Hauptvogel <rh@move-elevator.de>
+```
+Release 2.0.3
+---
+Bugfix: Update PHP version constraint to include newer PHP7 versions
+```
+
 2020-11-06 - Ronny Hauptvogel <rh@move-elevator.de>
 ```
 Release 2.0.2
