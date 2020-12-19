@@ -22,6 +22,8 @@ Users imported from extension ig_ldap_sso_auth will be ignored.
 This extension isn't compatible with **typo3/cms-rsaauth**, because typo3/cms-rsaauth will replace the given passwords through RSA hashes by an AJAX request before the password change form will be submitted.
 Therefore, RSA hashes aren't equal, so the "passwords do not match"-Validator doesn't work anymore. BUT you don't need typo3/cms-rsaauth if you already have HTTPS enabled, because it does exactly the same thing.
 
+Furthermore, you have to set the **loginSecurityLevel** to the default value **normal** and **not** rsa.
+
 ## Install and usage
 
 1. Basic install via composer
