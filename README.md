@@ -67,6 +67,13 @@ Run each command in the project root directory.
 * Website: https://www.move-elevator.de
 
 # Changelog
+2020-12-17 - Ronny Hauptvogel <rh@move-elevator.de>
+```
+Release 2.0.4
+---
+Feature: Add typo3/cms-rsaauth as conflict
+```
+
 2020-12-09 - Ronny Hauptvogel <rh@move-elevator.de>
 ```
 Release 2.0.3
