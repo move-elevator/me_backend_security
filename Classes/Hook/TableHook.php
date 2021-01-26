@@ -133,9 +133,12 @@ class TableHook
             return;
         }
 
-        // If old password is the same, ignore it
-        if ($this->passwordHashInstance->checkPassword($this->newPasswordPlain, $this->currentPassword)
-        ) {
+        $isOldPasswordTheSameIgnoreIt = $this->passwordHashInstance->checkPassword(
+            (string) $this->newPasswordPlain,
+            (string) $this->currentPassword
+        );
+
+        if ($isOldPasswordTheSameIgnoreIt) {
             $this->addFlashMessage();
             return;
         }
