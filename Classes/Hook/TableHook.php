@@ -93,7 +93,7 @@ class TableHook
         }
 
         $this->newPasswordPlain = $incomingFieldArray['password'];
-        $this->currentPassword = $this->queryBuilder
+        $this->currentPassword = (string)$this->queryBuilder
             ->select('password')
             ->from(self::USERS_TABLE)
             ->where(
