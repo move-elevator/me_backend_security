@@ -39,12 +39,12 @@ class TableHook
     /**
      * @var string
      */
-    protected $newPasswordPlain;
+    protected $newPasswordPlain = '';
 
     /**
      * @var string
      */
-    protected $currentPassword;
+    protected $currentPassword = '';
 
     /**
      * @codeCoverageIgnore
@@ -134,11 +134,11 @@ class TableHook
         }
 
         $isOldPasswordTheSameIgnoreIt = $this->passwordHashInstance->checkPassword(
-            (string) $this->newPasswordPlain,
-            (string) $this->currentPassword
+            $this->newPasswordPlain,
+            $this->currentPassword
         );
 
-        if ($isOldPasswordTheSameIgnoreIt) {
+        if ($isOldPasswordTheSameIgnoreIt === true) {
             $this->addFlashMessage();
             return;
         }
