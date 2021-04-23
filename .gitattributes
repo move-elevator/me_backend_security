@@ -1,0 +1,6 @@
+/build export-ignore
+/Tests export-ignore
+/.gitattributes export-ignore
+/.gitignore export-ignore
+/phpmd.xml export-ignore
+/phpunit.xml export-ignore
