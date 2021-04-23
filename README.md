@@ -67,6 +67,15 @@ Run each command in the project root directory.
 * Website: https://www.move-elevator.de
 
 # Changelog
+2021-04-23 - Ronny Hauptvogel <rh@move-elevator.de>
+```
+Release 2.0.5
+---
+Feature: Add .gitattributes file
+Feature: Add composer extension key
+Bugfix: Add proper type casting for hooks
+```
+
 2020-12-17 - Ronny Hauptvogel <rh@move-elevator.de>
 ```
 Release 2.0.4
