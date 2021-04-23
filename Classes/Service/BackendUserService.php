@@ -100,7 +100,7 @@ class BackendUserService
         $this->queryBuilder
             ->update(self::USERS_TABLE)
             ->where(
-                $this->queryBuilder->expr()->eq('uid', $this->backendUserAuthentication->user['uid'])
+                $this->queryBuilder->expr()->eq('uid', (int)$this->backendUserAuthentication->user['uid'])
             )
             ->set('password', $this->passwordHashInstance->getHashedPassword($passwordChangeRequest->getPassword()))
             ->set(self::LASTCHANGE_COLUMN_NAME, time() + date('Z'))

@@ -39,12 +39,12 @@ class TableHook
     /**
      * @var string
      */
-    protected $newPasswordPlain;
+    protected $newPasswordPlain = '';
 
     /**
      * @var string
      */
-    protected $currentPassword;
+    protected $currentPassword = '';
 
     /**
      * @codeCoverageIgnore
@@ -93,7 +93,7 @@ class TableHook
         }
 
         $this->newPasswordPlain = $incomingFieldArray['password'];
-        $this->currentPassword = $this->queryBuilder
+        $this->currentPassword = (string)$this->queryBuilder
             ->select('password')
             ->from(self::USERS_TABLE)
             ->where(
@@ -133,9 +133,12 @@ class TableHook
             return;
         }
 
-        // If old password is the same, ignore it
-        if ($this->passwordHashInstance->checkPassword($this->newPasswordPlain, $this->currentPassword)
-        ) {
+        $isOldPasswordTheSameIgnoreIt = $this->passwordHashInstance->checkPassword(
+            $this->newPasswordPlain,
+            $this->currentPassword
+        );
+
+        if ($isOldPasswordTheSameIgnoreIt === true) {
             $this->addFlashMessage();
             return;
         }

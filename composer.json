@@ -21,6 +21,9 @@
     "post-update-cmd": "Tooly\\ScriptHandler::installPharTools"
   },
   "extra": {
+    "typo3/cms": {
+      "extension-key": "me_backend_security"
+    },
     "tools": {
       "phpunit": {
         "url": "https://phar.phpunit.de/phpunit-8.0.1.phar",
