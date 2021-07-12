@@ -57,38 +57,38 @@
 			<trans-unit id="error.1513850698" xml:space="preserve">
 				<source>The new password is the same as the current password</source>
 			</trans-unit>
-			<trans-unit id="rule.passwordlength">
+			<trans-unit id="rule.passwordlength.singular">
 				<source>At least %s character</source>
 			</trans-unit>
-			<trans-unit id="rule.passwordlength.plural">
+			<trans-unit id="rule.passwordlength">
 				<source>At least %s characters</source>
 			</trans-unit>
-			<trans-unit id="rule.specialchar">
+			<trans-unit id="rule.specialchar.singular">
 				<source>At least %s special character</source>
 			</trans-unit>
-			<trans-unit id="rule.specialchar.plural">
+			<trans-unit id="rule.specialchar">
 				<source>At least %s special characters</source>
 			</trans-unit>
-			<trans-unit id="rule.digit">
+			<trans-unit id="rule.digit.singular">
 				<source>At least %s digit</source>
 			</trans-unit>
-			<trans-unit id="rule.digit.plural">
+			<trans-unit id="rule.digit">
 				<source>At least %s digits</source>
 			</trans-unit>
-			<trans-unit id="rule.capitalchar">
+			<trans-unit id="rule.capitalchar.singular">
 				<source>At least %s capital character</source>
 			</trans-unit>
-			<trans-unit id="rule.capitalchar.plural">
+			<trans-unit id="rule.capitalchar">
 				<source>At least %s capital characters</source>
 			</trans-unit>
-			<trans-unit id="rule.lowercasechar">
+			<trans-unit id="rule.lowercasechar.singular">
 				<source>At least %s lowercase character</source>
 			</trans-unit>
-			<trans-unit id="rule.lowercasechar.plural">
+			<trans-unit id="rule.lowercasechar">
 				<source>At least %s lowercase characters</source>
 			</trans-unit>
 			<trans-unit id="rule.differentPasswords">
-				<target>New and old password not the same</target>
+				<source>New and old password not the same</source>
 			</trans-unit>
 			<trans-unit id="password.current">
 				<source>Current password</source>
