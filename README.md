@@ -67,6 +67,13 @@ Run each command in the project root directory.
 * Website: https://www.move-elevator.de
 
 # Changelog
+2021-07-19 - Ronny Hauptvogel <rh@move-elevator.de>
+```
+Release 2.0.6
+---
+Bugfix: Fix broken language keys
+```
+
 2021-04-23 - Ronny Hauptvogel <rh@move-elevator.de>
 ```
 Release 2.0.5
