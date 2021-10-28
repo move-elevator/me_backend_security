@@ -23,5 +23,9 @@ defined('TYPO3_MODE') || die();
         $GLOBALS['TYPO3_CONF_VARS']['SYS']['Objects'][\TYPO3\CMS\Backend\Authentication\PasswordReset::class] = [
             'className' => \MoveElevator\MeBackendSecurity\Authentication\PasswordReset::class
         ];
+
+        $GLOBALS['TYPO3_CONF_VARS']['SYS']['Objects'][\TYPO3\CMS\Backend\Controller\LoginController::class] = [
+            'className' => \MoveElevator\MeBackendSecurity\Controller\LoginController::class
+        ];
     }
 })();
