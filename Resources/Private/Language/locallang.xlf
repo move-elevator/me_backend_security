@@ -90,6 +90,9 @@
 			<trans-unit id="rule.differentPasswords">
 				<source>New and old password not the same</source>
 			</trans-unit>
+			<trans-unit id="rule.differentPasswords.reset">
+				<source>Passwords do match</source>
+			</trans-unit>
 			<trans-unit id="password.current">
 				<source>Current password</source>
 			</trans-unit>

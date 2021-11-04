@@ -90,6 +90,9 @@
 			<trans-unit id="rule.differentPasswords">
 				<target>Neues und altes Passwort nicht identisch</target>
 			</trans-unit>
+			<trans-unit id="rule.differentPasswords.reset">
+				<target>Die Passwörter stimmen überein</target>
+			</trans-unit>
 			<trans-unit id="password.current">
 				<target>Aktuelles Passwort</target>
 			</trans-unit>
