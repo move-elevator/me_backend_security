@@ -40,25 +40,19 @@ Run each command in the project root directory.
 ### Execute PHPUnit tests
 
 ```
-./vendor/bin/phpunit.phar -c ./phpunit.xml --debug --verbose
-```
-
-### Execute PHPMD checks
-
-```
-./vendor/bin/phpmd.phar ./Classes text ./phpmd.xml
+composer run phpunit
 ```
 
 ### Execute PHPCS checks
 
 ```
-./vendor/bin/phpcs.phar -p --standard=PSR2 --extensions=php ./Classes
+composer run phpcs
 ```
 
-### Execute PHPCPD checks
+### Execute PHPSTAN checks
 
 ```
-./vendor/bin/phpcpd.phar ./Classes
+composer run phpstan
 ```
 
 # Contact

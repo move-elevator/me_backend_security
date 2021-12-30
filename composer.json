@@ -9,46 +9,34 @@
     "php": "^7.2"
   },
   "require-dev": {
-    "tm/tooly-composer-script": "1.2.5",
+    "friendsofphp/php-cs-fixer": "^3.2",
     "mockery/mockery": "^1.0",
+    "phpstan/phpstan": "^1.0",
+    "phpunit/phpunit": "^8.0",
     "typo3/minimal": "^9.5 || ^10.4"
   },
   "conflict": {
     "typo3/cms-rsaauth": "*"
   },
   "scripts": {
-    "post-install-cmd": "Tooly\\ScriptHandler::installPharTools",
-    "post-update-cmd": "Tooly\\ScriptHandler::installPharTools"
+    "phpcs": [
+      "@phpcs:main",
+      "@phpcs:test"
+    ],
+    "phpcs:main": "./vendor/bin/php-cs-fixer fix -v --dry-run --rules=@PSR12 ./Classes/",
+    "phpcs:test": "./vendor/bin/php-cs-fixer fix -v --dry-run --rules=@PSR12 ./Tests/",
+    "phpcs:fix": [
+      "@phpcs:fix:main",
+      "@phpcs:fix:test"
+    ],
+    "phpcs:fix:main": "./vendor/bin/php-cs-fixer fix --rules=@PSR12 ./Classes/",
+    "phpcs:fix:test": "./vendor/bin/php-cs-fixer fix --rules=@PSR12 ./Tests/",
+    "phpstan": "./vendor/bin/phpstan analyse ./Classes/",
+    "phpunit": "./vendor/bin/phpunit -c ./Build/phpunit.xml --debug --verbose"
   },
   "extra": {
     "typo3/cms": {
       "extension-key": "me_backend_security"
-    },
-    "tools": {
-      "phpunit": {
-        "url": "https://phar.phpunit.de/phpunit-8.0.1.phar",
-        "force-replace": true
-      },
-      "phpmd": {
-        "url": "http://static.phpmd.org/php/2.6.0/phpmd.phar",
-        "force-replace": true
-      },
-      "phpcs": {
-        "url": "https://github.com/squizlabs/PHP_CodeSniffer/releases/download/3.4.0/phpcs.phar",
-        "force-replace": true
-      },
-      "phpcpd": {
-        "url": "https://github.com/sebastianbergmann/phpcpd/releases/download/2.0.0/phpcpd.phar",
-        "force-replace": true
-      },
-      "pdepend": {
-        "url": "http://static.pdepend.org/php/2.5.0/pdepend.phar",
-        "force-replace": true
-      },
-      "phpmetrics": {
-        "url": "https://github.com/phpmetrics/PhpMetrics/releases/download/v2.4.1/phpmetrics.phar",
-        "force-replace": true
-      }
     }
   },
   "autoload": {
