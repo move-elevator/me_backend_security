@@ -73,6 +73,13 @@ composer php:validate
 * Website: https://www.move-elevator.de
 
 # Changelog
+2021-12-30 - Ronny Hauptvogel <rh@move-elevator.de>
+```
+Release 2.0.7
+---
+Feature: Add password validation rules to password reset form
+```
+
 2021-07-19 - Ronny Hauptvogel <rh@move-elevator.de>
 ```
 Release 2.0.6
