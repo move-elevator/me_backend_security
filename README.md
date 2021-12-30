@@ -40,19 +40,31 @@ Run each command in the project root directory.
 ### Execute PHPUnit tests
 
 ```
-composer run phpunit
+composer phpunit
 ```
 
 ### Execute PHPCS checks
 
 ```
-composer run phpcs
+composer phpcs
+```
+
+### Fix PHPCS issues
+
+```
+composer phpcs:fix
 ```
 
 ### Execute PHPSTAN checks
 
 ```
-composer run phpstan
+composer phpstan
+```
+
+### Execute all quality checks
+
+```
+composer php:validate
 ```
 
 # Contact

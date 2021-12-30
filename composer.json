@@ -32,7 +32,12 @@
     "phpcs:fix:main": "./vendor/bin/php-cs-fixer fix --rules=@PSR12 ./Classes/",
     "phpcs:fix:test": "./vendor/bin/php-cs-fixer fix --rules=@PSR12 ./Tests/",
     "phpstan": "./vendor/bin/phpstan analyse ./Classes/",
-    "phpunit": "./vendor/bin/phpunit -c ./Build/phpunit.xml --debug --verbose"
+    "phpunit": "./vendor/bin/phpunit -c ./Build/phpunit.xml --debug --verbose",
+    "php:validate": [
+      "@phpcs",
+      "@phpstan",
+      "@phpunit"
+    ]
   },
   "extra": {
     "typo3/cms": {
