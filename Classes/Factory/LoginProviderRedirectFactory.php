@@ -1,13 +1,11 @@
 <?php
+
 declare(strict_types=1);
 
 namespace MoveElevator\MeBackendSecurity\Factory;
 
 use MoveElevator\MeBackendSecurity\Domain\Model\LoginProviderRedirect;
 
-/**
- * @package MoveElevator\MeBackendSecurity\Factory
- */
 class LoginProviderRedirectFactory
 {
     protected const BASE_URL = 'index.php';

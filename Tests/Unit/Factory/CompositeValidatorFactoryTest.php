@@ -25,7 +25,9 @@ class CompositeValidatorFactoryTest extends TestCase
         $this->objectManager
             ->shouldReceive('get')
             ->withAnyArgs()
-            ->andReturnUsing(function($class, $options) { return new $class($options); });
+            ->andReturnUsing(function ($class, $options) {
+                return new $class($options);
+            });
     }
 
     public function testCreateObjectFromValidArguments(): void

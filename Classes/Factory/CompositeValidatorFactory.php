@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace MoveElevator\MeBackendSecurity\Factory;
@@ -8,9 +9,6 @@ use MoveElevator\MeBackendSecurity\Validation\Validator\AbstractValidator;
 use MoveElevator\MeBackendSecurity\Validation\Validator\CompositeValidator;
 use TYPO3\CMS\Extbase\Object\ObjectManager;
 
-/**
- * @package MoveElevator\MeBackendSecurity\Factory
- */
 class CompositeValidatorFactory
 {
     /**

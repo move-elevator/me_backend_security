@@ -1,11 +1,9 @@
 <?php
+
 declare(strict_types=1);
 
 namespace MoveElevator\MeBackendSecurity\Domain\Model;
 
-/**
- * @package MoveElevator\MeBackendSecurity\Domain\Model
- */
 class PasswordChangeRequest
 {
     /**

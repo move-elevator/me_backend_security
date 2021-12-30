@@ -1,13 +1,11 @@
 <?php
+
 declare(strict_types=1);
 
 namespace MoveElevator\MeBackendSecurity\Factory;
 
 use MoveElevator\MeBackendSecurity\Domain\Model\ExtensionConfiguration;
 
-/**
- * @package MoveElevator\MeBackendSecurity\Factory
- */
 class ExtensionConfigurationFactory
 {
     /**
