@@ -23,16 +23,16 @@
       "@phpcs:main",
       "@phpcs:test"
     ],
-    "phpcs:main": "./vendor/bin/php-cs-fixer fix -v --dry-run --rules=@PSR12 ./Classes/",
-    "phpcs:test": "./vendor/bin/php-cs-fixer fix -v --dry-run --rules=@PSR12 ./Tests/",
+    "phpcs:main": "@php ./vendor/bin/php-cs-fixer fix -v --dry-run --rules=@PSR12 ./Classes/",
+    "phpcs:test": "@php ./vendor/bin/php-cs-fixer fix -v --dry-run --rules=@PSR12 ./Tests/",
     "phpcs:fix": [
       "@phpcs:fix:main",
       "@phpcs:fix:test"
     ],
-    "phpcs:fix:main": "./vendor/bin/php-cs-fixer fix --rules=@PSR12 ./Classes/",
-    "phpcs:fix:test": "./vendor/bin/php-cs-fixer fix --rules=@PSR12 ./Tests/",
-    "phpstan": "./vendor/bin/phpstan analyse ./Classes/",
-    "phpunit": "./vendor/bin/phpunit -c ./Build/phpunit.xml --debug --verbose",
+    "phpcs:fix:main": "@php ./vendor/bin/php-cs-fixer fix --rules=@PSR12 ./Classes/",
+    "phpcs:fix:test": "@php ./vendor/bin/php-cs-fixer fix --rules=@PSR12 ./Tests/",
+    "phpstan": "@php ./vendor/bin/phpstan analyse ./Classes/",
+    "phpunit": "@php ./vendor/bin/phpunit -c ./Build/phpunit.xml --debug --verbose",
     "php:validate": [
       "@phpcs",
       "@phpstan",
