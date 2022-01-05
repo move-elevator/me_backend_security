@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace MoveElevator\MeBackendSecurity\Evaluation;
@@ -23,9 +24,6 @@ use TYPO3\CMS\Extbase\Error\Result;
 use TYPO3\CMS\Extbase\Object\ObjectManager;
 use TYPO3\CMS\Extbase\Utility\LocalizationUtility;
 
-/**
- * @package MoveElevator\MeBackendSecurity\Evaluation
- */
 class PasswordEvaluator
 {
     protected const EXTKEY = 'me_backend_security';

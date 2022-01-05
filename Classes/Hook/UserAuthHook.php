@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace MoveElevator\MeBackendSecurity\Hook;
@@ -25,8 +26,6 @@ use TYPO3\CMS\Extbase\Configuration\ConfigurationManagerInterface;
 use TYPO3\CMS\Extbase\Object\ObjectManager;
 
 /**
- * @package MoveElevator\MeBackendSecurity\Hook
- *
  * @codeCoverageIgnore
  * @SuppressWarnings(PHPMD.CouplingBetweenObjects)
  */

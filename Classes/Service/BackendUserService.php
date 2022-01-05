@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace MoveElevator\MeBackendSecurity\Service;
@@ -14,9 +15,6 @@ use TYPO3\CMS\Core\Database\Query\QueryBuilder;
 use TYPO3\CMS\Extbase\Error\Error;
 use TYPO3\CMS\Extbase\Error\Result;
 
-/**
- * @package MoveElevator\MeBackendSecurity\Service
- */
 class BackendUserService
 {
     protected const USERS_TABLE = 'be_users';

@@ -1,13 +1,11 @@
 <?php
+
 declare(strict_types=1);
 
 namespace MoveElevator\MeBackendSecurity\Validation\Validator;
 
 use MoveElevator\MeBackendSecurity\Domain\Model\PasswordChangeRequest;
 
-/**
- * @package MoveElevator\MeBackendSecurity\Validation\Validator
- */
 class PasswordConfirmationValidator extends AbstractValidator
 {
     private const ERROR_CODE = 1510742742;

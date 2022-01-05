@@ -40,25 +40,31 @@ Run each command in the project root directory.
 ### Execute PHPUnit tests
 
 ```
-./vendor/bin/phpunit.phar -c ./phpunit.xml --debug --verbose
-```
-
-### Execute PHPMD checks
-
-```
-./vendor/bin/phpmd.phar ./Classes text ./phpmd.xml
+composer phpunit
 ```
 
 ### Execute PHPCS checks
 
 ```
-./vendor/bin/phpcs.phar -p --standard=PSR2 --extensions=php ./Classes
+composer phpcs
 ```
 
-### Execute PHPCPD checks
+### Fix PHPCS issues
 
 ```
-./vendor/bin/phpcpd.phar ./Classes
+composer phpcs:fix
+```
+
+### Execute PHPSTAN checks
+
+```
+composer phpstan
+```
+
+### Execute all quality checks
+
+```
+composer php:validate
 ```
 
 # Contact
@@ -67,6 +73,13 @@ Run each command in the project root directory.
 * Website: https://www.move-elevator.de
 
 # Changelog
+2021-12-30 - Ronny Hauptvogel <rh@move-elevator.de>
+```
+Release 2.0.7
+---
+Feature: Add password validation rules to password reset form
+```
+
 2021-07-19 - Ronny Hauptvogel <rh@move-elevator.de>
 ```
 Release 2.0.6

@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace MoveElevator\MeBackendSecurity\LoginProvider;
@@ -14,9 +15,6 @@ use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Extbase\Object\ObjectManager;
 use TYPO3\CMS\Fluid\View\StandaloneView;
 
-/**
- * @package MoveElevator\MeBackendSecurity\LoginProvider
- */
 class UsernamePasswordLoginProvider extends \TYPO3\CMS\Backend\LoginProvider\UsernamePasswordLoginProvider
 {
     protected const EXTKEY = 'me_backend_security';

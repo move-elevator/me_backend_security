@@ -36,17 +36,23 @@ class BackendUserServiceTest extends TestCase
         $this->expressionBuilder
             ->shouldReceive('eq')
             ->withAnyArgs()
-            ->andReturnUsing(function() { return $this->expressionBuilder; });
+            ->andReturnUsing(function () {
+                return $this->expressionBuilder;
+            });
 
         $this->queryBuilder = \Mockery::mock(QueryBuilder::class);
         $this->queryBuilder
             ->shouldReceive('count', 'from', 'update', 'where', 'set', 'setParameter', 'execute')
             ->withAnyArgs()
-            ->andReturnUsing(function() { return $this->queryBuilder; });
+            ->andReturnUsing(function () {
+                return $this->queryBuilder;
+            });
         $this->queryBuilder
             ->shouldReceive('expr')
             ->withAnyArgs()
-            ->andReturnUsing(function() { return $this->expressionBuilder; });
+            ->andReturnUsing(function () {
+                return $this->expressionBuilder;
+            });
         $this->queryBuilder
             ->shouldReceive('fetchColumn')
             ->withAnyArgs()
@@ -80,7 +86,9 @@ class BackendUserServiceTest extends TestCase
         $this->passwordHashInstance
             ->shouldReceive('getHashedPassword')
             ->withAnyArgs()
-            ->andReturnUsing(function($argument) { return $argument; });
+            ->andReturnUsing(function ($argument) {
+                return $argument;
+            });
     }
 
     public function testCheckPasswordIsValid(): void
@@ -190,11 +198,15 @@ class BackendUserServiceTest extends TestCase
         $this->queryBuilder
             ->shouldReceive('count', 'from', 'update', 'where', 'set', 'setParameter', 'execute')
             ->withAnyArgs()
-            ->andReturnUsing(function() { return $this->queryBuilder; });
+            ->andReturnUsing(function () {
+                return $this->queryBuilder;
+            });
         $this->queryBuilder
             ->shouldReceive('expr')
             ->withAnyArgs()
-            ->andReturnUsing(function() { return $this->expressionBuilder; });
+            ->andReturnUsing(function () {
+                return $this->expressionBuilder;
+            });
         $this->queryBuilder
             ->shouldReceive('fetchColumn')
             ->withAnyArgs()
@@ -226,11 +238,15 @@ class BackendUserServiceTest extends TestCase
         $this->queryBuilder
             ->shouldReceive('count', 'from', 'update', 'where', 'set', 'setParameter', 'execute')
             ->withAnyArgs()
-            ->andReturnUsing(function() { return $this->queryBuilder; });
+            ->andReturnUsing(function () {
+                return $this->queryBuilder;
+            });
         $this->queryBuilder
             ->shouldReceive('expr')
             ->withAnyArgs()
-            ->andReturnUsing(function() { return $this->expressionBuilder; });
+            ->andReturnUsing(function () {
+                return $this->expressionBuilder;
+            });
         $this->queryBuilder
             ->shouldReceive('fetchColumn')
             ->withAnyArgs()

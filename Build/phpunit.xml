@@ -8,17 +8,17 @@
 		convertWarningsToExceptions="true"
 		processIsolation="false"
 		stopOnFailure="false"
-		bootstrap="vendor/autoload.php">
+		bootstrap="../vendor/autoload.php">
 
 	<testsuites>
 		<testsuite name="Default test-suite">
-			<directory>./Tests</directory>
+			<directory>../Tests</directory>
 		</testsuite>
 	</testsuites>
 
 	<filter>
 		<whitelist>
-			<directory>./Classes</directory>
+			<directory>../Classes</directory>
 		</whitelist>
 	</filter>
 

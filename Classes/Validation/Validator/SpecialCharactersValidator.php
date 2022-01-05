@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace MoveElevator\MeBackendSecurity\Validation\Validator;
@@ -6,9 +7,6 @@ namespace MoveElevator\MeBackendSecurity\Validation\Validator;
 use MoveElevator\MeBackendSecurity\Domain\Model\ExtensionConfiguration;
 use MoveElevator\MeBackendSecurity\Domain\Model\PasswordChangeRequest;
 
-/**
- * @package MoveElevator\MeBackendSecurity\Validation\Validator
- */
 class SpecialCharactersValidator extends AbstractValidator
 {
     private const PATTERN_SPECIAL_CHAR = '/[\\\[\]\/\-(){}@#?!$%&=*+~,.;:<>_]/';

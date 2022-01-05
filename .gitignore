@@ -1,11 +1,4 @@
-Build/bin*
-Build/log*
-Build/php*
-!Build/phpmd.xml
-typo3
-typo3_src
-vendor
-cache.*
-composer*
-!composer.json
-index.php
+*.cache
+/public
+/vendor
+composer.lock
