@@ -19,30 +19,11 @@ class TableHook
     protected const USERS_TABLE = 'be_users';
     protected const LASTCHANGE_COLUMN_NAME = 'tx_mebackendsecurity_lastpasswordchange';
 
-    /**
-     * @var FlashMessageQueue
-     */
-    protected $messageQueue;
-
-    /**
-     * @var QueryBuilder
-     */
-    protected $queryBuilder;
-
-    /**
-     * @var PasswordHashInterface
-     */
-    protected $passwordHashInstance;
-
-    /**
-     * @var string
-     */
-    protected $newPasswordPlain = '';
-
-    /**
-     * @var string
-     */
-    protected $currentPassword = '';
+    protected FlashMessageQueue $messageQueue;
+    protected QueryBuilder $queryBuilder;
+    protected PasswordHashInterface $passwordHashInstance;
+    protected string $newPasswordPlain = '';
+    protected string $currentPassword = '';
 
     /**
      * @codeCoverageIgnore
@@ -93,7 +74,7 @@ class TableHook
                 $this->queryBuilder->expr()->eq('uid', $id)
             )
             ->execute()
-            ->fetchColumn(0);
+            ->fetchOne();
     }
 
     /**
@@ -107,7 +88,7 @@ class TableHook
      */
     public function processDatamap_afterDatabaseOperations($status, $table, $id, &$fieldArray, &$tcemain): void // @codingStandardsIgnoreLine
     {
-        $lastChange = time() + date('Z');
+        $lastChange = time() + (int)date('Z');
 
         if ($table !== 'be_users') {
             return;

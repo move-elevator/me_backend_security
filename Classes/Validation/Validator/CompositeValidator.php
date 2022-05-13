@@ -4,31 +4,22 @@ declare(strict_types=1);
 
 namespace MoveElevator\MeBackendSecurity\Validation\Validator;
 
+use InvalidArgumentException;
 use MoveElevator\MeBackendSecurity\Domain\Model\PasswordChangeRequest;
-use TYPO3\CMS\Extbase\Error\Error;
 
 class CompositeValidator extends AbstractValidator
 {
-    /**
-     * @var array
-     */
-    protected $validators = [];
+    protected array $validators = [];
 
-    /**
-     * @param AbstractValidator $validator
-     */
     public function append(AbstractValidator $validator): void
     {
         $this->validators[] = $validator;
     }
 
-    /**
-     * @param mixed $value
-     */
-    protected function isValid($value): void
+    protected function isValid(mixed $value): void
     {
-        if ($value instanceof PasswordChangeRequest === false) {
-            throw new \InvalidArgumentException(
+        if (false === $value instanceof PasswordChangeRequest) {
+            throw new InvalidArgumentException(
                 'The given value is not from type ' . PasswordChangeRequest::class . '.',
                 1512480115
             );
@@ -40,19 +31,14 @@ class CompositeValidator extends AbstractValidator
         }
     }
 
-    /**
-     * @param AbstractValidator $validator
-     * @param mixed             $value
-     */
-    private function executeValidator(AbstractValidator $validator, $value): void
+    private function executeValidator(AbstractValidator $validator, mixed $value): void
     {
         $result = $validator->validate($value);
 
-        if ($result->hasErrors() === false) {
+        if (false === $result->hasErrors()) {
             return;
         }
 
-        /** @var Error $error */
         foreach ($result->getErrors() as $error) {
             $this->addError(
                 $error->getMessage(),

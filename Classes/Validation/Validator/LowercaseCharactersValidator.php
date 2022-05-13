@@ -9,7 +9,7 @@ use MoveElevator\MeBackendSecurity\Domain\Model\PasswordChangeRequest;
 
 class LowercaseCharactersValidator extends AbstractValidator
 {
-    private const PATTERN_LOWERCASECHAR = '/[a-zäöü]/';
+    private const PATTERN_LOWERCASECHAR = '/[a-zäöü]/u';
     private const ERROR_CODE = 1510742746;
 
     /**

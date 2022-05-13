@@ -9,11 +9,6 @@ use MoveElevator\MeBackendSecurity\Domain\Model\ExtensionConfiguration;
 
 class ExtensionConfigurationFactory
 {
-    /**
-     * @param array $rawExtensionConfiguration
-     *
-     * @return ExtensionConfiguration
-     */
     public static function create(array $rawExtensionConfiguration): ExtensionConfiguration
     {
         if (isset($rawExtensionConfiguration['minimumSpecialCharacters']) === false ||
@@ -32,11 +27,6 @@ class ExtensionConfigurationFactory
         return self::createExtensionConfiguration($rawExtensionConfiguration);
     }
 
-    /**
-     * @param array $rawExtensionConfiguration
-     *
-     * @return ExtensionConfiguration
-     */
     private static function createExtensionConfiguration(array $rawExtensionConfiguration): ExtensionConfiguration
     {
         $extensionConfiguration = new ExtensionConfiguration(

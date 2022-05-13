@@ -11,13 +11,6 @@ use TYPO3\CMS\Extbase\Object\ObjectManager;
 
 class CompositeValidatorFactory
 {
-    /**
-     * @param ObjectManager          $objectManager
-     * @param ExtensionConfiguration $extensionConfiguration
-     * @param array                  $rawTypoScriptSetup
-     *
-     * @return CompositeValidator
-     */
     public static function create(
         ObjectManager $objectManager,
         ExtensionConfiguration $extensionConfiguration,
@@ -46,12 +39,6 @@ class CompositeValidatorFactory
         return $compositeValidator;
     }
 
-    /**
-     * @param ObjectManager          $objectManager
-     * @param ExtensionConfiguration $extensionConfiguration
-     *
-     * @return CompositeValidator
-     */
     private static function createEmptyCompositeValidator(
         ObjectManager $objectManager,
         ExtensionConfiguration $extensionConfiguration

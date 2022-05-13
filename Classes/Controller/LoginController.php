@@ -8,12 +8,13 @@ use MoveElevator\MeBackendSecurity\Factory\ExtensionConfigurationFactory;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
 use TYPO3\CMS\Backend\Authentication\PasswordReset;
+use TYPO3\CMS\Backend\Controller\LoginController as CoreLoginController;
 use TYPO3\CMS\Core\Configuration\ExtensionConfiguration as ExtensionConfigurationUtility;
 use TYPO3\CMS\Core\Context\Context;
 use TYPO3\CMS\Core\Http\HtmlResponse;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 
-class LoginController extends \TYPO3\CMS\Backend\Controller\LoginController
+class LoginController extends CoreLoginController
 {
     private const EXTKEY = 'me_backend_security';
 

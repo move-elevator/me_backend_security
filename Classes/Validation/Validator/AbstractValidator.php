@@ -5,8 +5,9 @@ declare(strict_types=1);
 namespace MoveElevator\MeBackendSecurity\Validation\Validator;
 
 use MoveElevator\MeBackendSecurity\Domain\Model\ExtensionConfiguration;
+use TYPO3\CMS\Extbase\Validation\Validator\AbstractValidator as CoreAbstractValidator;
 
-abstract class AbstractValidator extends \TYPO3\CMS\Extbase\Validation\Validator\AbstractValidator
+abstract class AbstractValidator extends CoreAbstractValidator
 {
     /**
      * @var array
@@ -15,10 +16,6 @@ abstract class AbstractValidator extends \TYPO3\CMS\Extbase\Validation\Validator
         'extensionConfiguration' => [0, 'The extension configuration object', ExtensionConfiguration::class, true]
     ];
 
-    /**
-     * @param int  $errorCode
-     * @param int  $minimum
-     */
     protected function addTranslatedError(int $errorCode, int $minimum = 0): void
     {
         $languageKey = 'error.' . $errorCode;
@@ -27,7 +24,7 @@ abstract class AbstractValidator extends \TYPO3\CMS\Extbase\Validation\Validator
             'singular' => false
         ];
 
-        if ($minimum === 1) {
+        if (1 === $minimum) {
             $languageKey = 'error.' . $errorCode . '.singular';
             $arguments['singular'] = true;
         }

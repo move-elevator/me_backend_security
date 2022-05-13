@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace MoveElevator\MeBackendSecurity\Service;
 
+use DateInterval;
+use DateTime;
 use MoveElevator\MeBackendSecurity\Domain\Model\ExtensionConfiguration;
 use MoveElevator\MeBackendSecurity\Domain\Model\LoginProviderRedirect;
 use MoveElevator\MeBackendSecurity\Domain\Model\PasswordChangeRequest;
@@ -23,38 +25,12 @@ class BackendUserService
     protected const USER_DONT_EXIST_ERROR_CODE = 1510742747;
     protected const FIRST_CHANGE_MESSAGE_CODE = 1513928250;
 
-    /**
-     * @var mixed
-     */
-    protected $backendUserAuthentication;
+    protected mixed $backendUserAuthentication;
+    protected QueryBuilder $queryBuilder;
+    protected ExtensionConfiguration $extensionConfiguration;
+    protected CompositeValidator $compositeValidator;
+    protected PasswordHashInterface $passwordHashInstance;
 
-    /**
-     * @var QueryBuilder
-     */
-    protected $queryBuilder;
-
-    /**
-     * @var array
-     */
-    protected $extensionConfiguration;
-
-    /**
-     * @var CompositeValidator
-     */
-    protected $compositeValidator;
-
-    /**
-     * @var PasswordHashInterface
-     */
-    protected $passwordHashInstance;
-
-    /**
-     * @param BackendUserAuthentication $backendUserAuthentication
-     * @param QueryBuilder              $queryBuilder
-     * @param ExtensionConfiguration    $extensionConfiguration
-     * @param CompositeValidator        $compositeValidator
-     * @param PasswordHashInterface     $passwordHashInstance
-     */
     public function __construct(
         BackendUserAuthentication $backendUserAuthentication,
         QueryBuilder $queryBuilder,
@@ -69,24 +45,18 @@ class BackendUserService
         $this->passwordHashInstance = $passwordHashInstance;
     }
 
-    /**
-     * @param PasswordChangeRequest $passwordChangeRequest
-     *
-     * @return LoginProviderRedirect|null
-     */
     public function handlePasswordChangeRequest(PasswordChangeRequest $passwordChangeRequest): ?LoginProviderRedirect
     {
-        /** @var Result $validationResults */
         $validationResults = $this->compositeValidator->validate($passwordChangeRequest);
 
-        if ($validationResults->hasErrors()) {
+        if (true === $validationResults->hasErrors()) {
             return LoginProviderRedirectFactory::create(
                 $this->backendUserAuthentication->user['username'],
                 $this->getErrorCodesWithArguments($validationResults)
             );
         }
 
-        if ($this->isExistingUser() === false) {
+        if (false === $this->isExistingUser()) {
             return LoginProviderRedirectFactory::create(
                 $this->backendUserAuthentication->user['username'],
                 [self::USER_DONT_EXIST_ERROR_CODE]
@@ -99,19 +69,14 @@ class BackendUserService
                 $this->queryBuilder->expr()->eq('uid', (int)$this->backendUserAuthentication->user['uid'])
             )
             ->set('password', $this->passwordHashInstance->getHashedPassword($passwordChangeRequest->getPassword()))
-            ->set(self::LASTCHANGE_COLUMN_NAME, time() + date('Z'))
+            ->set(self::LASTCHANGE_COLUMN_NAME, time() + (int)date('Z'))
             ->execute();
 
-        $this->backendUserAuthentication->user[self::LASTCHANGE_COLUMN_NAME] = time() + date('Z');
+        $this->backendUserAuthentication->user[self::LASTCHANGE_COLUMN_NAME] = time() + (int)date('Z');
 
         return null;
     }
 
-    /**
-     * @return LoginProviderRedirect|null
-     *
-     * @throws \Exception
-     */
     public function checkPasswordLifeTime(): ?LoginProviderRedirect
     {
         $this->handleNewAccount();
@@ -134,13 +99,13 @@ class BackendUserService
 
         $validUntil = $this->extensionConfiguration->getMaximumValidDays();
 
-        $now = new \DateTime();
-        $expireDeathLine = new \DateTime();
+        $now = new DateTime();
+        $expireDeathLine = new DateTime();
         $expireDeathLine->setTimestamp(
             $lastPasswordChange
         );
         $expireDeathLine->add(
-            new \DateInterval('P' . $validUntil . 'D')
+            new DateInterval('P' . $validUntil . 'D')
         );
 
         if ($now <= $expireDeathLine) {
@@ -173,14 +138,9 @@ class BackendUserService
             ->execute();
     }
 
-    /**
-     * @return bool
-     */
     private function isNonMigratedAccount(): bool
     {
-        $lastPasswordChange = (int)$this->backendUserAuthentication->user[self::LASTCHANGE_COLUMN_NAME];
-
-        return $lastPasswordChange === 0;
+        return 0 === (int)$this->backendUserAuthentication->user[self::LASTCHANGE_COLUMN_NAME];
     }
 
     private function migrateAccount(): void
@@ -190,13 +150,10 @@ class BackendUserService
             ->where(
                 $this->queryBuilder->expr()->eq('uid', $this->backendUserAuthentication->user['uid'])
             )
-            ->set(self::LASTCHANGE_COLUMN_NAME, time() + date('Z'))
+            ->set(self::LASTCHANGE_COLUMN_NAME, time() + (int)date('Z'))
             ->execute();
     }
 
-    /**
-     * @return bool
-     */
     private function isExistingUser(): bool
     {
         $userExists = $this->queryBuilder
@@ -208,21 +165,15 @@ class BackendUserService
             )
             ->setParameter('u', $this->backendUserAuthentication->user['username'])
             ->execute()
-            ->fetchColumn(0);
+            ->fetchOne();
 
-        return $userExists !== false;
+        return false !== $userExists;
     }
 
-    /**
-     * @param Result $validationResults
-     *
-     * @return array
-     */
     private function getErrorCodesWithArguments(Result $validationResults): array
     {
         $errors = [];
 
-        /** @var Error $error */
         foreach ($validationResults->getErrors() as $error) {
             $errors[] = [
                 'errorCode' => $error->getCode(),

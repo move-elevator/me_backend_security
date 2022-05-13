@@ -56,8 +56,6 @@ class PasswordEvaluator
     }
 
     /**
-     * @return string
-     *
      * @codeCoverageIgnore
      */
     public function returnFieldJS(): string
@@ -66,12 +64,6 @@ class PasswordEvaluator
     }
 
     /**
-     * @param string $value
-     * @param string $is_in
-     * @param bool $set
-     *
-     * @return string
-     *
      * @throws ExtensionConfigurationExtensionNotConfiguredException
      * @throws ExtensionConfigurationPathDoesNotExistException
      * @throws InvalidPasswordHashException
@@ -103,10 +95,7 @@ class PasswordEvaluator
         );
 
         /** @var PasswordChangeRequest $passwordChangeRequest */
-        $passwordChangeRequest = PasswordChangeRequestFactory::create(
-            $requestParameters,
-            null
-        );
+        $passwordChangeRequest = PasswordChangeRequestFactory::create($requestParameters);
 
         $validationResult = $compositeValidator->validate($passwordChangeRequest);
 
@@ -120,8 +109,6 @@ class PasswordEvaluator
     }
 
     /**
-     * @param Result $validationResult
-     *
      * @codeCoverageIgnore
      */
     protected function addFlashMessage(Result $validationResult): void
@@ -132,7 +119,6 @@ class PasswordEvaluator
             'me_backend_security'
         );
 
-        /** @var Error $error */
         foreach ($validationResult->getErrors() as $error) {
             $errorMessages[] = $error->getMessage();
         }

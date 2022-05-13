@@ -20,10 +20,7 @@ class UsernamePasswordLoginProvider extends \TYPO3\CMS\Backend\LoginProvider\Use
     protected const EXTKEY = 'me_backend_security';
     protected const PARAMETER_IDENTIFIER = 'tx_mebackendsecurity';
 
-    /**
-     * @var ExtensionConfiguration $extensionConfiguration
-     */
-    protected $extensionConfiguration;
+    protected ExtensionConfiguration $extensionConfiguration;
 
     /**
      * @throws ExtensionConfigurationExtensionNotConfiguredException
@@ -89,8 +86,6 @@ class UsernamePasswordLoginProvider extends \TYPO3\CMS\Backend\LoginProvider\Use
     }
 
     /**
-     * @return bool
-     *
      * @codeCoverageIgnore
      */
     private function isResetFormRequired(): bool

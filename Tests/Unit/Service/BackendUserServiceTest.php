@@ -54,7 +54,7 @@ class BackendUserServiceTest extends TestCase
                 return $this->expressionBuilder;
             });
         $this->queryBuilder
-            ->shouldReceive('fetchColumn')
+            ->shouldReceive('fetchOne')
             ->withAnyArgs()
             ->andReturn(1);
 
@@ -208,7 +208,7 @@ class BackendUserServiceTest extends TestCase
                 return $this->expressionBuilder;
             });
         $this->queryBuilder
-            ->shouldReceive('fetchColumn')
+            ->shouldReceive('fetchOne')
             ->withAnyArgs()
             ->andReturn(false);
 
@@ -248,7 +248,7 @@ class BackendUserServiceTest extends TestCase
                 return $this->expressionBuilder;
             });
         $this->queryBuilder
-            ->shouldReceive('fetchColumn')
+            ->shouldReceive('fetchOne')
             ->withAnyArgs()
             ->andReturn(1);
 
