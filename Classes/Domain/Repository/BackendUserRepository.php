@@ -106,4 +106,9 @@ class BackendUserRepository
 
         return false !== $isUserPresent;
     }
+
+    public function migrate(int $uid, int $timestamp): void
+    {
+        $this->updateLastChange($uid, $timestamp);
+    }
 }

@@ -80,24 +80,24 @@ class BackendUserService
 
     public function checkPasswordLifeTime(): ?LoginProviderRedirect
     {
+        $userId = (int)$this->backendUserAuthentication->user['uid'];
+        $username = $this->backendUserAuthentication->user['username'];
+
         $this->handleNewAccount();
 
         if (true === $this->isNonMigratedAccount()) {
-            $this->migrateAccount();
+            $this->backendUserRepository->migrate($userId, DateTimeUtility::getTimestamp());
 
             return null;
         }
 
-        $lastPasswordChange = (int)$this->backendUserAuthentication->user[BackendUserRepository::LAST_CHANGE_COLUMN_NAME];
+        $lastPasswordChange = (int)$this->backendUserAuthentication
+            ->user[BackendUserRepository::LAST_CHANGE_COLUMN_NAME];
 
         if (1 === $lastPasswordChange) {
-            return LoginProviderRedirectFactory::create(
-                $this->backendUserAuthentication->user['username'],
-                [],
-                [
-                    self::FIRST_CHANGE_MESSAGE_CODE
-                ]
-            );
+            return LoginProviderRedirectFactory::create($username, [], [
+                self::FIRST_CHANGE_MESSAGE_CODE
+            ]);
         }
 
         $validUntilInDays = $this->extensionConfiguration->getMaximumValidDays();
@@ -106,9 +106,7 @@ class BackendUserService
             return null;
         }
 
-        return LoginProviderRedirectFactory::create(
-            $this->backendUserAuthentication->user['username']
-        );
+        return LoginProviderRedirectFactory::create($username);
     }
 
     private function handleNewAccount(): void
@@ -131,14 +129,6 @@ class BackendUserService
     private function isNonMigratedAccount(): bool
     {
         return 0 === (int)$this->backendUserAuthentication->user[BackendUserRepository::LAST_CHANGE_COLUMN_NAME];
-    }
-
-    private function migrateAccount(): void
-    {
-        $this->backendUserRepository->updateLastChange(
-            (int)$this->backendUserAuthentication->user['uid'],
-            DateTimeUtility::getTimestamp()
-        );
     }
 
     private function getErrorCodesWithArguments(Result $validationResults): array
