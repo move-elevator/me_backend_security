@@ -5,18 +5,16 @@ declare(strict_types=1);
 namespace MoveElevator\MeBackendSecurity\Hook;
 
 use MoveElevator\MeBackendSecurity\Domain\Repository\BackendUserRepository;
+use MoveElevator\MeBackendSecurity\Service\FlashMessageService;
 use MoveElevator\MeBackendSecurity\Utility\DateTimeUtility;
 use TYPO3\CMS\Core\Crypto\PasswordHashing\PasswordHashFactory;
 use TYPO3\CMS\Core\Crypto\PasswordHashing\PasswordHashInterface;
-use TYPO3\CMS\Core\Messaging\FlashMessage;
-use TYPO3\CMS\Core\Messaging\FlashMessageQueue;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
-use TYPO3\CMS\Extbase\Utility\LocalizationUtility;
 
 class BackendUserTableHook
 {
     protected BackendUserRepository $backendUserRepository;
-    protected FlashMessageQueue $messageQueue;
+    protected FlashMessageService $flashMessageService;
     protected PasswordHashInterface $passwordHashInstance;
     protected string $newPasswordPlain = '';
     protected string $currentPassword = '';
@@ -26,11 +24,7 @@ class BackendUserTableHook
      */
     public function __construct()
     {
-        $this->messageQueue = GeneralUtility::makeInstance(
-            FlashMessageQueue::class,
-            ['core.template.flashMessages']
-        );
-
+        $this->flashMessageService = GeneralUtility::makeInstance(FlashMessageService::class);
         $this->backendUserRepository = GeneralUtility::makeInstance(BackendUserRepository::class);
         $this->passwordHashInstance = GeneralUtility::makeInstance(PasswordHashFactory::class)
             ->getDefaultHashInstance('BE');
@@ -91,7 +85,7 @@ class BackendUserTableHook
         );
 
         if (true === $isOldPasswordTheSameIgnoreIt) {
-            $this->addFlashMessage();
+            $this->flashMessageService->addEqualPasswordFlashMessage();
             return;
         }
 
@@ -103,28 +97,5 @@ class BackendUserTableHook
         }
 
         $this->backendUserRepository->updateLastChange($id, $lastChange);
-    }
-
-    /**
-     * @codeCoverageIgnore
-     */
-    protected function addFlashMessage(): void
-    {
-        $flashMessage = new FlashMessage(
-            LocalizationUtility::translate(
-                'error.1513850698',
-                'me_backend_security'
-            ),
-            LocalizationUtility::translate(
-                'error.title',
-                'me_backend_security'
-            ),
-            FlashMessage::ERROR,
-            true
-        );
-
-        $this->messageQueue->addMessage(
-            $flashMessage
-        );
     }
 }
