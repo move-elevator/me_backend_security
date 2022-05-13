@@ -12,12 +12,12 @@ use TYPO3\CMS\Core\Configuration\Exception\ExtensionConfigurationPathDoesNotExis
 use TYPO3\CMS\Core\Configuration\ExtensionConfiguration as ExtensionConfigurationUtility;
 use TYPO3\CMS\Core\Page\PageRenderer;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
-use TYPO3\CMS\Extbase\Object\ObjectManager;
 use TYPO3\CMS\Fluid\View\StandaloneView;
 
 class UsernamePasswordLoginProvider extends \TYPO3\CMS\Backend\LoginProvider\UsernamePasswordLoginProvider
 {
     protected const PARAMETER_IDENTIFIER = 'tx_mebackendsecurity';
+    protected const TEMPLATE_PATH = 'EXT:me_backend_security/Resources/Private/Templates/LoginProvider/PasswordResetLoginForm.html';
 
     protected ExtensionConfiguration $extensionConfiguration;
 
@@ -29,10 +29,8 @@ class UsernamePasswordLoginProvider extends \TYPO3\CMS\Backend\LoginProvider\Use
      */
     public function __construct()
     {
-        $objectManager = GeneralUtility::makeInstance(ObjectManager::class);
-
         /** @var ExtensionConfigurationUtility $extensionConfigurationUtility */
-        $extensionConfigurationUtility = $objectManager->get(ExtensionConfigurationUtility::class);
+        $extensionConfigurationUtility = GeneralUtility::makeInstance(ExtensionConfigurationUtility::class);
 
         $this->extensionConfiguration = ExtensionConfigurationFactory::create(
             $extensionConfigurationUtility->get(ExtensionConfiguration::EXT_KEY)
@@ -44,18 +42,19 @@ class UsernamePasswordLoginProvider extends \TYPO3\CMS\Backend\LoginProvider\Use
      *
      * @codeCoverageIgnore
      */
-    public function render(StandaloneView $view, PageRenderer $pageRenderer, LoginController $loginController): void
-    {
+    public function render(
+        StandaloneView $view,
+        PageRenderer $pageRenderer,
+        LoginController $loginController
+    ): void {
         parent::render($view, $pageRenderer, $loginController);
 
-        if ($this->isResetFormRequired() === false) {
+        if (false === $this->isResetFormRequired()) {
             return;
         }
 
         $view->setTemplatePathAndFilename(
-            GeneralUtility::getFileAbsFileName(
-                'EXT:me_backend_security/Resources/Private/Templates/LoginProvider/PasswordResetLoginForm.html'
-            )
+            GeneralUtility::getFileAbsFileName(self::TEMPLATE_PATH)
         );
 
         $view->assign('configuration', $this->extensionConfiguration);

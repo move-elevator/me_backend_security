@@ -7,9 +7,9 @@ use MoveElevator\MeBackendSecurity\Controller\LoginController;
 use MoveElevator\MeBackendSecurity\Evaluation\PasswordEvaluator;
 use MoveElevator\MeBackendSecurity\Hook\BackendUserTableHook;
 use MoveElevator\MeBackendSecurity\Hook\UserAuthHook;
+use MoveElevator\MeBackendSecurity\LoginProvider\UsernamePasswordLoginProvider;
 use TYPO3\CMS\Backend\Authentication\PasswordReset as CorePasswordReset;
 use TYPO3\CMS\Backend\Controller\LoginController as CoreLoginController;
-use TYPO3\CMS\Backend\LoginProvider\UsernamePasswordLoginProvider;
 
 (static function () {
     $GLOBALS['TYPO3_CONF_VARS']['EXTCONF']['backend']['loginProviders'][1433416747]['provider'] =
