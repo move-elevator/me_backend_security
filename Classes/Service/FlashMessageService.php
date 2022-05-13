@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace MoveElevator\MeBackendSecurity\Service;
 
+use MoveElevator\MeBackendSecurity\Domain\Model\ExtensionConfiguration;
 use TYPO3\CMS\Core\Messaging\FlashMessage;
 use TYPO3\CMS\Core\Messaging\FlashMessageQueue;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
@@ -33,11 +34,11 @@ class FlashMessageService
         $flashMessage = new FlashMessage(
             LocalizationUtility::translate(
                 'error.1513850698',
-                'me_backend_security'
+                ExtensionConfiguration::EXT_KEY
             ),
             LocalizationUtility::translate(
                 'error.title',
-                'me_backend_security'
+                ExtensionConfiguration::EXT_KEY
             ),
             FlashMessage::ERROR,
             true
@@ -56,7 +57,7 @@ class FlashMessageService
         $errorMessages = [];
         $messageTitle = LocalizationUtility::translate(
             'error.title',
-            'me_backend_security'
+            ExtensionConfiguration::EXT_KEY
         );
 
         foreach ($validationResult->getErrors() as $error) {

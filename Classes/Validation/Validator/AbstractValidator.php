@@ -13,7 +13,12 @@ abstract class AbstractValidator extends CoreAbstractValidator
      * @var array
      */
     protected $supportedOptions = [
-        'extensionConfiguration' => [0, 'The extension configuration object', ExtensionConfiguration::class, true]
+        'extensionConfiguration' => [
+            0,
+            'The extension configuration object',
+            ExtensionConfiguration::class,
+            true
+        ],
     ];
 
     protected function addTranslatedError(int $errorCode, int $minimum = 0): void
@@ -32,7 +37,7 @@ abstract class AbstractValidator extends CoreAbstractValidator
         $this->addError(
             $this->translateErrorMessage(
                 $languageKey,
-                'me_backend_security',
+                ExtensionConfiguration::EXT_KEY,
                 $arguments
             ),
             $errorCode,

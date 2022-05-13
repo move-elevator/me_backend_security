@@ -30,7 +30,6 @@ use TYPO3\CMS\Extbase\Object\ObjectManager;
  */
 class UserAuthHook
 {
-    protected const EXTKEY = 'me_backend_security';
     protected const PARAMETER_IDENTIFIER = 'tx_mebackendsecurity';
     protected const PASSWORD_IDENTIFIER = 'userident';
     protected const USERS_TABLE = 'be_users';
@@ -106,7 +105,7 @@ class UserAuthHook
 
         /** @var ExtensionConfiguration $extensionConfiguration */
         $extensionConfiguration = ExtensionConfigurationFactory::create(
-            $extensionConfigurationUtility->get(self::EXTKEY)
+            $extensionConfigurationUtility->get(ExtensionConfiguration::EXT_KEY)
         );
 
         /** @var ConfigurationManagerInterface $configurationManager */

@@ -17,7 +17,6 @@ use TYPO3\CMS\Fluid\View\StandaloneView;
 
 class UsernamePasswordLoginProvider extends \TYPO3\CMS\Backend\LoginProvider\UsernamePasswordLoginProvider
 {
-    protected const EXTKEY = 'me_backend_security';
     protected const PARAMETER_IDENTIFIER = 'tx_mebackendsecurity';
 
     protected ExtensionConfiguration $extensionConfiguration;
@@ -36,7 +35,7 @@ class UsernamePasswordLoginProvider extends \TYPO3\CMS\Backend\LoginProvider\Use
         $extensionConfigurationUtility = $objectManager->get(ExtensionConfigurationUtility::class);
 
         $this->extensionConfiguration = ExtensionConfigurationFactory::create(
-            $extensionConfigurationUtility->get(self::EXTKEY)
+            $extensionConfigurationUtility->get(ExtensionConfiguration::EXT_KEY)
         );
     }
 

@@ -21,8 +21,6 @@ use TYPO3\CMS\Extbase\Object\ObjectManager;
 
 class PasswordEvaluator
 {
-    protected const EXTKEY = 'me_backend_security';
-
     protected ObjectManager $objectManager;
     protected PasswordHashFactory $passwordHashFactory;
     protected FlashMessageService $flashMessageService;
@@ -60,7 +58,7 @@ class PasswordEvaluator
 
         /** @var ExtensionConfiguration $extensionConfiguration */
         $extensionConfiguration = ExtensionConfigurationFactory::create(
-            $extensionConfigurationUtility->get(self::EXTKEY)
+            $extensionConfigurationUtility->get(ExtensionConfiguration::EXT_KEY)
         );
 
         /** @var ConfigurationManagerInterface $configurationManager */

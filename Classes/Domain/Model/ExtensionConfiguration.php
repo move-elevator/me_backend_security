@@ -6,6 +6,8 @@ namespace MoveElevator\MeBackendSecurity\Domain\Model;
 
 class ExtensionConfiguration
 {
+    public const EXT_KEY = 'me_backend_security';
+
     protected int $minimumSpecialCharacters;
     protected int $minimumDigits;
     protected int $minimumCapitalCharacters;

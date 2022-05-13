@@ -24,8 +24,6 @@ use TYPO3\CMS\Extbase\Object\ObjectManager;
 
 class PasswordReset extends \TYPO3\CMS\Backend\Authentication\PasswordReset
 {
-    protected const EXTKEY = 'me_backend_security';
-
     /**
      * @var ObjectManager
      */
@@ -100,7 +98,7 @@ class PasswordReset extends \TYPO3\CMS\Backend\Authentication\PasswordReset
 
         /** @var ExtensionConfiguration $extensionConfiguration */
         $extensionConfiguration = ExtensionConfigurationFactory::create(
-            $extensionConfigurationUtility->get(self::EXTKEY)
+            $extensionConfigurationUtility->get(ExtensionConfiguration::EXT_KEY)
         );
 
         /** @var ConfigurationManagerInterface $configurationManager */

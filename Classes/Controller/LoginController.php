@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace MoveElevator\MeBackendSecurity\Controller;
 
+use MoveElevator\MeBackendSecurity\Domain\Model\ExtensionConfiguration;
 use MoveElevator\MeBackendSecurity\Factory\ExtensionConfigurationFactory;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
@@ -16,8 +17,6 @@ use TYPO3\CMS\Core\Utility\GeneralUtility;
 
 class LoginController extends CoreLoginController
 {
-    private const EXTKEY = 'me_backend_security';
-
     /**
      * Validates the link and show a form to enter the new password.
      *
@@ -36,7 +35,7 @@ class LoginController extends CoreLoginController
         $passwordReset = GeneralUtility::makeInstance(PasswordReset::class);
         $extensionConfigurationUtility = GeneralUtility::makeInstance(ExtensionConfigurationUtility::class);
         $backendSecurityConfiguration = ExtensionConfigurationFactory::create(
-            $extensionConfigurationUtility->get(self::EXTKEY)
+            $extensionConfigurationUtility->get(ExtensionConfiguration::EXT_KEY)
         );
 
         $this->view->setTemplatePathAndFilename(
