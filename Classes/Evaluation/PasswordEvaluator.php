@@ -77,8 +77,6 @@ class PasswordEvaluator
      * @throws InvalidPasswordHashException
      *
      * @codeCoverageIgnore
-     * @SuppressWarnings(PHPMD.UnusedFormalParameter)
-     * @SuppressWarnings(PHPMD.ExcessiveMethodLength)
      */
     public function evaluateFieldValue(string $value, string $is_in, bool &$set): string
     {

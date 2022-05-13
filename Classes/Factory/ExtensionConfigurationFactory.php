@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace MoveElevator\MeBackendSecurity\Factory;
 
+use InvalidArgumentException;
 use MoveElevator\MeBackendSecurity\Domain\Model\ExtensionConfiguration;
 
 class ExtensionConfigurationFactory
@@ -12,8 +13,6 @@ class ExtensionConfigurationFactory
      * @param array $rawExtensionConfiguration
      *
      * @return ExtensionConfiguration
-     *
-     * @SuppressWarnings(PHPMD.CyclomaticComplexity)
      */
     public static function create(array $rawExtensionConfiguration): ExtensionConfiguration
     {
@@ -24,7 +23,7 @@ class ExtensionConfigurationFactory
             isset($rawExtensionConfiguration['passwordLength']) === false ||
             isset($rawExtensionConfiguration['maximumValidDays']) === false
         ) {
-            throw new \InvalidArgumentException(
+            throw new InvalidArgumentException(
                 'Some parameters are missing in given extension configuration.',
                 1512479995
             );

@@ -27,7 +27,6 @@ use TYPO3\CMS\Extbase\Object\ObjectManager;
 
 /**
  * @codeCoverageIgnore
- * @SuppressWarnings(PHPMD.CouplingBetweenObjects)
  */
 class UserAuthHook
 {
@@ -71,25 +70,18 @@ class UserAuthHook
      *
      * @throws ExtensionConfigurationExtensionNotConfiguredException
      * @throws ExtensionConfigurationPathDoesNotExistException
-     *
-     * @SuppressWarnings(PHPMD.Superglobals)
-     * @SuppressWarnings(PHPMD.UnusedFormalParameter)
      */
     public function postUserLookUp($params, $pObj): void
     {
-        if (TYPO3_MODE === 'FE') {
-            return;
-        }
-
         if ($pObj instanceof BackendUserAuthentication === false) {
             return;
         }
 
-        if (empty($pObj->user)) {
+        if (true === empty($pObj->user)) {
             return;
         }
 
-        if (empty($pObj->user['tx_igldapssoauth_dn']) === false) {
+        if (false === empty($pObj->user['tx_igldapssoauth_dn'])) {
             return;
         }
 
@@ -144,9 +136,6 @@ class UserAuthHook
         );
     }
 
-    /**
-     * @SuppressWarnings(PHPMD.Superglobals)
-     */
     private function initializeLanguageService(): void
     {
         if (empty($GLOBALS['LANG']) === false) {

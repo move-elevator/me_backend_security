@@ -54,8 +54,6 @@ class BackendUserService
      * @param ExtensionConfiguration    $extensionConfiguration
      * @param CompositeValidator        $compositeValidator
      * @param PasswordHashInterface     $passwordHashInstance
-     *
-     * @SuppressWarnings(PHPMD.ExcessiveParameterList)
      */
     public function __construct(
         BackendUserAuthentication $backendUserAuthentication,

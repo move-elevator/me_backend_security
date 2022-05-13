@@ -70,11 +70,6 @@ class TableHook
      * @param mixed $pObj
      *
      * @codeCoverageIgnore
-     * @SuppressWarnings(PHPMD.ShortVariable)
-     * @SuppressWarnings(PHPMD.CamelCaseMethodName)
-     * @SuppressWarnings(PHPMD.Superglobals)
-     * @SuppressWarnings(PHPMD.UnusedFormalParameter)
-     * @SuppressWarnings(PHPMD.ExcessiveParameterList)
      */
     public function processDatamap_preProcessFieldArray(&$incomingFieldArray, $table, $id, &$pObj): void // @codingStandardsIgnoreLine
     {
@@ -109,11 +104,6 @@ class TableHook
      * @param mixed $tcemain
      *
      * @codeCoverageIgnore
-     * @SuppressWarnings(PHPMD.ShortVariable)
-     * @SuppressWarnings(PHPMD.CamelCaseMethodName)
-     * @SuppressWarnings(PHPMD.Superglobals)
-     * @SuppressWarnings(PHPMD.UnusedFormalParameter)
-     * @SuppressWarnings(PHPMD.ExcessiveParameterList)
      */
     public function processDatamap_afterDatabaseOperations($status, $table, $id, &$fieldArray, &$tcemain): void // @codingStandardsIgnoreLine
     {
