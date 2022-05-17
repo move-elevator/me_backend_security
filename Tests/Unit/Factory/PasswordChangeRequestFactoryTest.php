@@ -2,14 +2,11 @@
 
 namespace MoveElevator\MeBackendSecurity\Tests\Unit\Domain\Model;
 
+use InvalidArgumentException;
 use MoveElevator\MeBackendSecurity\Factory\PasswordChangeRequestFactory;
 use MoveElevator\MeBackendSecurity\Tests\Fixtures\Domain\Model\PasswordChangeRequestFixture;
 use PHPUnit\Framework\TestCase;
-use TYPO3\CMS\Rsaauth\RsaEncryptionDecoder;
 
-/**
- * @package MoveElevator\MeBackendSecurity\Tests\Unit\Domain\Model
- */
 class PasswordChangeRequestFactoryTest extends TestCase
 {
     use PasswordChangeRequestFixture;
@@ -33,7 +30,7 @@ class PasswordChangeRequestFactoryTest extends TestCase
 
     public function testCreateObjectFromInvalidArguments(): void
     {
-        $this->expectException(\InvalidArgumentException::class);
+        $this->expectException(InvalidArgumentException::class);
 
         PasswordChangeRequestFactory::create([]);
     }

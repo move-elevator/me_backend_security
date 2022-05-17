@@ -2,26 +2,21 @@
 
 namespace MoveElevator\MeBackendSecurity\Tests\Unit\Domain\Model;
 
+use Mockery;
 use MoveElevator\MeBackendSecurity\Domain\Model\PasswordChangeRequest;
 use MoveElevator\MeBackendSecurity\Tests\Fixtures\Domain\Model\ExtensionConfigurationFixture;
 use MoveElevator\MeBackendSecurity\Validation\Validator\SamePasswordValidator;
 use PHPUnit\Framework\TestCase;
 
-/**
- * @package MoveElevator\MeBackendSecurity\Tests\Unit\Domain\Model
- */
 class SamePasswordValidatorTest extends TestCase
 {
     use ExtensionConfigurationFixture;
 
-    /**
-     * @var SamePasswordValidator
-     */
-    protected $samePasswordValidator;
+    protected SamePasswordValidator $samePasswordValidator;
 
     public function setUp(): void
     {
-        $this->samePasswordValidator = \Mockery::mock(
+        $this->samePasswordValidator = Mockery::mock(
             SamePasswordValidator::class . '[translateErrorMessage]',
             [['extensionConfiguration' => $this->getExtensionConfigurationFixture()]]
         );

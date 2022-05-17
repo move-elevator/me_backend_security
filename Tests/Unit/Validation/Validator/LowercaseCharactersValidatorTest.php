@@ -2,26 +2,21 @@
 
 namespace MoveElevator\MeBackendSecurity\Tests\Unit\Domain\Model;
 
+use Mockery;
 use MoveElevator\MeBackendSecurity\Domain\Model\PasswordChangeRequest;
 use MoveElevator\MeBackendSecurity\Tests\Fixtures\Domain\Model\ExtensionConfigurationFixture;
 use MoveElevator\MeBackendSecurity\Validation\Validator\LowercaseCharactersValidator;
 use PHPUnit\Framework\TestCase;
 
-/**
- * @package MoveElevator\MeBackendSecurity\Tests\Unit\Domain\Model
- */
 class LowercaseCharactersValidatorTest extends TestCase
 {
     use ExtensionConfigurationFixture;
 
-    /**
-     * @var LowercaseCharactersValidator
-     */
-    protected $lowercaseCharactersValidator;
+    protected LowercaseCharactersValidator $lowercaseCharactersValidator;
 
     public function setUp(): void
     {
-        $this->lowercaseCharactersValidator = \Mockery::mock(
+        $this->lowercaseCharactersValidator = Mockery::mock(
             LowercaseCharactersValidator::class . '[translateErrorMessage]',
             [['extensionConfiguration' => $this->getExtensionConfigurationFixture()]]
         );

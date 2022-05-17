@@ -5,9 +5,6 @@ namespace MoveElevator\MeBackendSecurity\Tests\Unit\Domain\Model;
 use MoveElevator\MeBackendSecurity\Tests\Fixtures\Domain\Model\ExtensionConfigurationFixture;
 use PHPUnit\Framework\TestCase;
 
-/**
- * @package MoveElevator\MeBackendSecurity\Tests\Unit\Domain\Model
- */
 class ExtensionConfigurationTest extends TestCase
 {
     use ExtensionConfigurationFixture;
