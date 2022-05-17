@@ -2,8 +2,10 @@
 
 namespace MoveElevator\MeBackendSecurity\Tests\Unit\Service;
 
+use Mockery;
 use MoveElevator\MeBackendSecurity\Domain\Model\LoginProviderRedirect;
 use MoveElevator\MeBackendSecurity\Domain\Model\PasswordChangeRequest;
+use MoveElevator\MeBackendSecurity\Domain\Repository\BackendUserRepository;
 use MoveElevator\MeBackendSecurity\Service\BackendUserService;
 use MoveElevator\MeBackendSecurity\Tests\Fixtures\Domain\Model\ExtensionConfigurationFixture;
 use MoveElevator\MeBackendSecurity\Validation\Validator\CapitalCharactersValidator;
@@ -11,18 +13,14 @@ use MoveElevator\MeBackendSecurity\Validation\Validator\CompositeValidator;
 use PHPUnit\Framework\TestCase;
 use TYPO3\CMS\Core\Authentication\BackendUserAuthentication;
 use TYPO3\CMS\Core\Crypto\PasswordHashing\Argon2iPasswordHash;
-use TYPO3\CMS\Core\Database\Query\Expression\ExpressionBuilder;
-use TYPO3\CMS\Core\Database\Query\QueryBuilder;
+use TYPO3\CMS\Extbase\Error\Result;
 
-/**
- * @package MoveElevator\MeBackendSecurity\Tests\Unit\Domain\Model
- */
 class BackendUserServiceTest extends TestCase
 {
     use ExtensionConfigurationFixture;
 
     protected $backendUserAuthentication;
-    protected $queryBuilder;
+    protected $backendUserRepository;
     protected $expressionBuilder;
     protected $extensionConfiguration;
     protected $compositeValidator;
@@ -30,37 +28,11 @@ class BackendUserServiceTest extends TestCase
 
     public function setUp(): void
     {
-        $this->backendUserAuthentication = \Mockery::mock(BackendUserAuthentication::class);
-
-        $this->expressionBuilder = \Mockery::mock(ExpressionBuilder::class);
-        $this->expressionBuilder
-            ->shouldReceive('eq')
-            ->withAnyArgs()
-            ->andReturnUsing(function () {
-                return $this->expressionBuilder;
-            });
-
-        $this->queryBuilder = \Mockery::mock(QueryBuilder::class);
-        $this->queryBuilder
-            ->shouldReceive('count', 'from', 'update', 'where', 'set', 'setParameter', 'execute')
-            ->withAnyArgs()
-            ->andReturnUsing(function () {
-                return $this->queryBuilder;
-            });
-        $this->queryBuilder
-            ->shouldReceive('expr')
-            ->withAnyArgs()
-            ->andReturnUsing(function () {
-                return $this->expressionBuilder;
-            });
-        $this->queryBuilder
-            ->shouldReceive('fetchOne')
-            ->withAnyArgs()
-            ->andReturn(1);
-
+        $this->backendUserAuthentication = Mockery::mock(BackendUserAuthentication::class);
+        $this->backendUserRepository = Mockery::mock(BackendUserRepository::class);
         $this->extensionConfiguration = $this->getExtensionConfigurationFixture();
 
-        $capitalCharactersValidator = \Mockery::mock(
+        $capitalCharactersValidator = Mockery::mock(
             CapitalCharactersValidator::class . '[translateErrorMessage]',
             [['extensionConfiguration' => $this->extensionConfiguration]]
         )->shouldAllowMockingProtectedMethods();
@@ -69,7 +41,7 @@ class BackendUserServiceTest extends TestCase
             ->withAnyArgs()
             ->andReturn('translated message');
 
-        $this->compositeValidator = \Mockery::mock(
+        $this->compositeValidator = Mockery::mock(
             CompositeValidator::class . '[translateErrorMessage]',
             [['extensionConfiguration' => $this->extensionConfiguration]]
         )->shouldAllowMockingProtectedMethods();
@@ -82,7 +54,7 @@ class BackendUserServiceTest extends TestCase
             $capitalCharactersValidator
         );
 
-        $this->passwordHashInstance = \Mockery::mock(Argon2iPasswordHash::class);
+        $this->passwordHashInstance = Mockery::mock(Argon2iPasswordHash::class);
         $this->passwordHashInstance
             ->shouldReceive('getHashedPassword')
             ->withAnyArgs()
@@ -93,12 +65,14 @@ class BackendUserServiceTest extends TestCase
 
     public function testCheckPasswordIsValid(): void
     {
+        $this->backendUserAuthentication->user['uid'] = 1;
+        $this->backendUserAuthentication->user['username'] = 'testuser';
         $this->backendUserAuthentication->user['tx_mebackendsecurity_lastpasswordchange'] = time();
         $this->backendUserAuthentication->user['lastlogin'] = time();
 
         $backendUserService = new BackendUserService(
             $this->backendUserAuthentication,
-            $this->queryBuilder,
+            $this->backendUserRepository,
             $this->extensionConfiguration,
             $this->compositeValidator,
             $this->passwordHashInstance
@@ -116,9 +90,13 @@ class BackendUserServiceTest extends TestCase
         $this->backendUserAuthentication->user['uid'] = 1;
         $this->backendUserAuthentication->user['username'] = 'testuser';
 
+        $this->backendUserRepository
+            ->shouldReceive('migrate')
+            ->withAnyArgs();
+
         $backendUserService = new BackendUserService(
             $this->backendUserAuthentication,
-            $this->queryBuilder,
+            $this->backendUserRepository,
             $this->extensionConfiguration,
             $this->compositeValidator,
             $this->passwordHashInstance
@@ -136,9 +114,13 @@ class BackendUserServiceTest extends TestCase
         $this->backendUserAuthentication->user['uid'] = 1;
         $this->backendUserAuthentication->user['username'] = 'testuser';
 
+        $this->backendUserRepository
+            ->shouldReceive('updateLastChangeAndLogin')
+            ->withAnyArgs();
+
         $backendUserService = new BackendUserService(
             $this->backendUserAuthentication,
-            $this->queryBuilder,
+            $this->backendUserRepository,
             $this->extensionConfiguration,
             $this->compositeValidator,
             $this->passwordHashInstance
@@ -153,11 +135,17 @@ class BackendUserServiceTest extends TestCase
     {
         $this->backendUserAuthentication->user['tx_mebackendsecurity_lastpasswordchange'] = 631152000;
         $this->backendUserAuthentication->user['lastlogin'] = time();
+        $this->backendUserAuthentication->user['uid'] = 1;
         $this->backendUserAuthentication->user['username'] = 'testuser';
+
+        $result = $this->compositeValidator
+            ->shouldReceive('validate')
+            ->withAnyArgs()
+            ->andReturn(Result::class);
 
         $backendUserService = new BackendUserService(
             $this->backendUserAuthentication,
-            $this->queryBuilder,
+            $this->backendUserRepository,
             $this->extensionConfiguration,
             $this->compositeValidator,
             $this->passwordHashInstance
@@ -170,11 +158,12 @@ class BackendUserServiceTest extends TestCase
 
     public function testHandlePasswordChangeRequestWithValidationError(): void
     {
+        $this->backendUserAuthentication->user['uid'] = 1;
         $this->backendUserAuthentication->user['username'] = 'testuser';
 
         $backendUserService = new BackendUserService(
             $this->backendUserAuthentication,
-            $this->queryBuilder,
+            $this->backendUserRepository,
             $this->extensionConfiguration,
             $this->compositeValidator,
             $this->passwordHashInstance
@@ -194,27 +183,14 @@ class BackendUserServiceTest extends TestCase
         $this->backendUserAuthentication->user['uid'] = '1';
         $this->backendUserAuthentication->user['username'] = 'nobody';
 
-        $this->queryBuilder = \Mockery::mock(QueryBuilder::class);
-        $this->queryBuilder
-            ->shouldReceive('count', 'from', 'update', 'where', 'set', 'setParameter', 'execute')
-            ->withAnyArgs()
-            ->andReturnUsing(function () {
-                return $this->queryBuilder;
-            });
-        $this->queryBuilder
-            ->shouldReceive('expr')
-            ->withAnyArgs()
-            ->andReturnUsing(function () {
-                return $this->expressionBuilder;
-            });
-        $this->queryBuilder
-            ->shouldReceive('fetchOne')
+        $this->backendUserRepository
+            ->shouldReceive('isUserPresent')
             ->withAnyArgs()
             ->andReturn(false);
 
         $backendUserService = new BackendUserService(
             $this->backendUserAuthentication,
-            $this->queryBuilder,
+            $this->backendUserRepository,
             $this->extensionConfiguration,
             $this->compositeValidator,
             $this->passwordHashInstance
@@ -234,27 +210,18 @@ class BackendUserServiceTest extends TestCase
         $this->backendUserAuthentication->user['uid'] = '1';
         $this->backendUserAuthentication->user['username'] = 'test';
 
-        $this->queryBuilder = \Mockery::mock(QueryBuilder::class);
-        $this->queryBuilder
-            ->shouldReceive('count', 'from', 'update', 'where', 'set', 'setParameter', 'execute')
+        $this->backendUserRepository
+            ->shouldReceive('isUserPresent')
             ->withAnyArgs()
-            ->andReturnUsing(function () {
-                return $this->queryBuilder;
-            });
-        $this->queryBuilder
-            ->shouldReceive('expr')
-            ->withAnyArgs()
-            ->andReturnUsing(function () {
-                return $this->expressionBuilder;
-            });
-        $this->queryBuilder
-            ->shouldReceive('fetchOne')
-            ->withAnyArgs()
-            ->andReturn(1);
+            ->andReturn(true);
+
+        $this->backendUserRepository
+            ->shouldReceive('updatePassword')
+            ->withAnyArgs();
 
         $backendUserService = new BackendUserService(
             $this->backendUserAuthentication,
-            $this->queryBuilder,
+            $this->backendUserRepository,
             $this->extensionConfiguration,
             $this->compositeValidator,
             $this->passwordHashInstance
