@@ -9,15 +9,9 @@ use MoveElevator\MeBackendSecurity\Validation\Validator\PasswordConfirmationVali
 use MoveElevator\MeBackendSecurity\Validation\Validator\PasswordLengthValidator;
 use MoveElevator\MeBackendSecurity\Validation\Validator\SpecialCharactersValidator;
 
-/**
- * @package MoveElevator\MeBackendSecurity\Tests\Fixtures
- */
 trait TypoScriptSetupFixture
 {
-    /**
-     * @var string
-     */
-    protected $validators = [
+    protected array $validators = [
         CapitalCharactersValidator::class,
         DigitsValidator::class,
         LowercaseCharactersValidator::class,
@@ -26,17 +20,14 @@ trait TypoScriptSetupFixture
         SpecialCharactersValidator::class
     ];
 
-    /**
-     * @return array
-     */
     protected function getRawTypoScriptSetupFixture(): array
     {
         return [
             'config.' => [
                 'tx_mebackendsecurity.' => [
-                    'validators.' => $this->validators
-                ]
-            ]
+                    'validators.' => $this->validators,
+                ],
+            ],
         ];
     }
 }
