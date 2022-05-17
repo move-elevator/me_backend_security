@@ -22,7 +22,7 @@ class FlashMessageService
     {
         $this->messageQueue = GeneralUtility::makeInstance(
             FlashMessageQueue::class,
-            ['core.template.flashMessages']
+            'core.template.flashMessages'
         );
     }
 
