@@ -59,12 +59,9 @@ class BackendUserService
         );
 
         if (false === $isUserPresent) {
-            return LoginProviderRedirectFactory::create(
-                $username,
-                [
-                    self::USER_DOES_NOT_EXIST_ERROR_CODE
-                ]
-            );
+            return LoginProviderRedirectFactory::create($username, [
+                self::USER_DOES_NOT_EXIST_ERROR_CODE,
+            ]);
         }
 
         $this->backendUserRepository->updatePassword(
@@ -96,7 +93,7 @@ class BackendUserService
 
         if (1 === $lastPasswordChange) {
             return LoginProviderRedirectFactory::create($username, [], [
-                self::FIRST_CHANGE_MESSAGE_CODE
+                self::FIRST_CHANGE_MESSAGE_CODE,
             ]);
         }
 
@@ -138,7 +135,7 @@ class BackendUserService
         foreach ($validationResults->getErrors() as $error) {
             $errors[] = [
                 'errorCode' => $error->getCode(),
-                'arguments' => $error->getArguments()
+                'arguments' => $error->getArguments(),
             ];
         }
 
