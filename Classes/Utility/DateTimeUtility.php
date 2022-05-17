@@ -23,6 +23,6 @@ class DateTimeUtility
             new DateInterval('P' . $deadlineEndInDays . 'D')
         );
 
-        return $now <= $deadline;
+        return $now > $deadline;
     }
 }
