@@ -89,6 +89,24 @@ class BackendUserRepository
             ->execute();
     }
 
+    public function updatePasswordAndResetToken(int $uid, string $hashedPassword): void
+    {
+        $queryBuilder = $this->getQueryBuilder();
+
+        $queryBuilder
+            ->update(self::TABLE_NAME)
+            ->where(
+                $queryBuilder->expr()->eq(
+                    'uid',
+                    $queryBuilder->createNamedParameter($uid, PDO::PARAM_INT)
+                )
+            )
+            ->set('password', $hashedPassword)
+            ->set('password_reset_token', '')
+            ->set(self::LAST_CHANGE_COLUMN_NAME, DateTimeUtility::getTimestamp())
+            ->execute();
+    }
+
     public function isUserPresent(int $uid, string $username): bool
     {
         $queryBuilder = $this->getQueryBuilder();
