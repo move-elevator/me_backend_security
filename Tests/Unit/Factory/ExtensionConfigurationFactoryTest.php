@@ -2,14 +2,12 @@
 
 namespace MoveElevator\MeBackendSecurity\Tests\Unit\Domain\Model;
 
+use InvalidArgumentException;
 use MoveElevator\MeBackendSecurity\Domain\Model\ExtensionConfiguration;
 use MoveElevator\MeBackendSecurity\Factory\ExtensionConfigurationFactory;
 use MoveElevator\MeBackendSecurity\Tests\Fixtures\Domain\Model\ExtensionConfigurationFixture;
 use PHPUnit\Framework\TestCase;
 
-/**
- * @package MoveElevator\MeBackendSecurity\Tests\Unit\Domain\Model
- */
 class ExtensionConfigurationFactoryTest extends TestCase
 {
     use ExtensionConfigurationFixture;
@@ -35,7 +33,7 @@ class ExtensionConfigurationFactoryTest extends TestCase
     public function testCreateObjectFromInvalidArguments(): void
     {
         $this->expectException(
-            \InvalidArgumentException::class
+            InvalidArgumentException::class
         );
 
         ExtensionConfigurationFactory::create([]);

@@ -2,26 +2,21 @@
 
 namespace MoveElevator\MeBackendSecurity\Tests\Unit\Domain\Model;
 
+use Mockery;
 use MoveElevator\MeBackendSecurity\Domain\Model\PasswordChangeRequest;
 use MoveElevator\MeBackendSecurity\Tests\Fixtures\Domain\Model\ExtensionConfigurationFixture;
 use MoveElevator\MeBackendSecurity\Validation\Validator\PasswordLengthValidator;
 use PHPUnit\Framework\TestCase;
 
-/**
- * @package MoveElevator\MeBackendSecurity\Tests\Unit\Domain\Model
- */
 class PasswordLengthValidatorTest extends TestCase
 {
     use ExtensionConfigurationFixture;
 
-    /**
-     * @var PasswordLengthValidator
-     */
-    protected $passwordLengthValidator;
+    protected PasswordLengthValidator $passwordLengthValidator;
 
     public function setUp(): void
     {
-        $this->passwordLengthValidator = \Mockery::mock(
+        $this->passwordLengthValidator = Mockery::mock(
             PasswordLengthValidator::class . '[translateErrorMessage]',
             [['extensionConfiguration' => $this->getExtensionConfigurationFixture()]]
         );

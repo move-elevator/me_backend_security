@@ -4,24 +4,19 @@ declare(strict_types=1);
 
 namespace MoveElevator\MeBackendSecurity\Factory;
 
+use InvalidArgumentException;
 use MoveElevator\MeBackendSecurity\Domain\Model\PasswordChangeRequest;
 
 class PasswordChangeRequestFactory
 {
-    /**
-     * @param array  $changeRequestParameters
-     * @param string $currentPassword
-     *
-     * @return PasswordChangeRequest
-     */
     public static function create(
         array $changeRequestParameters,
         ?string $currentPassword = null
     ): PasswordChangeRequest {
-        if (empty($changeRequestParameters['password']) ||
-            empty($changeRequestParameters['password2'])
+        if (true === empty($changeRequestParameters['password']) ||
+            true === empty($changeRequestParameters['password2'])
         ) {
-            throw new \InvalidArgumentException(
+            throw new InvalidArgumentException(
                 'Some request parameters are missing for password change.',
                 1512481285
             );
@@ -29,7 +24,7 @@ class PasswordChangeRequestFactory
 
         $passwordChange = new PasswordChangeRequest();
 
-        if (empty($currentPassword) === false) {
+        if (false === empty($currentPassword)) {
             $passwordChange->setCurrentPassword($currentPassword);
         }
 

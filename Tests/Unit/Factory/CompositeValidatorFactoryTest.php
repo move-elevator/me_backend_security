@@ -2,6 +2,8 @@
 
 namespace MoveElevator\MeBackendSecurity\Tests\Unit\Domain\Model;
 
+use InvalidArgumentException;
+use Mockery;
 use MoveElevator\MeBackendSecurity\Factory\CompositeValidatorFactory;
 use MoveElevator\MeBackendSecurity\Tests\Fixtures\Domain\Model\ExtensionConfigurationFixture;
 use MoveElevator\MeBackendSecurity\Tests\Fixtures\TypoScriptSetupFixture;
@@ -9,9 +11,6 @@ use MoveElevator\MeBackendSecurity\Validation\Validator\CompositeValidator;
 use PHPUnit\Framework\TestCase;
 use TYPO3\CMS\Extbase\Object\ObjectManager;
 
-/**
- * @package MoveElevator\MeBackendSecurity\Tests\Unit\Domain\Model
- */
 class CompositeValidatorFactoryTest extends TestCase
 {
     use ExtensionConfigurationFixture;
@@ -21,7 +20,7 @@ class CompositeValidatorFactoryTest extends TestCase
 
     public function setUp(): void
     {
-        $this->objectManager = \Mockery::mock(ObjectManager::class);
+        $this->objectManager = Mockery::mock(ObjectManager::class);
         $this->objectManager
             ->shouldReceive('get')
             ->withAnyArgs()
@@ -48,7 +47,7 @@ class CompositeValidatorFactoryTest extends TestCase
     {
         $extensionConfiguration = $this->getExtensionConfigurationFixture();
 
-        $this->expectException(\InvalidArgumentException::class);
+        $this->expectException(InvalidArgumentException::class);
 
         CompositeValidatorFactory::create(
             $this->objectManager,

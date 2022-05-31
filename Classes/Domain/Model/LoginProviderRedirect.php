@@ -6,22 +6,13 @@ namespace MoveElevator\MeBackendSecurity\Domain\Model;
 
 class LoginProviderRedirect
 {
-    /**
-     * @var string
-     */
-    protected $url;
+    protected string $url;
 
-    /**
-     * @return string
-     */
     public function getUrl(): string
     {
         return $this->url;
     }
 
-    /**
-     * @param string $url
-     */
     public function setUrl(string $url): void
     {
         $this->url = $url;

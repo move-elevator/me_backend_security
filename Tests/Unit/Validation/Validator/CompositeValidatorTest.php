@@ -2,32 +2,23 @@
 
 namespace MoveElevator\MeBackendSecurity\Tests\Unit\Domain\Model;
 
+use Mockery;
 use MoveElevator\MeBackendSecurity\Domain\Model\PasswordChangeRequest;
 use MoveElevator\MeBackendSecurity\Tests\Fixtures\Domain\Model\ExtensionConfigurationFixture;
 use MoveElevator\MeBackendSecurity\Validation\Validator\CapitalCharactersValidator;
 use MoveElevator\MeBackendSecurity\Validation\Validator\CompositeValidator;
 use PHPUnit\Framework\TestCase;
 
-/**
- * @package MoveElevator\MeBackendSecurity\Tests\Unit\Domain\Model
- */
 class CompositeValidatorTest extends TestCase
 {
     use ExtensionConfigurationFixture;
 
-    /**
-     * @var CapitalCharactersValidator
-     */
-    protected $capitalCharactersValidator;
-
-    /**
-     * @var CompositeValidator
-     */
-    protected $compositeValidator;
+    protected CapitalCharactersValidator $capitalCharactersValidator;
+    protected CompositeValidator $compositeValidator;
 
     public function setUp(): void
     {
-        $this->compositeValidator = \Mockery::mock(
+        $this->compositeValidator = Mockery::mock(
             CompositeValidator::class . '[translateErrorMessage]',
             [['extensionConfiguration' => $this->getExtensionConfigurationFixture()]]
         );

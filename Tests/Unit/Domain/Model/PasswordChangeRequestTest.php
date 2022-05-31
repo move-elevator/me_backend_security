@@ -5,9 +5,6 @@ namespace MoveElevator\MeBackendSecurity\Tests\Unit\Domain\Model;
 use MoveElevator\MeBackendSecurity\Tests\Fixtures\Domain\Model\PasswordChangeRequestFixture;
 use PHPUnit\Framework\TestCase;
 
-/**
- * @package MoveElevator\MeBackendSecurity\Tests\Unit\Domain\Model
- */
 class PasswordChangeRequestTest extends TestCase
 {
     use PasswordChangeRequestFixture;

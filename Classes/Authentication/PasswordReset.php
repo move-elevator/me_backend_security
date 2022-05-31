@@ -6,6 +6,7 @@ namespace MoveElevator\MeBackendSecurity\Authentication;
 
 use MoveElevator\MeBackendSecurity\Domain\Model\ExtensionConfiguration;
 use MoveElevator\MeBackendSecurity\Domain\Model\PasswordChangeRequest;
+use MoveElevator\MeBackendSecurity\Domain\Repository\BackendUserRepository;
 use MoveElevator\MeBackendSecurity\Factory\CompositeValidatorFactory;
 use MoveElevator\MeBackendSecurity\Factory\ExtensionConfigurationFactory;
 use MoveElevator\MeBackendSecurity\Factory\PasswordChangeRequestFactory;
@@ -13,35 +14,25 @@ use MoveElevator\MeBackendSecurity\Validation\Validator\CompositeValidator;
 use Psr\Http\Message\ServerRequestInterface;
 use TYPO3\CMS\Core\Configuration\ExtensionConfiguration as ExtensionConfigurationUtility;
 use TYPO3\CMS\Core\Context\Context;
-use TYPO3\CMS\Core\Database\ConnectionPool;
 use TYPO3\CMS\Core\Http\NormalizedParams;
 use TYPO3\CMS\Core\SysLog\Action\Login as SystemLogLoginAction;
 use TYPO3\CMS\Core\SysLog\Error as SystemLogErrorClassification;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Extbase\Configuration\ConfigurationManagerInterface;
+use TYPO3\CMS\Extbase\Error\Result;
 use TYPO3\CMS\Extbase\Object\ObjectManager;
 
 class PasswordReset extends \TYPO3\CMS\Backend\Authentication\PasswordReset
 {
-    protected const EXTKEY = 'me_backend_security';
-
-    /**
-     * @var ObjectManager
-     */
-    protected $objectManager;
+    protected ObjectManager $objectManager;
+    protected BackendUserRepository $backendUserRepository;
 
     public function __construct()
     {
         $this->objectManager = GeneralUtility::makeInstance(ObjectManager::class);
+        $this->backendUserRepository = GeneralUtility::makeInstance(BackendUserRepository::class);
     }
 
-    /**
-     * Update the password in the database if the password matches and the token is valid.
-     *
-     * @param ServerRequestInterface $request
-     * @param Context $context current context
-     * @return bool whether the password was reset or not
-     */
     public function resetPassword(ServerRequestInterface $request, Context $context): bool
     {
         $expirationTimestamp = (int)($request->getQueryParams()['e'] ?? '');
@@ -51,14 +42,14 @@ class PasswordReset extends \TYPO3\CMS\Backend\Authentication\PasswordReset
         $newPasswordRepeat = (string)$request->getParsedBody()['passwordrepeat'];
         $validationResults = $this->validatePassword($newPassword, $newPasswordRepeat);
 
-        if ($validationResults->hasErrors()) {
+        if (true === $validationResults->hasErrors()) {
             $this->logger->debug('Password reset not possible due to weak password');
 
             return false;
         }
 
         $user = $this->findValidUserForToken($token, $identityHash, $expirationTimestamp);
-        if ($user === null) {
+        if (null === $user) {
             $this->logger->warning('Password reset not possible. Valid user for token not found.');
 
             return false;
@@ -66,19 +57,10 @@ class PasswordReset extends \TYPO3\CMS\Backend\Authentication\PasswordReset
 
         $userId = (int)$user['uid'];
 
-        GeneralUtility::makeInstance(ConnectionPool::class)
-            ->getConnectionForTable('be_users')
-            ->update(
-                'be_users',
-                [
-                    'password_reset_token' => '',
-                    'password' => $this->getHasher()->getHashedPassword($newPassword),
-                    'tx_mebackendsecurity_lastpasswordchange' => time(),
-                ],
-                [
-                    'uid' => $userId,
-                ]
-            );
+        $this->backendUserRepository->updatePasswordAndResetToken(
+            $userId,
+            $this->getHasher()->getHashedPassword($newPassword)
+        );
 
         $this->logger->info('Password reset successful for user ' . $userId);
         $this->log(
@@ -97,16 +79,16 @@ class PasswordReset extends \TYPO3\CMS\Backend\Authentication\PasswordReset
         return true;
     }
 
-    private function validatePassword($password, $password2)
+    private function validatePassword(string $password, string $password2): Result
     {
         $requestParameters = ['password' => $password, 'password2' => $password2];
 
         /** @var ExtensionConfigurationUtility $extensionConfigurationUtility */
-        $extensionConfigurationUtility = $this->objectManager->get(ExtensionConfigurationUtility::class);
+        $extensionConfigurationUtility = GeneralUtility::makeInstance(ExtensionConfigurationUtility::class);
 
         /** @var ExtensionConfiguration $extensionConfiguration */
         $extensionConfiguration = ExtensionConfigurationFactory::create(
-            $extensionConfigurationUtility->get(self::EXTKEY)
+            $extensionConfigurationUtility->get(ExtensionConfiguration::EXT_KEY)
         );
 
         /** @var ConfigurationManagerInterface $configurationManager */

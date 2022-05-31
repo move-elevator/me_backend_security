@@ -9,7 +9,7 @@ use MoveElevator\MeBackendSecurity\Domain\Model\PasswordChangeRequest;
 
 class CapitalCharactersValidator extends AbstractValidator
 {
-    private const PATTERN_CAPITAL_CHAR = '/[A-ZÄÖÜ]/';
+    private const PATTERN_CAPITAL_CHAR = '/[A-ZÄÖÜ]/u';
     private const ERROR_CODE = 1510742745;
 
     /**

@@ -4,29 +4,12 @@ namespace MoveElevator\MeBackendSecurity\Tests\Fixtures\Domain\Model;
 
 use MoveElevator\MeBackendSecurity\Domain\Model\PasswordChangeRequest;
 
-/**
- * @package MoveElevator\MeBackendSecurity\Tests\Fixtures\Domain\Model
- */
 trait PasswordChangeRequestFixture
 {
-    /**
-     * @var string
-     */
-    protected $currentPassword = 'foo';
+    protected string $currentPassword = 'foo';
+    protected string $password = 'fooBar';
+    protected string $passwordConfirmation = 'fooBar';
 
-    /**
-     * @var string
-     */
-    protected $password = 'fooBar';
-
-    /**
-     * @var string
-     */
-    protected $passwordConfirmation = 'fooBar';
-
-    /**
-     * @return PasswordChangeRequest
-     */
     protected function getPasswordChangeRequestFixture(): PasswordChangeRequest
     {
         $passwordChangeRequest = new PasswordChangeRequest();
@@ -37,9 +20,6 @@ trait PasswordChangeRequestFixture
         return $passwordChangeRequest;
     }
 
-    /**
-     * @return array
-     */
     protected function getRawPasswordChangeRequestFixture(): array
     {
         return [

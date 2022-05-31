@@ -10,13 +10,6 @@ class LoginProviderRedirectFactory
 {
     protected const BASE_URL = 'index.php';
 
-    /**
-     * @param string $username
-     * @param array  $errors
-     * @param array  $messages
-     *
-     * @return LoginProviderRedirect
-     */
     public static function create(
         string $username = '',
         array $errors = [],

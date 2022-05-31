@@ -5,9 +5,6 @@ namespace MoveElevator\MeBackendSecurity\Tests\Unit\Domain\Model;
 use MoveElevator\MeBackendSecurity\Factory\LoginProviderRedirectFactory;
 use PHPUnit\Framework\TestCase;
 
-/**
- * @package MoveElevator\MeBackendSecurity\Tests\Unit\Domain\Model
- */
 class LoginProviderRedirectFactoryTest extends TestCase
 {
     public function testCreateObjectWithoutArguments(): void

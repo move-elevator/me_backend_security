@@ -2,26 +2,21 @@
 
 namespace MoveElevator\MeBackendSecurity\Tests\Unit\Domain\Model;
 
+use Mockery;
 use MoveElevator\MeBackendSecurity\Domain\Model\PasswordChangeRequest;
 use MoveElevator\MeBackendSecurity\Tests\Fixtures\Domain\Model\ExtensionConfigurationFixture;
 use MoveElevator\MeBackendSecurity\Validation\Validator\PasswordConfirmationValidator;
 use PHPUnit\Framework\TestCase;
 
-/**
- * @package MoveElevator\MeBackendSecurity\Tests\Unit\Domain\Model
- */
 class PasswordConfirmationValidatorTest extends TestCase
 {
     use ExtensionConfigurationFixture;
 
-    /**
-     * @var PasswordConfirmationValidator
-     */
-    protected $passwordConfirmationValidator;
+    protected PasswordConfirmationValidator $passwordConfirmationValidator;
 
     public function setUp(): void
     {
-        $this->passwordConfirmationValidator = \Mockery::mock(
+        $this->passwordConfirmationValidator = Mockery::mock(
             PasswordConfirmationValidator::class . '[translateErrorMessage]',
             [['extensionConfiguration' => $this->getExtensionConfigurationFixture()]]
         );
