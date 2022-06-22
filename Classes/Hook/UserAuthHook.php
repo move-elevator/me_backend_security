@@ -53,7 +53,7 @@ class UserAuthHook
      */
     public function postUserLookUp($params, $pObj): void
     {
-        if (false === $pObj instanceof FrontendBackendUserAuthentication) {
+        if (true === $pObj instanceof FrontendBackendUserAuthentication) {
             return;
         }
 
