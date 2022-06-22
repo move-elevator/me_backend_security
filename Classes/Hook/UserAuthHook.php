@@ -13,6 +13,7 @@ use MoveElevator\MeBackendSecurity\Factory\ExtensionConfigurationFactory;
 use MoveElevator\MeBackendSecurity\Factory\PasswordChangeRequestFactory;
 use MoveElevator\MeBackendSecurity\Service\BackendUserService;
 use MoveElevator\MeBackendSecurity\Validation\Validator\CompositeValidator;
+use TYPO3\CMS\Backend\FrontendBackendUserAuthentication;
 use TYPO3\CMS\Core\Authentication\BackendUserAuthentication;
 use TYPO3\CMS\Core\Configuration\Exception\ExtensionConfigurationExtensionNotConfiguredException;
 use TYPO3\CMS\Core\Configuration\Exception\ExtensionConfigurationPathDoesNotExistException;
@@ -52,6 +53,10 @@ class UserAuthHook
      */
     public function postUserLookUp($params, $pObj): void
     {
+        if (false === $pObj instanceof FrontendBackendUserAuthentication) {
+            return;
+        }
+
         if (false === $pObj instanceof BackendUserAuthentication) {
             return;
         }

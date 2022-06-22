@@ -66,6 +66,13 @@ composer php:validate
 * Website: https://www.move-elevator.de
 
 # Changelog
+2022-06-22 - Ronny Hauptvogel <rh@move-elevator.de>
+```
+Release 3.0.1
+---
+Bugfix: Fix FrontendBackendUserAuthentication issue which will break third-party extension ext_localconf.php files
+```
+
 2022-05-19 - Ronny Hauptvogel <rh@move-elevator.de>
 ```
 Release 3.0.0
