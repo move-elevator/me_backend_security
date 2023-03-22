@@ -66,6 +66,13 @@ composer php:validate
 * Website: https://www.move-elevator.de
 
 # Changelog
+2023-03-22 - Ronny Hauptvogel <rh@move-elevator.de>
+```
+Release 3.0.2
+---
+Bugfix: Fix extension dependency constraints
+```
+
 2022-06-22 - Ronny Hauptvogel <rh@move-elevator.de>
 ```
 Release 3.0.1
