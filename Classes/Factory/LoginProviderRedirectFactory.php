@@ -13,6 +13,7 @@ class LoginProviderRedirectFactory
     public static function create(
         string $username = '',
         array $errors = [],
+        string $mfaToken = '',
         array $messages = []
     ): LoginProviderRedirect {
         $parameter = [
@@ -29,6 +30,10 @@ class LoginProviderRedirectFactory
 
         if (empty($messages) === false) {
             $parameter['m'] = urlencode(base64_encode(serialize($messages)));
+        }
+
+        if (empty($mfaToken) === false) {
+            $parameter['x'] = urlencode(base64_encode(serialize($mfaToken)));
         }
 
         $loginProviderRedirect = new LoginProviderRedirect();

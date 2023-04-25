@@ -10,6 +10,7 @@ use MoveElevator\MeBackendSecurity\Domain\Model\PasswordChangeRequest;
 use MoveElevator\MeBackendSecurity\Domain\Repository\BackendUserRepository;
 use MoveElevator\MeBackendSecurity\Factory\LoginProviderRedirectFactory;
 use MoveElevator\MeBackendSecurity\Utility\DateTimeUtility;
+use MoveElevator\MeBackendSecurity\Utility\MfaUtility;
 use MoveElevator\MeBackendSecurity\Validation\Validator\CompositeValidator;
 use TYPO3\CMS\Core\Authentication\BackendUserAuthentication;
 use TYPO3\CMS\Core\Crypto\PasswordHashing\PasswordHashInterface;
@@ -49,7 +50,8 @@ class BackendUserService
         if (true === $validationResults->hasErrors()) {
             return LoginProviderRedirectFactory::create(
                 $username,
-                $this->getErrorCodesWithArguments($validationResults)
+                $this->getErrorCodesWithArguments($validationResults),
+                MfaUtility::getMfaToken($this->backendUserAuthentication)
             );
         }
 
@@ -59,9 +61,11 @@ class BackendUserService
         );
 
         if (false === $isUserPresent) {
-            return LoginProviderRedirectFactory::create($username, [
-                self::USER_DOES_NOT_EXIST_ERROR_CODE,
-            ]);
+            return LoginProviderRedirectFactory::create(
+                $username,
+                [self::USER_DOES_NOT_EXIST_ERROR_CODE],
+                MfaUtility::getMfaToken($this->backendUserAuthentication)
+            );
         }
 
         $this->backendUserRepository->updatePassword(
@@ -92,7 +96,7 @@ class BackendUserService
             ->user[BackendUserRepository::LAST_CHANGE_COLUMN_NAME];
 
         if (1 === $lastPasswordChange) {
-            return LoginProviderRedirectFactory::create($username, [], [
+            return LoginProviderRedirectFactory::create($username, [], MfaUtility::getMfaToken($this->backendUserAuthentication), [
                 self::FIRST_CHANGE_MESSAGE_CODE,
             ]);
         }
@@ -103,7 +107,7 @@ class BackendUserService
             return null;
         }
 
-        return LoginProviderRedirectFactory::create($username);
+        return LoginProviderRedirectFactory::create($username, [], MfaUtility::getMfaToken($this->backendUserAuthentication));
     }
 
     private function handleNewAccount(): void

@@ -3,12 +3,14 @@
 defined('TYPO3') || die();
 
 use MoveElevator\MeBackendSecurity\Authentication\PasswordReset;
+use MoveElevator\MeBackendSecurity\Authentication\BackendUserAuthentication;
 use MoveElevator\MeBackendSecurity\Controller\ResetPasswordController;
 use MoveElevator\MeBackendSecurity\Evaluation\PasswordEvaluator;
 use MoveElevator\MeBackendSecurity\Hook\BackendUserTableHook;
 use MoveElevator\MeBackendSecurity\Hook\UserAuthHook;
 use MoveElevator\MeBackendSecurity\LoginProvider\UsernamePasswordLoginProvider;
 use TYPO3\CMS\Backend\Authentication\PasswordReset as CorePasswordReset;
+use TYPO3\CMS\Core\Authentication\BackendUserAuthentication as CoreBackendUserAuthentication;
 use TYPO3\CMS\Backend\Controller\ResetPasswordController as CoreResetPasswordController;
 
 (static function () {
@@ -30,5 +32,9 @@ use TYPO3\CMS\Backend\Controller\ResetPasswordController as CoreResetPasswordCon
 
     $GLOBALS['TYPO3_CONF_VARS']['SYS']['Objects'][CoreResetPasswordController::class] = [
         'className' => ResetPasswordController::class,
+    ];
+
+    $GLOBALS['TYPO3_CONF_VARS']['SYS']['Objects'][CoreBackendUserAuthentication::class] = [
+        'className' => BackendUserAuthentication::class
     ];
 })();
