@@ -36,8 +36,6 @@ class LoginProviderRedirectFactory
             $parameter['x'] = urlencode(base64_encode(serialize($mfaToken)));
         }
 
-        var_dump($parameter);
-
         $loginProviderRedirect = new LoginProviderRedirect();
         $loginProviderRedirect->setUrl(self::BASE_URL . '?' . http_build_query($parameter));
 
