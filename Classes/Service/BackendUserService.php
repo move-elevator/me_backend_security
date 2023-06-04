@@ -25,19 +25,22 @@ class BackendUserService
     protected ExtensionConfiguration $extensionConfiguration;
     protected CompositeValidator $compositeValidator;
     protected PasswordHashInterface $passwordHashInstance;
+    protected MfaService $mfaService;
 
     public function __construct(
         BackendUserAuthentication $backendUserAuthentication,
         BackendUserRepository $backendUserRepository,
         ExtensionConfiguration $extensionConfiguration,
         CompositeValidator $compositeValidator,
-        PasswordHashInterface $passwordHashInstance
+        PasswordHashInterface $passwordHashInstance,
+        MfaService $mfaService
     ) {
         $this->backendUserAuthentication = $backendUserAuthentication;
         $this->backendUserRepository = $backendUserRepository;
         $this->extensionConfiguration = $extensionConfiguration;
         $this->compositeValidator = $compositeValidator;
         $this->passwordHashInstance = $passwordHashInstance;
+        $this->mfaService = $mfaService;
     }
 
     public function handlePasswordChangeRequest(PasswordChangeRequest $passwordChangeRequest): ?LoginProviderRedirect
@@ -49,7 +52,8 @@ class BackendUserService
         if (true === $validationResults->hasErrors()) {
             return LoginProviderRedirectFactory::create(
                 $username,
-                $this->getErrorCodesWithArguments($validationResults)
+                $this->getErrorCodesWithArguments($validationResults),
+                $this->mfaService->getMfaToken($this->backendUserAuthentication)
             );
         }
 
@@ -59,9 +63,11 @@ class BackendUserService
         );
 
         if (false === $isUserPresent) {
-            return LoginProviderRedirectFactory::create($username, [
-                self::USER_DOES_NOT_EXIST_ERROR_CODE,
-            ]);
+            return LoginProviderRedirectFactory::create(
+                $username,
+                [self::USER_DOES_NOT_EXIST_ERROR_CODE],
+                $this->mfaService->getMfaToken($this->backendUserAuthentication)
+            );
         }
 
         $this->backendUserRepository->updatePassword(
@@ -92,9 +98,14 @@ class BackendUserService
             ->user[BackendUserRepository::LAST_CHANGE_COLUMN_NAME];
 
         if (1 === $lastPasswordChange) {
-            return LoginProviderRedirectFactory::create($username, [], [
-                self::FIRST_CHANGE_MESSAGE_CODE,
-            ]);
+            return LoginProviderRedirectFactory::create(
+                $username,
+                [],
+                $this->mfaService->getMfaToken($this->backendUserAuthentication),
+                [
+                    self::FIRST_CHANGE_MESSAGE_CODE,
+                ]
+            );
         }
 
         $validUntilInDays = $this->extensionConfiguration->getMaximumValidDays();
@@ -103,7 +114,11 @@ class BackendUserService
             return null;
         }
 
-        return LoginProviderRedirectFactory::create($username);
+        return LoginProviderRedirectFactory::create(
+            $username,
+            [],
+            $this->mfaService->getMfaToken($this->backendUserAuthentication)
+        );
     }
 
     private function handleNewAccount(): void

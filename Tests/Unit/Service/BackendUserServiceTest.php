@@ -7,6 +7,7 @@ use MoveElevator\MeBackendSecurity\Domain\Model\LoginProviderRedirect;
 use MoveElevator\MeBackendSecurity\Domain\Model\PasswordChangeRequest;
 use MoveElevator\MeBackendSecurity\Domain\Repository\BackendUserRepository;
 use MoveElevator\MeBackendSecurity\Service\BackendUserService;
+use MoveElevator\MeBackendSecurity\Service\MfaService;
 use MoveElevator\MeBackendSecurity\Tests\Fixtures\Domain\Model\ExtensionConfigurationFixture;
 use MoveElevator\MeBackendSecurity\Validation\Validator\CapitalCharactersValidator;
 use MoveElevator\MeBackendSecurity\Validation\Validator\CompositeValidator;
@@ -25,6 +26,7 @@ class BackendUserServiceTest extends TestCase
     protected $extensionConfiguration;
     protected $compositeValidator;
     protected $passwordHashInstance;
+    protected $mfaService;
 
     public function setUp(): void
     {
@@ -61,12 +63,20 @@ class BackendUserServiceTest extends TestCase
             ->andReturnUsing(function ($argument) {
                 return $argument;
             });
+
+        $this->mfaService = Mockery::mock(MfaService::class);
+        $this->mfaService
+            ->shouldReceive('getMfaToken')
+            ->withAnyArgs()
+            ->andReturn('mfatoken');
     }
 
     public function testCheckPasswordIsValid(): void
     {
         $this->backendUserAuthentication->user['uid'] = 1;
         $this->backendUserAuthentication->user['username'] = 'testuser';
+        $this->backendUserAuthentication->user['email'] = 'info@test.de';
+        $this->backendUserAuthentication->user['mfa'] = null;
         $this->backendUserAuthentication->user['tx_mebackendsecurity_lastpasswordchange'] = time();
         $this->backendUserAuthentication->user['lastlogin'] = time();
 
@@ -75,7 +85,8 @@ class BackendUserServiceTest extends TestCase
             $this->backendUserRepository,
             $this->extensionConfiguration,
             $this->compositeValidator,
-            $this->passwordHashInstance
+            $this->passwordHashInstance,
+            $this->mfaService
         );
 
         $result = $backendUserService->checkPasswordLifeTime();
@@ -89,6 +100,8 @@ class BackendUserServiceTest extends TestCase
         $this->backendUserAuthentication->user['lastlogin'] = time();
         $this->backendUserAuthentication->user['uid'] = 1;
         $this->backendUserAuthentication->user['username'] = 'testuser';
+        $this->backendUserAuthentication->user['email'] = 'info@test.de';
+        $this->backendUserAuthentication->user['mfa'] = null;
 
         $this->backendUserRepository
             ->shouldReceive('migrate')
@@ -99,7 +112,8 @@ class BackendUserServiceTest extends TestCase
             $this->backendUserRepository,
             $this->extensionConfiguration,
             $this->compositeValidator,
-            $this->passwordHashInstance
+            $this->passwordHashInstance,
+            $this->mfaService
         );
 
         $result = $backendUserService->checkPasswordLifeTime();
@@ -112,7 +126,9 @@ class BackendUserServiceTest extends TestCase
         $this->backendUserAuthentication->user['tx_mebackendsecurity_lastpasswordchange'] = 0;
         $this->backendUserAuthentication->user['lastlogin'] = 0;
         $this->backendUserAuthentication->user['uid'] = 1;
+        $this->backendUserAuthentication->user['mfa'] = null;
         $this->backendUserAuthentication->user['username'] = 'testuser';
+        $this->backendUserAuthentication->user['email'] = 'info@test.de';
 
         $this->backendUserRepository
             ->shouldReceive('updateLastChangeAndLogin')
@@ -123,7 +139,8 @@ class BackendUserServiceTest extends TestCase
             $this->backendUserRepository,
             $this->extensionConfiguration,
             $this->compositeValidator,
-            $this->passwordHashInstance
+            $this->passwordHashInstance,
+            $this->mfaService
         );
 
         $result = $backendUserService->checkPasswordLifeTime();
@@ -136,7 +153,9 @@ class BackendUserServiceTest extends TestCase
         $this->backendUserAuthentication->user['tx_mebackendsecurity_lastpasswordchange'] = 631152000;
         $this->backendUserAuthentication->user['lastlogin'] = time();
         $this->backendUserAuthentication->user['uid'] = 1;
+        $this->backendUserAuthentication->user['mfa'] = null;
         $this->backendUserAuthentication->user['username'] = 'testuser';
+        $this->backendUserAuthentication->user['email'] = 'info@test.de';
 
         $result = $this->compositeValidator
             ->shouldReceive('validate')
@@ -148,7 +167,8 @@ class BackendUserServiceTest extends TestCase
             $this->backendUserRepository,
             $this->extensionConfiguration,
             $this->compositeValidator,
-            $this->passwordHashInstance
+            $this->passwordHashInstance,
+            $this->mfaService
         );
 
         $result = $backendUserService->checkPasswordLifeTime();
@@ -159,14 +179,18 @@ class BackendUserServiceTest extends TestCase
     public function testHandlePasswordChangeRequestWithValidationError(): void
     {
         $this->backendUserAuthentication->user['uid'] = 1;
+        $this->backendUserAuthentication->user['mfa'] = null;
         $this->backendUserAuthentication->user['username'] = 'testuser';
+        $this->backendUserAuthentication->user['email'] = 'info@test.de';
+        $this->backendUserAuthentication->user['tx_mebackendsecurity_lastpasswordchange'] = time();
 
         $backendUserService = new BackendUserService(
             $this->backendUserAuthentication,
             $this->backendUserRepository,
             $this->extensionConfiguration,
             $this->compositeValidator,
-            $this->passwordHashInstance
+            $this->passwordHashInstance,
+            $this->mfaService
         );
 
         $passwordChangeRequest = new PasswordChangeRequest();
@@ -181,7 +205,10 @@ class BackendUserServiceTest extends TestCase
     public function testHandlePasswordChangeRequestWithNotExistingUser(): void
     {
         $this->backendUserAuthentication->user['uid'] = '1';
+        $this->backendUserAuthentication->user['mfa'] = null;
         $this->backendUserAuthentication->user['username'] = 'nobody';
+        $this->backendUserAuthentication->user['email'] = 'info@test.de';
+        $this->backendUserAuthentication->user['tx_mebackendsecurity_lastpasswordchange'] = time();
 
         $this->backendUserRepository
             ->shouldReceive('isUserPresent')
@@ -193,7 +220,8 @@ class BackendUserServiceTest extends TestCase
             $this->backendUserRepository,
             $this->extensionConfiguration,
             $this->compositeValidator,
-            $this->passwordHashInstance
+            $this->passwordHashInstance,
+            $this->mfaService
         );
 
         $passwordChangeRequest = new PasswordChangeRequest();
@@ -224,7 +252,8 @@ class BackendUserServiceTest extends TestCase
             $this->backendUserRepository,
             $this->extensionConfiguration,
             $this->compositeValidator,
-            $this->passwordHashInstance
+            $this->passwordHashInstance,
+            $this->mfaService
         );
 
         $passwordChangeRequest = new PasswordChangeRequest();

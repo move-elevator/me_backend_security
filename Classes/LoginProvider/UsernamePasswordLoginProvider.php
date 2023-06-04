@@ -78,6 +78,15 @@ class UsernamePasswordLoginProvider extends \TYPO3\CMS\Backend\LoginProvider\Use
             );
         }
 
+        $x = GeneralUtility::_GP('x');
+
+        if (empty($x) === false) {
+            $view->assign(
+                'mfaToken',
+                unserialize(base64_decode(urldecode($x)), ['allowed_classes' => false])
+            );
+        }
+
         $pageRenderer->loadRequireJsModule(
             'TYPO3/CMS/MeBackendSecurity/PasswordValidator'
         );
