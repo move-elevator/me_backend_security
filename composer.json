@@ -51,5 +51,11 @@
     "psr-4": {
       "MoveElevator\\MeBackendSecurity\\Tests\\": "Tests"
     }
+  },
+  "config": {
+    "allow-plugins": {
+      "typo3/class-alias-loader": true,
+      "typo3/cms-composer-installers": true
+    }
   }
 }
