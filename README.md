@@ -21,9 +21,10 @@ Users imported from extension ig_ldap_sso_auth will be ignored.
 
 1. Basic install via composer
 
-    ```
-    composer req "move-elevator/me-backend-security":"^3.0"
-    ```
+```
+composer req "move-elevator/me-backend-security":"^3.0"
+```
+
 2. Modify extension settings in TYPO3 backend
 3. Be safer :)
 
@@ -66,6 +67,15 @@ composer php:validate
 * Website: https://www.move-elevator.de
 
 # Changelog
+2023-06-04 - Ronny Hauptvogel <rh@move-elevator.de>
+```
+Release 3.0.2
+---
+Bugfix: Fix extension dependency constraints
+Bugfix: Fix MFA authentication loop
+Feature: Update password reset login form template
+```
+
 2022-06-22 - Ronny Hauptvogel <rh@move-elevator.de>
 ```
 Release 3.0.1

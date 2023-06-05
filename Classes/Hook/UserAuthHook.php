@@ -12,6 +12,7 @@ use MoveElevator\MeBackendSecurity\Factory\CompositeValidatorFactory;
 use MoveElevator\MeBackendSecurity\Factory\ExtensionConfigurationFactory;
 use MoveElevator\MeBackendSecurity\Factory\PasswordChangeRequestFactory;
 use MoveElevator\MeBackendSecurity\Service\BackendUserService;
+use MoveElevator\MeBackendSecurity\Service\MfaService;
 use MoveElevator\MeBackendSecurity\Validation\Validator\CompositeValidator;
 use TYPO3\CMS\Backend\FrontendBackendUserAuthentication;
 use TYPO3\CMS\Core\Authentication\BackendUserAuthentication;
@@ -86,6 +87,9 @@ class UserAuthHook
         /** @var ExtensionConfigurationUtility $extensionConfigurationUtility */
         $extensionConfigurationUtility = GeneralUtility::makeInstance(ExtensionConfigurationUtility::class);
 
+        /** @var MfaService $mfaService */
+        $mfaService = GeneralUtility::makeInstance(MfaService::class);
+
         /** @var ExtensionConfiguration $extensionConfiguration */
         $extensionConfiguration = ExtensionConfigurationFactory::create(
             $extensionConfigurationUtility->get(ExtensionConfiguration::EXT_KEY)
@@ -111,7 +115,8 @@ class UserAuthHook
             $this->backendUserRepository,
             $extensionConfiguration,
             $compositeValidator,
-            $passwordHashInstance
+            $passwordHashInstance,
+            $mfaService
         );
     }
 

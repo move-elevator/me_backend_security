@@ -18,6 +18,8 @@ class LoginProviderRedirectFactoryTest extends TestCase
     {
         $username = 'testuser';
         $errorCodes = [100, 200, 300];
+        $mfaToken = 'mfatoken';
+        $messages = ['message1', 'message2', 'message3'];
 
         $loginProviderRedirect = LoginProviderRedirectFactory::create($username);
         $this->assertEquals($loginProviderRedirect->getUrl(), 'index.php?r=1&u=' . $username);
@@ -26,6 +28,20 @@ class LoginProviderRedirectFactoryTest extends TestCase
         $this->assertEquals(
             $loginProviderRedirect->getUrl(),
             'index.php?r=1&u=' . $username . '&e=' . urlencode(base64_encode(serialize($errorCodes)))
+        );
+
+        $loginProviderRedirect = LoginProviderRedirectFactory::create($username, $errorCodes, $mfaToken);
+        $this->assertEquals(
+            $loginProviderRedirect->getUrl(),
+            'index.php?r=1&u=' . $username . '&e=' . urlencode(base64_encode(serialize($errorCodes))) .
+            '&x=' . urlencode(base64_encode(serialize($mfaToken)))
+        );
+
+        $loginProviderRedirect = LoginProviderRedirectFactory::create($username, $errorCodes, '', $messages);
+        $this->assertEquals(
+            $loginProviderRedirect->getUrl(),
+            'index.php?r=1&u=' . $username . '&e=' . urlencode(base64_encode(serialize($errorCodes))) .
+            '&m=' . urlencode(base64_encode(serialize($messages)))
         );
     }
 }
