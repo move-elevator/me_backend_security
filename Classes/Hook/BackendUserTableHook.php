@@ -75,7 +75,10 @@ class BackendUserTableHook
             return;
         }
 
-        if (false === is_int($id)) {
+        // ID is a temporary string which starts with NEW...
+        // because backend user was inserted by copy & paste
+        if (true === is_string($id)) {
+            $this->backendUserRepository->updateLastChangeByUsername($fieldArray['username'], 1);
             return;
         }
 
@@ -89,8 +92,8 @@ class BackendUserTableHook
             return;
         }
 
-        // If user is created or copied or current user is not the same as account
-        if ('insert' === $status ||
+        if (
+            'new' === $status ||
             $id !== (int)$GLOBALS['BE_USER']->user['uid']
         ) {
             $lastChange = 1;

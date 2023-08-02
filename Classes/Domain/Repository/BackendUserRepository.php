@@ -55,6 +55,22 @@ class BackendUserRepository
             ->execute();
     }
 
+    public function updateLastChangeByUsername(string $username, int $lastChangeTimestamp): void
+    {
+        $queryBuilder = $this->getQueryBuilder();
+
+        $queryBuilder
+            ->update(self::TABLE_NAME)
+            ->where(
+                $queryBuilder->expr()->eq(
+                    'username',
+                    $queryBuilder->createNamedParameter($username)
+                )
+            )
+            ->set(self::LAST_CHANGE_COLUMN_NAME, $lastChangeTimestamp)
+            ->execute();
+    }
+
     public function updateLastChangeAndLogin(int $uid, int $lastLoginTimestamp): void
     {
         $queryBuilder = $this->getQueryBuilder();

@@ -67,6 +67,13 @@ composer php:validate
 * Website: https://www.move-elevator.de
 
 # Changelog
+2023-07-31 - Ronny Hauptvogel <rh@move-elevator.de>
+```
+Release 3.0.3
+---
+Bugfix: Fix backend user generation handling via TYPO3 backend
+```
+
 2023-06-04 - Ronny Hauptvogel <rh@move-elevator.de>
 ```
 Release 3.0.2
